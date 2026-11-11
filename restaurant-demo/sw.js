@@ -1,4 +1,4 @@
-const CACHE = 'restaurant-demo-v1';
+const CACHE = 'restaurant-demo-v2';
 const CORE = ['./', './index.html', './manifest.json', './icon.svg', './icon-maskable.svg'];
 
 self.addEventListener('install', (event) => {

@@ -321,6 +321,37 @@
   }
   .placed .items-list{margin-top:10px;font-size:13px;color:var(--dim);line-height:1.6}
 
+  /* ---------- admin full-screen page ---------- */
+  .admin-page{
+    position:fixed;inset:0;z-index:60;
+    background:var(--bg);color:var(--text);
+    overflow-y:auto;-webkit-overflow-scrolling:touch;
+    overscroll-behavior:contain;
+  }
+  .admin-page-bar{
+    position:sticky;top:0;z-index:2;
+    background:color-mix(in srgb,var(--bg) 94%,transparent);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+  }
+  .admin-page-bar-inner{
+    max-width:720px;margin-inline:auto;padding:10px 16px;
+    display:flex;align-items:center;
+  }
+  .admin-back-btn{
+    display:inline-flex;align-items:center;gap:7px;
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:999px;padding:10px 16px;min-height:44px;
+    font-size:14px;font-weight:600;color:var(--text);
+  }
+  .admin-back-btn:active{background:var(--surface-2)}
+  .admin-page-body{
+    max-width:720px;margin-inline:auto;width:100%;
+    padding:22px 16px max(40px,env(safe-area-inset-bottom));
+  }
+  .admin-page-body h2{font-size:28px;line-height:1.2}
+  .admin-page-body .sub{margin-top:6px;font-size:14px;color:var(--dim);line-height:1.55}
+
   .hidden{display:none !important}
 
   @media (prefers-reduced-motion: reduce){
@@ -328,7 +359,9 @@
     .pulse-dot,.sheet{animation:none}
   }
 </style>
-<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#14532d"><link rel="apple-touch-icon" href="icon.svg"><meta name="mobile-web-app-capable" content="yes"></head>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+</head>
 <body>
 
 <div class="demo-banner" role="note">
@@ -337,7 +370,7 @@
       <strong>Demo menu</strong> — order like a customer: pick a table, add dishes, place the order. Restaurant owner? Open the admin side to watch orders arrive.
       <span class="bn">এই ডেমোতে অর্ডার শুধু এই স্ক্রিনেই দেখা যায় — কোনো অর্ডার সেভ হয় না।</span>
     </div>
-    <button type="button" class="admin-login-btn" id="admin-login-btn" aria-haspopup="dialog">
+    <button type="button" class="admin-login-btn" id="admin-login-btn">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm-3 8V7a3 3 0 1 1 6 0v3H9zm3 4a2 2 0 0 1 1 3.73V19a1 1 0 1 1-2 0v-1.27A2 2 0 0 1 12 14z"/></svg>
       <span id="admin-login-label">Admin Login</span>
       <span class="dot hidden" id="admin-new-dot" aria-hidden="true"></span>
@@ -398,9 +431,14 @@
   <div class="sheet" role="dialog" aria-modal="true" id="sheet" aria-labelledby="sheet-title"></div>
 </div>
 
-<!-- ================= admin login / dashboard ================= -->
-<div class="overlay hidden" id="admin-overlay">
-  <div class="sheet" role="dialog" aria-modal="true" id="admin-sheet" aria-labelledby="admin-title"></div>
+<!-- ================= admin login / dashboard (full-screen page) ================= -->
+<div class="admin-page hidden" id="admin-page">
+  <div class="admin-page-bar">
+    <div class="admin-page-bar-inner">
+      <button type="button" class="admin-back-btn" id="admin-back-btn">← মেনুতে ফিরুন · Back to menu</button>
+    </div>
+  </div>
+  <div class="admin-page-body" id="admin-content" aria-labelledby="admin-title"></div>
 </div>
 
 <script>
@@ -547,8 +585,8 @@ function observeSections(){
 /* ---------------- overlays ---------------- */
 var tableOverlay = document.getElementById("table-overlay");
 var sheetOverlay = document.getElementById("sheet-overlay");
-var adminOverlay = document.getElementById("admin-overlay");
-var adminSheetEl = document.getElementById("admin-sheet");
+var adminPage = document.getElementById("admin-page");
+var adminContentEl = document.getElementById("admin-content");
 var sheetEl = document.getElementById("sheet");
 var sheetMode = "cart"; // "cart" | "placed"
 var lastPlaced = null;
@@ -596,14 +634,35 @@ function closeOverlay(el){
   if (lastFocus && lastFocus.focus) lastFocus.focus();
   renderCartBar();
 }
-[tableOverlay, sheetOverlay, adminOverlay].forEach(function(ov){
+[tableOverlay, sheetOverlay].forEach(function(ov){
   ov.addEventListener("click", function(ev){ if (ev.target===ov) closeOverlay(ov); });
 });
+
+/* admin is a full-screen page, not an overlay: it has its own scroll,
+   its own back control, and no backdrop tap-to-close. */
+function openAdminPage(){
+  lastFocus = document.activeElement;
+  adminPage.classList.remove("hidden");
+  adminPage.scrollTop = 0;
+  document.body.style.overflow = "hidden";
+  var backBtn = document.getElementById("admin-back-btn");
+  if (backBtn) backBtn.focus();
+  renderCartBar();
+}
+function closeAdminPage(){
+  if (adminPage.classList.contains("hidden")) return;
+  adminPage.classList.add("hidden");
+  document.body.style.overflow = "";
+  if (lastFocus && lastFocus.focus) lastFocus.focus();
+  renderCartBar();
+}
+document.getElementById("admin-back-btn").addEventListener("click", closeAdminPage);
+
 document.addEventListener("keydown", function(ev){
   if (ev.key==="Escape"){
     if (!sheetOverlay.classList.contains("hidden")) closeOverlay(sheetOverlay);
     if (!tableOverlay.classList.contains("hidden")) closeOverlay(tableOverlay);
-    if (!adminOverlay.classList.contains("hidden")) closeOverlay(adminOverlay);
+    if (!adminPage.classList.contains("hidden")) closeAdminPage();
   }
 });
 
@@ -720,7 +779,7 @@ function placeOrder(){
   renderPlacedSheet();
   renderCartBar();
   renderAdminBtn();
-  if (!adminOverlay.classList.contains("hidden") && adminAuthed) renderAdminDashboard();
+  if (!adminPage.classList.contains("hidden") && adminAuthed) renderAdminDashboard();
 }
 
 /* kitchen status: New → Preparing → Served. In this demo the clock moves it
@@ -768,14 +827,12 @@ function renderAdminBtn(){
 }
 
 function renderAdminLogin(errMsg){
-  var html = '<div class="sheet-head"><h2 class="font-display" id="admin-title">Admin Login</h2>' +
-    '<button type="button" class="close-btn" id="admin-close" aria-label="Close admin login">✕</button></div>' +
+  var html = '<h2 class="font-display" id="admin-title">Admin Login</h2>' +
     '<p class="sub">This is the owner\u2019s side of the demo — the screen where table orders arrive. Demo PIN: <strong>1234</strong> (the real system uses the owner\u2019s own PIN).</p>' +
     '<input class="pin-input" id="admin-pin" type="password" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="••••" aria-label="Admin PIN, 4 digits">' +
     '<p class="pin-error" id="admin-pin-error" role="alert">'+(errMsg ? esc(errMsg) : "")+'</p>' +
     '<button type="button" class="primary-btn" id="admin-enter">Enter dashboard</button>';
-  adminSheetEl.innerHTML = html;
-  document.getElementById("admin-close").addEventListener("click", function(){ closeOverlay(adminOverlay); });
+  adminContentEl.innerHTML = html;
   var pinEl = document.getElementById("admin-pin");
   function tryLogin(){
     if (pinEl.value === "1234"){
@@ -805,7 +862,7 @@ function renderAdminDashboard(){
       '<div class="row grand"><dt>Sales so far</dt><dd>'+taka(revenue)+'</dd></div></dl>';
 
   if (orders.length===0){
-    html += '<div class="admin-empty">No orders yet.<br>Close this, add a dish and place an order as a customer — it will appear here instantly, like it does on the owner\u2019s phone in the real system.</div>';
+    html += '<div class="admin-empty">No orders yet.<br>Go back to the menu, add a dish and place an order as a customer — it will appear here instantly, like it does on the owner\u2019s phone in the real system.</div>';
   } else {
     orders.forEach(function(o){
       var st = statusOf(o);
@@ -821,14 +878,14 @@ function renderAdminDashboard(){
     });
   }
   html += '<button type="button" class="primary-btn" id="admin-done">Back to menu</button>';
-  adminSheetEl.innerHTML = html;
+  adminContentEl.innerHTML = html;
 
   document.getElementById("admin-logout").addEventListener("click", function(){
     adminAuthed = false;
-    closeOverlay(adminOverlay);
+    closeAdminPage();
   });
-  document.getElementById("admin-done").addEventListener("click", function(){ closeOverlay(adminOverlay); });
-  adminSheetEl.querySelectorAll("[data-advance]").forEach(function(btn){
+  document.getElementById("admin-done").addEventListener("click", function(){ closeAdminPage(); });
+  adminContentEl.querySelectorAll("[data-advance]").forEach(function(btn){
     btn.addEventListener("click", function(){
       var no = parseInt(btn.getAttribute("data-advance"), 10);
       var ord = null;
@@ -843,13 +900,11 @@ function renderAdminDashboard(){
 document.getElementById("admin-login-btn").addEventListener("click", function(){
   adminSeenCount = orders.length;
   renderAdminBtn();
-  /* Build the panel's content FIRST, then reveal it — the same order the
-     working cart/table sheets use. Opening an empty sheet and filling it
-     afterwards (plus the old forced PIN focus) left the login looking
-     like it never opened on phones. */
+  /* Build the page's content FIRST, then reveal the full-screen page.
+     Focus goes to the page's back button — never the PIN input, so no
+     phone keyboard pops up to cover the login. */
   if (adminAuthed) renderAdminDashboard(); else renderAdminLogin("");
-  adminSheetEl.scrollTop = 0;
-  openOverlay(adminOverlay);
+  openAdminPage();
 });
 
 /* ---------------- placed sheet ---------------- */
@@ -884,5 +939,6 @@ renderMenu();
 renderCartBar();
 renderAdminBtn();
 </script>
-<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}</script></body>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js")})}</script>
+</body>
 </html>
