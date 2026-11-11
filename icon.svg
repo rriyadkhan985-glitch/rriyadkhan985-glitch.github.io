@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#57101f"/>
+  <circle cx="256" cy="256" r="216.0" fill="none" stroke="#d9a441" stroke-width="10"/>
+  <circle cx="256" cy="256" r="200.0" fill="none" stroke="#d9a441" stroke-width="3"/>
+  <text x="256" y="318" text-anchor="middle" font-family="'Noto Sans Bengali','Hind Siliguri',sans-serif" font-size="215" font-weight="700" fill="#f3c96b">বা</text>
+  <text x="256" y="438.0" text-anchor="middle" font-family="'Noto Sans Bengali','Hind Siliguri',sans-serif" font-size="44" letter-spacing="6" fill="#f3c96b">মসলা</text>
+</svg>
