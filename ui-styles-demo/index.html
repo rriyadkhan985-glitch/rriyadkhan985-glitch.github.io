@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>৪টা UI স্টাইল — পাশাপাশি ডেমো</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f1ea;
+    --ink:#1c1a17;
+    --ink-2:#5c564c;
+    --line:#ddd6c8;
+    --paper:#fffdf8;
+    --accent:#c2410c;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#131110;
+      --ink:#f2ece3;
+      --ink-2:#a89f92;
+      --line:#2e2a26;
+      --paper:#1c1917;
+      --accent:#fb923c;
+    }
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Hind Siliguri", system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height:1.55;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 18px 56px}
+  /* ---------- Intro ---------- */
+  .intro{max-width:720px}
+  .intro h1{font-size:clamp(28px,5vw,44px);line-height:1.15;margin:0 0 10px;font-weight:700;letter-spacing:-.01em}
+  .intro h1 em{font-style:normal;color:var(--accent)}
+  .intro p{margin:0;color:var(--ink-2);font-size:17px}
+  .howto{
+    margin-top:18px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+    font-size:14px;color:var(--ink-2);
+  }
+  .howto b{color:var(--ink);font-weight:600}
+  .howto span{
+    background:var(--paper);border:1px solid var(--line);border-radius:999px;
+    padding:5px 12px;font-size:13.5px;
+  }
+  /* ---------- Grid ---------- */
+  .grid{
+    display:grid;grid-template-columns:1fr;gap:22px;margin-top:30px;
+  }
+  @media (min-width:860px){ .grid{grid-template-columns:1fr 1fr} }
+  .panel{
+    background:var(--paper);border:1px solid var(--line);border-radius:20px;
+    overflow:hidden;display:flex;flex-direction:column;
+  }
+  .panel-head{
+    display:flex;align-items:flex-start;gap:14px;padding:20px 20px 16px;
+  }
+  .num{
+    font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:600;
+    border:1.5px solid var(--ink);border-radius:999px;padding:3px 9px;flex:none;margin-top:3px;
+  }
+  .panel-head h2{margin:0;font-size:22px;line-height:1.2;font-weight:700}
+  .panel-head h2 small{display:block;font-size:15px;font-weight:500;color:var(--ink-2);margin-top:2px}
+  .diff{margin-left:auto;flex:none;text-align:right;font-size:12.5px;color:var(--ink-2);line-height:1.35}
+  .diff b{display:block;color:var(--ink);font-size:13px}
+  .stage{padding:26px 20px 30px;display:flex;justify-content:center}
+  .panel-body{padding:18px 20px 20px;border-top:1px solid var(--line)}
+  .panel-body p{margin:0 0 10px;font-size:15px;color:var(--ink-2)}
+  .panel-body p b{color:var(--ink)}
+  .use{font-size:14.5px}
+  .use b{color:var(--accent)}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+  .tags span{
+    font-family:"IBM Plex Mono",monospace;font-size:11.5px;
+    border:1px solid var(--line);border-radius:6px;padding:3px 8px;color:var(--ink-2);
+  }
+
+  /* ---------- Shared player bits ---------- */
+  .player{width:100%;max-width:340px}
+  .p-top{display:flex;align-items:center;gap:12px}
+  .p-meta{min-width:0}
+  .p-title{font-weight:700;font-size:16.5px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .p-artist{font-size:13.5px;opacity:.75}
+  .eq{display:flex;gap:3px;align-items:flex-end;height:18px;margin-left:auto;flex:none;padding-bottom:2px}
+  .eq i{width:4px;border-radius:2px;height:5px;background:currentColor;opacity:.85}
+  .playing .eq i{animation:eqb 0.9s ease-in-out infinite alternate}
+  .playing .eq i:nth-child(2){animation-delay:.15s}
+  .playing .eq i:nth-child(3){animation-delay:.3s}
+  .playing .eq i:nth-child(4){animation-delay:.45s}
+  @keyframes eqb{from{height:4px}to{height:17px}}
+  @media (prefers-reduced-motion: reduce){ .playing .eq i{animation:none;height:10px} }
+  .p-prog{margin-top:18px}
+  .p-times{display:flex;justify-content:space-between;font-family:"IBM Plex Mono",monospace;font-size:11.5px;opacity:.75;margin-top:5px}
+  .p-controls{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:16px}
+  .p-bottom{display:flex;align-items:center;gap:12px;margin-top:18px}
+  .p-vol{display:flex;align-items:center;gap:8px;flex:1}
+  .p-vol svg{flex:none;opacity:.8}
+  button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  button:focus-visible, input:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .like{background:none;border:none;font-size:22px;line-height:1;padding:4px;color:inherit}
+  .like .fill{display:none}
+  .like.liked .fill{display:inline}
+  .like.liked .line{display:none}
+  .like.liked{color:#e11d48 !important}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;background:transparent;cursor:pointer;height:24px;margin:0}
+  input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:99px;background:var(--track,rgba(0,0,0,.18))}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;margin-top:-6px;background:var(--thumb,#fff);box-shadow:0 1px 5px rgba(0,0,0,.3)}
+  input[type=range]::-moz-range-track{height:6px;border-radius:99px;background:var(--track,rgba(0,0,0,.18))}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;border:none;border-radius:50%;background:var(--thumb,#fff);box-shadow:0 1px 5px rgba(0,0,0,.3)}
+  .shuffle{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;background:none;border:none;color:inherit;padding:4px}
+  .sw{width:40px;height:23px;border-radius:99px;position:relative;flex:none;transition:background .2s}
+  .sw::after{content:"";position:absolute;top:3px;left:3px;width:17px;height:17px;border-radius:50%;transition:left .2s, transform .15s}
+  .shuffle[aria-pressed="true"] .sw::after{left:20px}
+
+  /* ============ 1. GLASSMORPHISM ============ */
+  .stage-glass{
+    background:
+      radial-gradient(220px 220px at 12% 18%, #f59e0b 0%, transparent 65%),
+      radial-gradient(260px 260px at 88% 12%, #0d9488 0%, transparent 65%),
+      radial-gradient(300px 300px at 78% 92%, #be3455 0%, transparent 65%),
+      radial-gradient(200px 200px at 18% 88%, #2563eb 0%, transparent 60%),
+      linear-gradient(135deg,#312e81,#7c2d12);
+    color:#fff;
+  }
+  .glass-card{
+    background:rgba(255,255,255,.16);
+    -webkit-backdrop-filter:blur(18px) saturate(150%);
+    backdrop-filter:blur(18px) saturate(150%);
+    border:1px solid rgba(255,255,255,.38);
+    border-radius:22px;padding:20px;
+    box-shadow:0 18px 40px rgba(10,5,30,.35), inset 0 1px 0 rgba(255,255,255,.45);
+    --track:rgba(255,255,255,.35); --thumb:#ffffff;
+  }
+  .glass-art{
+    width:52px;height:52px;border-radius:14px;flex:none;
+    background:linear-gradient(140deg,#fbbf24,#f43f5e);
+    border:1px solid rgba(255,255,255,.5);
+    display:flex;align-items:center;justify-content:center;font-size:24px;
+    box-shadow:0 6px 16px rgba(0,0,0,.28);
+  }
+  .glass-btn{
+    background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:#fff;
+    width:42px;height:42px;border-radius:50%;font-size:15px;
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  }
+  .glass-btn:active{transform:scale(.93)}
+  .glass-play{
+    width:58px;height:58px;font-size:20px;
+    background:rgba(255,255,255,.92);color:#1e1b4b;border:none;
+    box-shadow:0 8px 22px rgba(0,0,0,.3);
+  }
+  .glass-card .sw{background:rgba(255,255,255,.3)}
+  .glass-card .sw::after{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+  .glass-card .shuffle[aria-pressed="true"] .sw{background:#34d399}
+
+  /* ============ 2. CLAYMORPHISM ============ */
+  .stage-clay{background:#fdeef2;color:#43304a}
+  .clay-card{
+    background:#fff7f9;border-radius:34px;padding:22px;
+    box-shadow:
+      inset 0 -8px 14px rgba(244,114,182,.14),
+      inset 0 8px 14px #ffffff,
+      0 22px 34px rgba(190,90,140,.22);
+    --track:#fbcfe8; --thumb:#ec4899;
+  }
+  .clay-art{
+    width:54px;height:54px;border-radius:20px;flex:none;background:#fde68a;
+    display:flex;align-items:center;justify-content:center;font-size:26px;
+    box-shadow:inset 0 -5px 8px rgba(217,119,6,.3), inset 0 5px 8px #fff8, 0 8px 14px rgba(217,119,6,.25);
+  }
+  .clay-btn{
+    background:#e0f2fe;border:none;color:#075985;width:46px;height:46px;border-radius:18px;font-size:16px;
+    box-shadow:inset 0 -4px 7px rgba(2,132,199,.25), inset 0 4px 7px #ffffff, 0 7px 12px rgba(2,132,199,.2);
+  }
+  .clay-btn:active{transform:translateY(2px) scale(.96)}
+  .clay-play{
+    width:62px;height:62px;border-radius:22px;font-size:22px;background:#fda4af;color:#881337;
+    box-shadow:inset 0 -5px 9px rgba(190,18,60,.28), inset 0 5px 9px #ffffff, 0 10px 16px rgba(225,29,72,.28);
+  }
+  .clay-card .sw{background:#fbcfe8;box-shadow:inset 0 2px 5px rgba(190,24,93,.25)}
+  .clay-card .sw::after{background:#fff;box-shadow:0 2px 6px rgba(190,24,93,.35)}
+  .clay-card .shuffle[aria-pressed="true"] .sw{background:#f472b6}
+
+  /* ============ 3. NEUMORPHISM ============ */
+  .stage-neu{background:#e3e7ee;color:#4a5568}
+  .neu-card{
+    background:#e3e7ee;border-radius:26px;padding:22px;
+    box-shadow:10px 10px 22px #b9bfcc, -10px -10px 22px #ffffff;
+    --track:#cbd2de; --thumb:#e3e7ee;
+  }
+  .neu-card input[type=range]::-webkit-slider-thumb{box-shadow:3px 3px 6px #b9bfcc, -3px -3px 6px #ffffff}
+  .neu-card input[type=range]::-moz-range-thumb{box-shadow:3px 3px 6px #b9bfcc, -3px -3px 6px #ffffff}
+  .neu-art{
+    width:52px;height:52px;border-radius:50%;flex:none;background:#e3e7ee;
+    display:flex;align-items:center;justify-content:center;font-size:23px;
+    box-shadow:5px 5px 10px #b9bfcc, -5px -5px 10px #ffffff;
+  }
+  .neu-btn{
+    background:#e3e7ee;border:none;color:#4a5568;width:44px;height:44px;border-radius:50%;font-size:15px;
+    box-shadow:5px 5px 10px #b9bfcc, -5px -5px 10px #ffffff;
+  }
+  .neu-btn:active{box-shadow:inset 4px 4px 8px #b9bfcc, inset -4px -4px 8px #ffffff}
+  .neu-play{
+    width:60px;height:60px;font-size:20px;color:#2f6fed;
+    box-shadow:7px 7px 14px #b9bfcc, -7px -7px 14px #ffffff;
+  }
+  .neu-play:active{box-shadow:inset 5px 5px 10px #b9bfcc, inset -5px -5px 10px #ffffff}
+  .neu-card .sw{background:#e3e7ee;box-shadow:inset 3px 3px 6px #b9bfcc, inset -3px -3px 6px #ffffff}
+  .neu-card .sw::after{background:#e3e7ee;box-shadow:3px 3px 6px #b9bfcc, -2px -2px 5px #ffffff}
+  .neu-card .shuffle[aria-pressed="true"] .sw::after{background:#2f6fed}
+
+  /* ============ 4. SKEUOMORPHISM ============ */
+  .stage-skeu{
+    background:
+      repeating-linear-gradient(93deg, rgba(0,0,0,.14) 0 2px, transparent 2px 90px),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.04) 0 3px, transparent 3px 7px),
+      linear-gradient(160deg,#8a5a33,#6f4525 55%,#7d5029);
+    color:#3b2a18;
+  }
+  .skeu-card{
+    border-radius:8px;padding:0;overflow:hidden;max-width:340px;
+    background:
+      repeating-linear-gradient(0deg, transparent 0 27px, rgba(90,120,180,.28) 27px 28px),
+      linear-gradient(#fdf6e3,#f7ecd2);
+    box-shadow:0 16px 30px rgba(20,10,0,.5), inset 0 0 40px rgba(160,120,60,.18);
+    border:1px solid #d8c49a;
+    --track:rgba(90,60,20,.3); --thumb:#8a5a33;
+  }
+  .skeu-inner{padding:18px 20px 20px;position:relative}
+  .skeu-inner::before{
+    content:"";position:absolute;left:34px;top:0;bottom:0;width:1.5px;background:rgba(220,80,80,.4);
+  }
+  .skeu-head{
+    margin:-18px -20px 14px;padding:12px 20px 11px 46px;
+    background:linear-gradient(#5d4023,#4a3319);
+    color:#f3e3bd;font-family:Georgia,"Times New Roman",serif;letter-spacing:.06em;
+    font-size:12.5px;text-transform:uppercase;
+    box-shadow:0 2px 5px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,220,150,.35);
+    border-bottom:2px dashed rgba(243,227,189,.4);
+  }
+  .skeu-art{
+    width:52px;height:52px;border-radius:6px;flex:none;
+    background:radial-gradient(circle at 32% 30%, #f6d48a, #b97e2c 70%, #8a5a1a);
+    border:1px solid #7c5518;
+    display:flex;align-items:center;justify-content:center;font-size:24px;color:#3d2703;
+    box-shadow:0 3px 6px rgba(60,35,0,.4), inset 0 1px 2px #fff9;
+    text-shadow:0 1px 0 rgba(255,240,200,.6);
+  }
+  .skeu-card .p-title{font-family:Georgia,serif}
+  .skeu-btn{
+    width:44px;height:44px;border-radius:50%;font-size:15px;color:#f5ead0;
+    background:radial-gradient(circle at 35% 28%, #a97c46, #6e4a22 68%, #573a18);
+    border:1px solid #40290d;
+    box-shadow:0 4px 7px rgba(50,30,0,.45), inset 0 1.5px 2px rgba(255,235,190,.65), inset 0 -3px 5px rgba(0,0,0,.4);
+    text-shadow:0 -1px 1px rgba(0,0,0,.6);
+  }
+  .skeu-btn:active{transform:translateY(2px);box-shadow:0 1px 3px rgba(50,30,0,.5), inset 0 2px 6px rgba(0,0,0,.45)}
+  .skeu-play{
+    width:60px;height:60px;font-size:20px;
+    background:radial-gradient(circle at 35% 28%, #d9534f, #a52a24 65%, #7e1d18);
+    border-color:#57120e;
+    box-shadow:0 5px 9px rgba(50,10,0,.5), inset 0 1.5px 2px rgba(255,210,200,.7), inset 0 -3px 6px rgba(0,0,0,.45);
+  }
+  .skeu-card .sw{
+    background:linear-gradient(#cdb27a,#a9884e);
+    border:1px solid #7c5f28;box-shadow:inset 0 2px 4px rgba(0,0,0,.35);
+  }
+  .skeu-card .sw::after{
+    background:radial-gradient(circle at 35% 30%, #f7ead0, #c8a55e 70%, #9a7a38);
+    border:1px solid #6d5423;box-shadow:0 1px 3px rgba(0,0,0,.4);
+  }
+  .skeu-card .shuffle[aria-pressed="true"] .sw{background:linear-gradient(#8fbf6a,#5d8f3e)}
+
+  /* ---------- Verdict / compare ---------- */
+  .verdict{margin-top:34px}
+  .verdict h2{font-size:24px;margin:0 0 6px}
+  .verdict > p{margin:0 0 18px;color:var(--ink-2);font-size:15.5px;max-width:640px}
+  .v-grid{display:grid;grid-template-columns:1fr;gap:12px}
+  @media (min-width:700px){ .v-grid{grid-template-columns:1fr 1fr} }
+  @media (min-width:1020px){ .v-grid{grid-template-columns:repeat(4,1fr)} }
+  .v-card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .v-card h3{margin:0 0 6px;font-size:16.5px}
+  .v-card p{margin:0;font-size:14px;color:var(--ink-2)}
+  .v-card .best{margin-top:10px;font-size:13.5px;font-weight:600;color:var(--accent)}
+  footer{margin-top:36px;font-size:13.5px;color:var(--ink-2);border-top:1px solid var(--line);padding-top:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="intro">
+    <h1>একই কার্ড, <em>৪টা লুক</em> — পাশাপাশি দেখো</h1>
+    <p>নিচে চার জায়গাতেই হুবহু একই মিউজিক প্লেয়ার কার্ড বসানো হয়েছে — শুধু ডিজাইনের স্টাইলটা আলাদা। চোখে দেখলেই বুঝবে কোন স্টাইলে জিনিসটা কেমন লাগে, আর কোনটা কোথায় মানায়।</p>
+    <div class="howto">
+      <b>নিজে চেষ্টা করো:</b>
+      <span>▶ Play চাপো</span>
+      <span>♥ পছন্দ দাও</span>
+      <span>স্লাইডার টানো</span>
+      <span>Shuffle অন/অফ করো</span>
+    </div>
+  </header>
+
+  <main class="grid" id="grid"><!-- cards injected pattern repeated below --></main>
+
+  <section class="verdict">
+    <h2>তাহলে কোনটা কখন?</h2>
+    <p>রিলে যেমন বলা হয়েছিল — স্টাইল ট্রেন্ড দেখে না বেছে প্রোডাক্টের সাথে মিলিয়ে বাছতে হয়। সংক্ষেপে মনে রাখার মতো করে:</p>
+    <div class="v-grid">
+      <div class="v-card">
+        <h3>Glassmorphism</h3>
+        <p>পেছনে রঙিন কিছু থাকলেই এর জাদু কাজ করে। ফাঁকা সাদা পেছনে রাখলে পুরো লুকটাই মরে যায়।</p>
+        <div class="best">সেরা: প্রিমিয়াম শপ, মিউজিক/মিডিয়া অ্যাপ</div>
+      </div>
+      <div class="v-card">
+        <h3>Claymorphism</h3>
+        <p>বন্ধুসুলভ আর মজার ভাব আনে, তবে তথ্য-ঘন পেজে এই ফোলা আকৃতি জায়গা বেশি খায়।</p>
+        <div class="best">সেরা: বাচ্চাদের অ্যাপ, গেম, মজার প্রোডাক্ট</div>
+      </div>
+      <div class="v-card">
+        <h3>Neumorphism</h3>
+        <p>দেখতে সবচেয়ে শান্ত, কিন্তু কনট্রাস্ট কম — বাটন আর লেখা আলাদা করা কঠিন, অ্যাক্সেসিবিলিটিতে দুর্বল।</p>
+        <div class="best">সেরা: স্মার্ট-হোম কন্ট্রোল, মিনিমাল ড্যাশবোর্ড</div>
+      </div>
+      <div class="v-card">
+        <h3>Skeuomorphism</h3>
+        <p>নতুন ব্যবহারকারীকে শেখাতে সেরা — দেখেই বোঝা যায় কী করতে হবে। কিন্তু বানাতে সবচেয়ে সময় লাগে।</p>
+        <div class="best">সেরা: ক্যালকুলেটর, রেকর্ডার, নস্টালজিক অ্যাপ</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>ডেমোর সবগুলো কার্ড খাঁটি CSS দিয়ে বানানো — কোনো ছবি ব্যবহার হয়নি। Skeuomorphism-এর কাঠ, চামড়া আর খাতার পাতার ভাবও গ্রেডিয়েন্ট আর ছায়া দিয়েই তোলা।</footer>
+</div>
+
+<script>
+/* Build the same player card 4 times, once per style */
+var STYLES = [
+  {
+    id:'glass', num:'01', name:'Glassmorphism', bn:'কাচের মতো স্বচ্ছ',
+    diff:'বানানো: সহজ–মাঝারি',
+    desc:'<b>চেনার উপায়:</b> কার্ডটা হিম-কাচের মতো — পেছনের রঙ ঝাপসা হয়ে ভেতর দিয়ে দেখা যায়। পাতলা সাদা বর্ডার আর নরম ছায়া দিয়ে কাচের ধার বোঝানো হয়।',
+    use:'<b>কোথায় মানায়:</b> প্রিমিয়াম শপের হিরো সেকশন, মিউজিক অ্যাপ — যেখানে পেছনে রঙিন ছবি বা গ্রেডিয়েন্ট আছে।',
+    tags:['backdrop-filter: blur','rgba স্বচ্ছতা','1px সাদা বর্ডার']
+  },
+  {
+    id:'clay', num:'02', name:'Claymorphism', bn:'নরম মাটির পুতুলের মতো ফোলা',
+    diff:'বানানো: সহজ',
+    desc:'<b>চেনার উপায়:</b> সবকিছু বড় গোলগাল, ফোলা ফোলা — যেন নরম মাটি দিয়ে বানানো খেলনা। ভেতরের আলো-ছায়া (inset shadow) দিয়েই এই পাফি ভাবটা আসে।',
+    use:'<b>কোথায় মানায়:</b> বাচ্চাদের অ্যাপ, গেম, শিক্ষামূলক বা মজার প্রোডাক্ট — যেখানে বন্ধুসুলভ ভাব দরকার।',
+    tags:['বড় border-radius','inset shadow','প্যাস্টেল রঙ']
+  },
+  {
+    id:'neu', num:'03', name:'Neumorphism', bn:'একই রঙে হালকা ছায়া-আলোর খাঁজ',
+    diff:'বানানো: মাঝারি',
+    desc:'<b>চেনার উপায়:</b> কার্ড আর পেছনের রঙ একই — আলাদা করা যায় শুধু দুই পাশের ছায়া দিয়ে: একদিকে গাঢ় ছায়া, অন্যদিকে সাদা আলো। চাপ দিলে বাটন ভেতরে ঢুকে যায়। নিচের বাটনগুলো চেপে দেখো।',
+    use:'<b>কোথায় মানায়:</b> স্মার্ট-হোম কন্ট্রোল, মিনিমাল ড্যাশবোর্ড — তবে কনট্রাস্ট কম বলে সবার জন্য পড়া কঠিন হতে পারে।',
+    tags:['দ্বিমুখী box-shadow','একরঙা প্যালেট','নরম কনট্রাস্ট']
+  },
+  {
+    id:'skeu', num:'04', name:'Skeuomorphism', bn:'আসল জিনিসের মতো দেখতে',
+    diff:'বানানো: সবচেয়ে কঠিন',
+    desc:'<b>চেনার উপায়:</b> ডিজিটাল জিনিসকে আসল জিনিসের মতো সাজানো — এই কার্ডটা কাঠের টেবিলের ওপর রাখা খাতার পাতা, উপরে চামড়ার বাঁধাই, বাটনগুলো আসল প্লাস্টিক-ধাতুর বোতামের মতো। পুরনো iPhone-এর নোটপ্যাড ঠিক এমনই ছিল।',
+    use:'<b>কোথায় মানায়:</b> যেখানে ব্যবহারকারী একদম নতুন — দেখেই যেন বুঝে যায় কোনটা কী। ক্যালকুলেটর, ভয়েস রেকর্ডারে আজও চলে।',
+    tags:['আসল টেক্সচার','গ্রেডিয়েন্টের গভীরতা','বাস্তব ছায়া']
+  }
+];
+
+function playerHTML(s){
+  var art = s.id==='skeu' ? '♪' : '🎵';
+  var head = s.id==='skeu' ? '<div class="skeu-head">My Notebook Player</div>' : '';
+  var innerOpen = s.id==='skeu' ? '<div class="skeu-inner">' : '';
+  var innerClose = s.id==='skeu' ? '</div>' : '';
+  return '' +
+  '<article class="panel" aria-label="'+s.name+'">' +
+    '<div class="panel-head"><span class="num">'+s.num+'</span>' +
+      '<h2>'+s.name+'<small>'+s.bn+'</small></h2>' +
+      '<div class="diff"><b>স্টাইল '+s.num+'</b>'+s.diff+'</div>' +
+    '</div>' +
+    '<div class="stage stage-'+s.id+'">' +
+      '<div class="player '+s.id+'-card" data-player>' + head + innerOpen +
+        '<div class="p-top">' +
+          '<div class="'+s.id+'-art" aria-hidden="true">'+art+'</div>' +
+          '<div class="p-meta"><div class="p-title">তুমি আমার অনেক শখের</div>' +
+          '<div class="p-artist">Piran Khan • Lo-Fi সংস্করণ</div></div>' +
+          '<div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></div>' +
+        '</div>' +
+        '<div class="p-prog">' +
+          '<input type="range" class="prog" min="0" max="225" value="84" aria-label="গানের অগ্রগতি">' +
+          '<div class="p-times"><span class="cur">1:24</span><span>3:45</span></div>' +
+        '</div>' +
+        '<div class="p-controls">' +
+          '<button type="button" class="'+s.id+'-btn" aria-label="আগের গান">⏮</button>' +
+          '<button type="button" class="'+s.id+'-btn '+s.id+'-play play-btn" aria-label="চালাও বা থামাও">▶</button>' +
+          '<button type="button" class="'+s.id+'-btn" aria-label="পরের গান">⏭</button>' +
+        '</div>' +
+        '<div class="p-bottom">' +
+          '<button type="button" class="like" aria-label="পছন্দ করো" aria-pressed="false"><span class="line">♡</span><span class="fill">♥</span></button>' +
+          '<div class="p-vol">' +
+            '<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>' +
+            '<input type="range" min="0" max="100" value="65" aria-label="ভলিউম">' +
+          '</div>' +
+          '<button type="button" class="shuffle" aria-pressed="false"><span class="sw"></span>Shuffle</button>' +
+        '</div>' +
+      innerClose + '</div>' +
+    '</div>' +
+    '<div class="panel-body"><p>'+s.desc+'</p><p class="use">'+s.use+'</p>' +
+      '<div class="tags">'+ s.tags.map(function(t){return '<span>'+t+'</span>'}).join('') +'</div>' +
+    '</div>' +
+  '</article>';
+}
+
+document.getElementById('grid').innerHTML = STYLES.map(playerHTML).join('');
+
+/* Interactivity — same behaviour in every style */
+function fmt(sec){ var m = Math.floor(sec/60), s = sec%60; return m + ':' + (s<10?'0':'') + s; }
+
+document.querySelectorAll('[data-player]').forEach(function(card){
+  var playBtn = card.querySelector('.play-btn');
+  var prog = card.querySelector('.prog');
+  var cur = card.querySelector('.cur');
+  var timer = null, pos = 84;
+
+  function stopTimer(){ if(timer){ clearInterval(timer); timer = null; } }
+  playBtn.addEventListener('click', function(){
+    var playing = card.classList.toggle('playing');
+    playBtn.textContent = playing ? '❚❚' : '▶';
+    stopTimer();
+    if(playing){
+      timer = setInterval(function(){
+        pos = pos >= 225 ? 0 : pos + 1;
+        prog.value = pos; cur.textContent = fmt(pos);
+      }, 1000);
+    }
+  });
+  prog.addEventListener('input', function(){
+    pos = parseInt(prog.value, 10);
+    cur.textContent = fmt(pos);
+  });
+
+  var like = card.querySelector('.like');
+  like.addEventListener('click', function(){
+    var on = like.classList.toggle('liked');
+    like.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+
+  var sh = card.querySelector('.shuffle');
+  sh.addEventListener('click', function(){
+    var on = sh.getAttribute('aria-pressed') !== 'true';
+    sh.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+});
+</script>
+</body>
+</html>
