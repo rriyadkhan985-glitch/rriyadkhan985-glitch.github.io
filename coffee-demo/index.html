@@ -4,12 +4,13 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="color-scheme" content="light dark" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
 <link rel="icon" href="data:," />
 <title>EMBER — Specialty Coffee Roasters, Dhaka</title>
 <meta name="description" content="EMBER is a premium specialty coffee brand — small-batch roasts, single-origin beans and a slow coffee bar in Banani, Dhaka." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
 <style>
   :root{
     --bg:#171008;
@@ -45,11 +46,11 @@
   html{scroll-behavior:smooth}
   body{
     margin:0;background:var(--bg);color:var(--ink);
-    font-family:"Jost",system-ui,sans-serif;font-weight:300;
+    font-family:"Space Grotesk",system-ui,sans-serif;font-weight:300;
     font-size:17px;line-height:1.65;
     -webkit-font-smoothing:antialiased;
   }
-  h1,h2,h3,.serif{font-family:"Playfair Display",Georgia,serif}
+  h1,h2,h3,.serif{font-family:"Fraunces",Georgia,serif;font-optical-sizing:auto}
   img{max-width:100%;display:block}
   a{color:inherit}
   button,[role="button"],select,summary,input:not([type="checkbox"],[type="radio"]){min-height:2.25rem}
@@ -67,11 +68,11 @@
   .btn{
     display:inline-flex;align-items:center;gap:10px;
     padding:14px 30px;border-radius:999px;border:1px solid var(--accent);
-    font-family:"Jost",sans-serif;font-size:.95rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+    font-family:"Space Grotesk",sans-serif;font-size:.95rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
     text-decoration:none;cursor:pointer;transition:all .25s ease;background:transparent;color:var(--ink);
   }
   .btn-solid{background:var(--accent);color:#1d1206;border-color:var(--accent)}
-  .btn-solid:hover{background:var(--accent-2);border-color:var(--accent-2);color:#fff}
+  .btn-solid:hover{background:var(--accent-2);border-color:var(--accent-2);color:#fff;transform:translateY(-2px);box-shadow:0 14px 34px rgba(180,113,42,.35)}
   .btn-ghost:hover{background:var(--accent);color:#1d1206}
   .btn-wa{background:#22b358;border-color:#22b358;color:#fff}
   .btn-wa:hover{background:#1a9147;border-color:#1a9147}
@@ -84,7 +85,7 @@
   }
   #preloader.done{opacity:0;visibility:hidden}
   #preloader .mono{
-    font-family:"Playfair Display",serif;font-size:3.4rem;font-weight:900;color:#d99a3d;
+    font-family:"Fraunces",serif;font-size:3.4rem;font-weight:900;color:#d99a3d;
     width:96px;height:96px;border:1px solid rgba(217,154,61,.5);border-radius:50%;
     display:flex;align-items:center;justify-content:center;
     animation:pulse 1.6s ease-in-out infinite;
@@ -117,7 +118,7 @@
   header.nav.scrolled .announce{max-height:0;opacity:0}
   .nav-in{display:flex;align-items:center;justify-content:space-between;height:68px;transition:height .3s ease}
   header.nav.scrolled .nav-in{height:54px}
-  .brand{font-family:"Playfair Display",serif;font-weight:900;font-size:1.55rem;letter-spacing:.14em;text-decoration:none;transition:font-size .3s ease}
+  .brand{font-family:"Fraunces",serif;font-weight:900;font-size:1.55rem;letter-spacing:.14em;text-decoration:none;transition:font-size .3s ease}
   header.nav.scrolled .brand{font-size:1.32rem}
   .brand span{color:var(--accent)}
   .nav-links{display:flex;gap:30px;align-items:center}
@@ -171,9 +172,13 @@
   .hero .kicker{color:#e8b566}
   .hero .kicker::before{background:#e8b566}
   .hero h1{
-    font-size:clamp(3rem,9.5vw,6.8rem);line-height:.98;font-weight:900;margin:0 0 22px;max-width:12ch;
+    font-size:clamp(3rem,9.5vw,6.8rem);line-height:.98;font-weight:900;letter-spacing:-.01em;margin:0 0 22px;max-width:12ch;
   }
-  .hero h1 em{font-style:italic;font-weight:500;color:#e8b566}
+  .hero h1 em{
+    font-style:italic;font-weight:500;
+    background:linear-gradient(100deg,#d99a3d 20%,#e8b566 60%,#ffd9b8);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
   .hero p{max-width:520px;font-size:1.13rem;color:#e9dcc2;margin:0 0 34px;font-weight:300}
   .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
   .hero .btn-ghost{color:#f6ecda;border-color:rgba(246,236,218,.55)}
@@ -182,7 +187,7 @@
     display:flex;gap:0;margin-top:56px;border-top:1px solid rgba(246,236,218,.22);max-width:640px;flex-wrap:wrap;
   }
   .hero-meta div{padding:16px 28px 0 0;margin-right:28px}
-  .hero-meta b{font-family:"Playfair Display",serif;font-size:1.5rem;font-weight:700;display:block;line-height:1}
+  .hero-meta b{font-family:"Fraunces",serif;font-size:1.5rem;font-weight:700;display:block;line-height:1}
   .hero-meta span{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:#cdbb9c}
 
   /* ---------- Marquee ---------- */
@@ -192,7 +197,7 @@
   }
   .marquee-track{display:inline-flex;gap:0;animation:scrollX 30s linear infinite;will-change:transform}
   .marquee span{
-    font-family:"Playfair Display",serif;font-style:italic;font-size:1.05rem;color:var(--ink-soft);
+    font-family:"Fraunces",serif;font-style:italic;font-size:1.05rem;color:var(--ink-soft);
     padding:0 26px;position:relative;
   }
   .marquee span::after{content:"✦";position:absolute;right:-7px;color:var(--accent);font-style:normal;font-size:.8rem;top:4px}
@@ -202,7 +207,7 @@
   .menu-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px}
   .menu-tab{
     padding:11px 24px;border-radius:999px;border:1px solid var(--line);background:transparent;
-    color:var(--ink-soft);font-family:"Jost",sans-serif;font-size:.9rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ink-soft);font-family:"Space Grotesk",sans-serif;font-size:.9rem;letter-spacing:.1em;text-transform:uppercase;
     cursor:pointer;transition:all .2s;min-height:44px;
   }
   .menu-tab:hover{border-color:var(--accent);color:var(--ink)}
@@ -218,9 +223,9 @@
   .menu-item .tag{
     display:inline-block;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
     border:1px solid var(--accent);color:var(--accent);border-radius:999px;padding:2px 9px;margin-left:8px;
-    vertical-align:middle;font-family:"Jost",sans-serif;font-weight:500;
+    vertical-align:middle;font-family:"Space Grotesk",sans-serif;font-weight:500;
   }
-  .price{font-family:"Playfair Display",serif;font-size:1.3rem;font-weight:700;color:var(--accent);white-space:nowrap}
+  .price{font-family:"Fraunces",serif;font-size:1.3rem;font-weight:700;color:var(--accent);white-space:nowrap}
   .menu-note{margin-top:30px;color:var(--muted);font-size:.92rem}
   .menu-panel{display:none}
   .menu-panel.active{display:block;animation:fadeUp .45s ease}
@@ -256,7 +261,7 @@
   @media (max-width:560px){.about-photos .float{right:0}}
   .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:38px}
   .stat{border-top:2px solid var(--accent);padding-top:14px}
-  .stat b{font-family:"Playfair Display",serif;font-size:2rem;display:block;line-height:1;color:var(--ink)}
+  .stat b{font-family:"Fraunces",serif;font-size:2rem;display:block;line-height:1;color:var(--ink)}
   .stat span{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
   .values{margin-top:30px;display:grid;gap:14px}
   .value{display:flex;gap:14px;align-items:flex-start}
@@ -265,7 +270,7 @@
     display:flex;align-items:center;justify-content:center;color:var(--accent);
   }
   .value .dot svg{width:18px;height:18px}
-  .value h4{margin:2px 0 2px;font-family:"Playfair Display",serif;font-size:1.08rem}
+  .value h4{margin:2px 0 2px;font-family:"Fraunces",serif;font-size:1.08rem}
   .value p{margin:0;color:var(--muted);font-size:.93rem}
 
   /* ---------- Process ---------- */
@@ -273,7 +278,7 @@
   @media (max-width:900px){.process-grid{grid-template-columns:1fr 1fr}}
   @media (max-width:520px){.process-grid{grid-template-columns:1fr}}
   .step{border:1px solid var(--line);border-radius:16px;padding:28px 24px;background:var(--surface)}
-  .step .num{font-family:"Playfair Display",serif;font-style:italic;font-size:2rem;color:var(--accent);line-height:1}
+  .step .num{font-family:"Fraunces",serif;font-style:italic;font-size:2rem;color:var(--accent);line-height:1}
   .step h3{margin:12px 0 6px;font-size:1.15rem}
   .step p{margin:0;color:var(--muted);font-size:.92rem}
 
@@ -296,7 +301,7 @@
   .offer h3{font-size:1.55rem;margin:0 0 8px;line-height:1.15}
   .offer p{margin:0 0 20px;color:var(--muted);font-size:.95rem}
   .offer.hot p{color:#d8c39c}
-  .offer .big{font-family:"Playfair Display",serif;font-size:2.4rem;font-weight:900;color:var(--accent);line-height:1;display:block;margin-bottom:6px}
+  .offer .big{font-family:"Fraunces",serif;font-size:2.4rem;font-weight:900;color:var(--accent);line-height:1;display:block;margin-bottom:6px}
   .offer small{color:var(--muted);font-size:.82rem}
   .offer.hot small{color:#b89b6d}
 
@@ -308,11 +313,11 @@
     display:flex;flex-direction:column;gap:14px;
   }
   .stars{color:var(--accent);letter-spacing:4px;font-size:1rem}
-  .rev blockquote{margin:0;font-family:"Playfair Display",serif;font-style:italic;font-size:1.12rem;line-height:1.55}
+  .rev blockquote{margin:0;font-family:"Fraunces",serif;font-style:italic;font-size:1.12rem;line-height:1.55}
   .rev-who{display:flex;align-items:center;gap:13px;margin-top:auto}
   .avatar{
     width:44px;height:44px;border-radius:50%;background:var(--accent);color:#1d1206;
-    display:flex;align-items:center;justify-content:center;font-weight:600;font-family:"Playfair Display",serif;font-size:1.05rem;
+    display:flex;align-items:center;justify-content:center;font-weight:600;font-family:"Fraunces",serif;font-size:1.05rem;
   }
   .rev-who b{display:block;font-weight:500;font-size:.98rem;line-height:1.25}
   .rev-who span{color:var(--muted);font-size:.84rem}
@@ -320,18 +325,18 @@
     display:flex;gap:26px;flex-wrap:wrap;align-items:center;margin-bottom:38px;
     border:1px solid var(--line);border-radius:16px;padding:20px 26px;background:var(--surface);
   }
-  .rating-strip .score{font-family:"Playfair Display",serif;font-size:2.6rem;font-weight:900;line-height:1;color:var(--accent)}
+  .rating-strip .score{font-family:"Fraunces",serif;font-size:2.6rem;font-weight:900;line-height:1;color:var(--accent)}
   .rating-strip p{margin:0;color:var(--muted);font-size:.93rem;max-width:420px}
 
   /* ---------- FAQ ---------- */
   .faq-list{max-width:820px}
   .faq{border-bottom:1px solid var(--line)}
   .faq summary{
-    cursor:pointer;padding:22px 6px;font-family:"Playfair Display",serif;font-size:1.18rem;font-weight:700;
+    cursor:pointer;padding:22px 6px;font-family:"Fraunces",serif;font-size:1.18rem;font-weight:700;
     list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:44px;
   }
   .faq summary::-webkit-details-marker{display:none}
-  .faq summary::after{content:"+";color:var(--accent);font-size:1.6rem;font-family:"Jost",sans-serif;font-weight:300;transition:transform .25s}
+  .faq summary::after{content:"+";color:var(--accent);font-size:1.6rem;font-family:"Space Grotesk",sans-serif;font-weight:300;transition:transform .25s}
   .faq details[open ] summary::after{transform:rotate(45deg)}
   .faq .faq-a{padding:0 6px 24px;color:var(--muted);max-width:680px}
   .faq .faq-a p{margin:0}
@@ -346,7 +351,7 @@
     display:flex;align-items:center;justify-content:center;color:var(--accent);
   }
   .info-row .ic svg{width:20px;height:20px}
-  .info-row h4{margin:0 0 3px;font-family:"Playfair Display",serif;font-size:1.05rem}
+  .info-row h4{margin:0 0 3px;font-family:"Fraunces",serif;font-size:1.05rem}
   .info-row p{margin:0;color:var(--muted);font-size:.94rem}
   .info-row a{color:var(--accent);text-decoration:none}
   .book-card{
@@ -359,7 +364,7 @@
   .field label{display:block;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:7px;font-weight:500}
   .field input,.field select,.field textarea{
     width:100%;padding:13px 15px;border-radius:12px;border:1px solid var(--line);
-    background:var(--bg);color:var(--ink);font-family:"Jost",sans-serif;font-size:1rem;font-weight:300;
+    background:var(--bg);color:var(--ink);font-family:"Space Grotesk",sans-serif;font-size:1rem;font-weight:300;
   }
   .field textarea{resize:vertical;min-height:84px}
   .field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
@@ -368,13 +373,15 @@
   .book-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
   .form-msg{display:none;margin-top:16px;padding:13px 16px;border-radius:12px;background:rgba(34,179,88,.14);border:1px solid rgba(34,179,88,.5);color:var(--ink);font-size:.93rem}
   .form-msg.show{display:block}
+  .form-msg.err{background:rgba(214,69,48,.13);border-color:rgba(214,69,48,.55)}
+  .field input.invalid,.field textarea.invalid{border-color:rgba(214,69,48,.75);outline-color:rgba(214,69,48,.75)}
 
   /* ---------- Footer ---------- */
   footer{border-top:1px solid var(--line);padding:64px 0 34px;background:var(--bg)}
   .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;margin-bottom:44px}
   @media (max-width:860px){.foot-grid{grid-template-columns:1fr 1fr}}
   @media (max-width:520px){.foot-grid{grid-template-columns:1fr}}
-  footer h5{font-family:"Playfair Display",serif;font-size:1.02rem;margin:0 0 14px}
+  footer h5{font-family:"Fraunces",serif;font-size:1.02rem;margin:0 0 14px}
   footer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
   footer ul a{text-decoration:none;color:var(--muted);font-size:.93rem;padding:4px 0;display:inline-block}
   footer ul a:hover{color:var(--accent)}
@@ -385,15 +392,48 @@
   }
   .foot-bottom a{color:var(--accent);text-decoration:none}
 
-  /* reveal on scroll */
-  .rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+  /* reveal on scroll — soft easing + stagger delays from the EMBER dark reference */
+  .rv{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
   .rv.in{opacity:1;transform:none}
+  .rv.d1{transition-delay:.12s}
+  .rv.d2{transition-delay:.24s}
+  .rv.d3{transition-delay:.36s}
+  .rv.d4{transition-delay:.48s}
   @media (prefers-reduced-motion: reduce){
     .rv{opacity:1;transform:none;transition:none}
     .hero-img{animation:none;transform:none}
     .marquee-track{animation:none}
     .announce-in{animation:none}
     html{scroll-behavior:auto}
+  }
+
+  /* ---------- From the EMBER dark reference: grain, card glow, steam ---------- */
+  ::selection{background:var(--accent);color:#1d1206}
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:95;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .btn:hover{transform:translateY(-2px)}
+  .sig-card{position:relative;transition:transform .5s cubic-bezier(.16,1,.3,1),border-color .4s ease}
+  .sig-card:hover{transform:translateY(-6px)}
+  .rev,.step{position:relative}
+  .sig-card::before,.offer::before,.rev::before,.step::before{
+    content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:0;
+    background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(217,154,61,.15),transparent 65%);
+    opacity:0;transition:opacity .4s ease;
+  }
+  .sig-card:hover::before,.offer:hover::before,.rev:hover::before,.step:hover::before{opacity:1}
+  .book-head{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+  .book-head h3{margin:0}
+  .book-head .cup{width:46px;height:46px;flex:0 0 auto;color:var(--accent)}
+  .steam{animation:steam 3.4s ease-in-out infinite}
+  .steam.s2{animation-delay:.7s}
+  .steam.s3{animation-delay:1.4s}
+  @keyframes steam{0%{opacity:0;transform:translateY(6px)}35%{opacity:.85}100%{opacity:0;transform:translateY(-12px)}}
+  @media (prefers-reduced-motion: reduce){
+    .steam{animation:none;opacity:.55}
+    .sig-card{transition:none}
+    .sig-card:hover,.btn:hover{transform:none}
   }
 </style>
 </head>
@@ -500,13 +540,13 @@
     <p class="sec-sub rv">Prices include everything — no surprises at the counter. Oat, soy and almond milk available on any drink for +৳60.</p>
 
     <div class="menu-tabs" role="tablist" aria-label="Menu categories">
-      <button class="menu-tab active" data-tab="espresso" role="tab">Espresso Bar</button>
-      <button class="menu-tab" data-tab="brew" role="tab">Slow Brews</button>
-      <button class="menu-tab" data-tab="cold" role="tab">Cold &amp; Iced</button>
-      <button class="menu-tab" data-tab="bites" role="tab">Bites &amp; Beans</button>
+      <button class="menu-tab active" data-tab="espresso" role="tab" aria-selected="true" aria-controls="panel-espresso">Espresso Bar</button>
+      <button class="menu-tab" data-tab="brew" role="tab" aria-selected="false" aria-controls="panel-brew">Slow Brews</button>
+      <button class="menu-tab" data-tab="cold" role="tab" aria-selected="false" aria-controls="panel-cold">Cold &amp; Iced</button>
+      <button class="menu-tab" data-tab="bites" role="tab" aria-selected="false" aria-controls="panel-bites">Bites &amp; Beans</button>
     </div>
 
-    <div class="menu-panel active" id="panel-espresso">
+    <div class="menu-panel active" id="panel-espresso" role="tabpanel">
       <div class="menu-grid">
         <div class="menu-item"><div><h3>Espresso</h3><p>Double shot of the week's roast, pulled at 93°C.</p></div><span class="price">৳180</span></div>
         <div class="menu-item"><div><h3>The Ember Shot<span class="tag">Signature</span></h3><p>Double ristretto, Midnight Blend, extra-thick crema.</p></div><span class="price">৳220</span></div>
@@ -521,7 +561,7 @@
       </div>
     </div>
 
-    <div class="menu-panel" id="panel-brew">
+    <div class="menu-panel" id="panel-brew" role="tabpanel">
       <div class="menu-grid">
         <div class="menu-item"><div><h3>V60 Pour Over</h3><p>Your choice of single-origin, brewed cup by cup at the slow bar.</p></div><span class="price">৳340</span></div>
         <div class="menu-item"><div><h3>Chemex for Two</h3><p>A shared 600ml Chemex of the week's featured origin.</p></div><span class="price">৳620</span></div>
@@ -532,7 +572,7 @@
       </div>
     </div>
 
-    <div class="menu-panel" id="panel-cold">
+    <div class="menu-panel" id="panel-cold" role="tabpanel">
       <div class="menu-grid">
         <div class="menu-item"><div><h3>Midnight Cold Brew<span class="tag">Signature</span></h3><p>18-hour steep, one clear cube, swirl of cream.</p></div><span class="price">৳350</span></div>
         <div class="menu-item"><div><h3>Iced Americano</h3><p>Double shot over ice — sharp, cold, honest.</p></div><span class="price">৳260</span></div>
@@ -543,7 +583,7 @@
       </div>
     </div>
 
-    <div class="menu-panel" id="panel-bites">
+    <div class="menu-panel" id="panel-bites" role="tabpanel">
       <div class="menu-grid">
         <div class="menu-item"><div><h3>Butter Croissant</h3><p>Baked fresh every morning — flaky, golden, warm.</p></div><span class="price">৳180</span></div>
         <div class="menu-item"><div><h3>Banana Walnut Loaf</h3><p>Thick slice, toasted, with salted butter.</p></div><span class="price">৳160</span></div>
@@ -572,23 +612,23 @@
         <p class="rv" style="color:var(--ink-soft)">In 2019, EMBER began as a single 5kg roaster in a Banani side-street, with one stubborn idea: Dhaka deserves coffee that is roasted here, rested properly, and brewed with patience — not shipped stale from halfway across the world.</p>
         <p class="rv" style="color:var(--ink-soft)">Today we work directly with growers in Ethiopia, Colombia, Sumatra and Brazil, roast in small batches twice a week, and run a slow bar where every pour-over is made to order. No syrups hiding bad beans. No shortcuts. Just heat, time and attention.</p>
         <div class="values">
-          <div class="value rv">
+          <div class="value rv d1">
             <div class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21c-4-4.5-8-7.6-8-11a8 8 0 0 1 16 0c0 3.4-4 6.5-8 11Z"/><circle cx="12" cy="10" r="2.6"/></svg></div>
             <div><h4>Sourced with names, not numbers</h4><p>We know the farms and the people behind every lot we buy.</p></div>
           </div>
-          <div class="value rv">
+          <div class="value rv d2">
             <div class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="3.2"/></svg></div>
             <div><h4>Roasted 48 hours before it meets water</h4><p>Every batch rests exactly two days — never served tired, never served raw.</p></div>
           </div>
-          <div class="value rv">
+          <div class="value rv d3">
             <div class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4H6.5A2.5 2.5 0 0 0 4 6.5v13ZM4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg></div>
             <div><h4>A room built for slow mornings</h4><p>Warm wood, low light, no rush. Stay for one cup or the whole afternoon.</p></div>
           </div>
         </div>
         <div class="stats">
-          <div class="stat rv"><b><span class="count" data-to="7">0</span></b><span>Years of Roasting</span></div>
-          <div class="stat rv"><b><span class="count" data-to="12">0</span></b><span>Origins on Shelf</span></div>
-          <div class="stat rv"><b><span class="count" data-to="40">0</span>k+</b><span>Cups Poured</span></div>
+          <div class="stat rv d1"><b><span class="count" data-to="7">0</span></b><span>Years of Roasting</span></div>
+          <div class="stat rv d2"><b><span class="count" data-to="12">0</span></b><span>Origins on Shelf</span></div>
+          <div class="stat rv d3"><b><span class="count" data-to="40">0</span>k+</b><span>Cups Poured</span></div>
         </div>
       </div>
     </div>
@@ -602,10 +642,10 @@
     <h2 class="sec-title rv">Four steps, zero shortcuts</h2>
     <p class="sec-sub rv">Every lot that reaches your cup passes through the same four hands-on stages.</p>
     <div class="process-grid">
-      <div class="step rv"><div class="num">01</div><h3>Select</h3><p>We cup dozens of samples each season and buy only the lots that stop the table talking.</p></div>
-      <div class="step rv"><div class="num">02</div><h3>Roast</h3><p>Small 12kg batches, profiled per origin, roasted every Tuesday and Friday in-house.</p></div>
-      <div class="step rv"><div class="num">03</div><h3>Rest</h3><p>Beans rest 48 hours so gases settle and sweetness opens up before the first grind.</p></div>
-      <div class="step rv"><div class="num">04</div><h3>Brew</h3><p>Weighed, timed and poured by hand — 1:16 ratio, water at exactly 93°C.</p></div>
+      <div class="step rv d1"><div class="num">01</div><h3>Select</h3><p>We cup dozens of samples each season and buy only the lots that stop the table talking.</p></div>
+      <div class="step rv d2"><div class="num">02</div><h3>Roast</h3><p>Small 12kg batches, profiled per origin, roasted every Tuesday and Friday in-house.</p></div>
+      <div class="step rv d3"><div class="num">03</div><h3>Rest</h3><p>Beans rest 48 hours so gases settle and sweetness opens up before the first grind.</p></div>
+      <div class="step rv d4"><div class="num">04</div><h3>Brew</h3><p>Weighed, timed and poured by hand — 1:16 ratio, water at exactly 93°C.</p></div>
     </div>
   </div>
 </section>
@@ -617,21 +657,21 @@
     <h2 class="sec-title rv">Offers worth leaving<br />the house for</h2>
     <p class="sec-sub rv">Simple, honest offers — show this page at the counter or mention the offer name when you book on WhatsApp.</p>
     <div class="offer-grid">
-      <div class="offer hot rv">
+      <div class="offer hot rv d1">
         <span class="badge">Most Popular</span>
         <span class="big">Buy 1 Get 1</span>
         <h3>Slow Bar Sundays</h3>
         <p>Every Sunday, 9 AM – 12 PM: order any pour-over or Chemex and the second cup is on the house. Bring someone worth talking to.</p>
         <small>Offer name: <b>SLOW SUNDAY</b> · Dine-in only</small>
       </div>
-      <div class="offer rv">
+      <div class="offer rv d2">
         <span class="badge">Beans Club</span>
         <span class="big">−20%</span>
         <h3>Monthly Bean Subscription</h3>
         <p>Two 250g bags of rotating single-origin beans delivered in the first week of every month. Pause or skip anytime.</p>
         <small>From ৳1,680/month · Free delivery in Dhaka</small>
       </div>
-      <div class="offer rv">
+      <div class="offer rv d3">
         <span class="badge">Students</span>
         <span class="big">−15%</span>
         <h3>Study Hours</h3>
@@ -655,32 +695,32 @@
       </div>
     </div>
     <div class="rev-grid">
-      <article class="rev rv">
+      <article class="rev rv d1">
         <div class="stars">★★★★★</div>
         <blockquote>“The siphon brew at the table is half coffee, half theatre. I have taken every visiting friend here — nobody has left unimpressed.”</blockquote>
         <div class="rev-who"><div class="avatar">TA</div><div><b>Tanvir Ahmed</b><span>Regular since 2021 · Banani</span></div></div>
       </article>
-      <article class="rev rv">
+      <article class="rev rv d2">
         <div class="stars">★★★★★</div>
         <blockquote>“Finally a café that treats coffee seriously without being snobbish about it. The staff explained three origins and let me taste before I chose.”</blockquote>
         <div class="rev-who"><div class="avatar">SR</div><div><b>Sadia Rahman</b><span>Beans Club member · Uttara</span></div></div>
       </article>
-      <article class="rev rv">
+      <article class="rev rv d3">
         <div class="stars">★★★★☆</div>
         <blockquote>“Midnight Cold Brew is the best cold coffee in Dhaka, full stop. It gets busy on Sunday mornings — book ahead or come early.”</blockquote>
         <div class="rev-who"><div class="avatar">FH</div><div><b>Farhan Haque</b><span>Weekend regular · Gulshan</span></div></div>
       </article>
-      <article class="rev rv">
+      <article class="rev rv d1">
         <div class="stars">★★★★★</div>
         <blockquote>“I wrote most of my thesis in the quiet corner. Study-hours discount, endless patience from the staff, and the flat white never misses.”</blockquote>
         <div class="rev-who"><div class="avatar">NA</div><div><b>Nusrat Amin</b><span>Student · Dhaka University</span></div></div>
       </article>
-      <article class="rev rv">
+      <article class="rev rv d2">
         <div class="stars">★★★★★</div>
         <blockquote>“We served EMBER beans at our office and clients started asking where the coffee was from. The subscription has never missed a month.”</blockquote>
         <div class="rev-who"><div class="avatar">RK</div><div><b>Rafid Khan</b><span>Office subscriber · Motijheel</span></div></div>
       </article>
-      <article class="rev rv">
+      <article class="rev rv d3">
         <div class="stars">★★★★★</div>
         <blockquote>“The Honey Cardamom Latte sounds like a gimmick and tastes like a hug. This place is the reason my wallet fears Banani.”</blockquote>
         <div class="rev-who"><div class="avatar">MP</div><div><b>Mehedi Parvez</b><span>First visit, stayed 3 hours · Dhanmondi</span></div></div>
@@ -732,32 +772,43 @@
         <p class="kicker rv">Visit Us</p>
         <h2 class="sec-title rv">Find the ember glow</h2>
         <p class="sec-sub rv" style="margin-bottom:10px">We are on a quiet lane in Banani — follow the smell of fresh roast.</p>
-        <div class="info-row rv">
+        <div class="info-row rv d1">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21c-4-4.5-8-7.6-8-11a8 8 0 0 1 16 0c0 3.4-4 6.5-8 11Z"/><circle cx="12" cy="10" r="2.6"/></svg></div>
           <div><h4>Location</h4><p>House 14, Road 12, Block E<br />Banani, Dhaka 1213</p>
           <p style="margin-top:6px"><a href="https://www.google.com/maps/search/?api=1&query=Road+12+Banani+Dhaka" target="_blank" rel="noopener">Open in Google Maps →</a></p></div>
         </div>
-        <div class="info-row rv">
+        <div class="info-row rv d2">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div>
           <div><h4>Hours</h4><p>Saturday – Thursday: 8:00 AM – 11:00 PM<br />Friday: 3:00 PM – 11:30 PM<br />Slow bar closes 30 minutes early.</p></div>
         </div>
-        <div class="info-row rv">
+        <div class="info-row rv d3">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg></div>
           <div><h4>Call or WhatsApp</h4><p><a href="tel:+8801712000000">+880 1712-000000</a><br />Fastest reply on WhatsApp, 9 AM – 10 PM.</p></div>
         </div>
-        <div class="info-row rv" style="border-bottom:none">
+        <div class="info-row rv d4" style="border-bottom:none">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
           <div><h4>Email</h4><p><a href="mailto:hello@embercoffee.com.bd">hello@embercoffee.com.bd</a><br />For events, wholesale beans and catering.</p></div>
         </div>
       </div>
 
       <div class="book-card">
-        <h3>Book a table</h3>
+        <div class="book-head">
+          <svg class="cup" viewBox="0 0 200 200" fill="none" aria-hidden="true">
+            <path class="steam" d="M80 55c-6-8 6-12 0-20" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+            <path class="steam s2" d="M100 50c-6-8 6-12 0-20" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+            <path class="steam s3" d="M120 55c-6-8 6-12 0-20" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+            <path d="M45 75h110v40c0 26-20 44-55 44S45 141 45 115V75z" stroke="currentColor" stroke-width="5"/>
+            <path d="M155 82h12c10 0 16 7 16 15s-7 15-17 15h-11" stroke="currentColor" stroke-width="5"/>
+            <ellipse cx="100" cy="75" rx="55" ry="8" stroke="currentColor" stroke-width="5"/>
+            <path d="M60 172h80" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+          </svg>
+          <h3>Book a table</h3>
+        </div>
         <p>Fill this in and send it to us on WhatsApp — we confirm within minutes during opening hours.</p>
         <form id="bookForm">
           <div class="form-2">
-            <div class="field"><label for="fName">Your name</label><input id="fName" type="text" placeholder="e.g. Arif Chowdhury" required /></div>
-            <div class="field"><label for="fPhone">Phone</label><input id="fPhone" type="tel" placeholder="01XXXXXXXXX" required /></div>
+            <div class="field"><label for="fName">Your name</label><input id="fName" type="text" placeholder="e.g. Arif Chowdhury" required maxlength="60" autocomplete="name" /></div>
+            <div class="field"><label for="fPhone">Phone</label><input id="fPhone" type="tel" placeholder="01XXXXXXXXX" required maxlength="20" inputmode="tel" autocomplete="tel" /></div>
           </div>
           <div class="form-2">
             <div class="field"><label for="fDate">Date</label><input id="fDate" type="date" required /></div>
@@ -777,7 +828,7 @@
             </div>
           </div>
           <div class="field"><label for="fNote">Anything we should know? <span style="text-transform:none;letter-spacing:0;color:var(--muted)">(optional)</span></label>
-          <textarea id="fNote" placeholder="Birthday, laptop work, a first date — tell us and we will set the table right."></textarea></div>
+          <textarea id="fNote" maxlength="300" placeholder="Birthday, laptop work, a first date — tell us and we will set the table right."></textarea></div>
           <div class="book-actions">
             <button type="submit" class="btn btn-wa">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.9-1.2-4.7-4.1-4.9-4.3-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5s.8 1.9.8 2c.1.1.1.3 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 1.9 1.1.9 2 1.2 2.3 1.3.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l2 .9c.3.2.5.3.6.4 0 .1 0 .7-.2 1.1Z"/></svg>
@@ -786,6 +837,7 @@
             <a class="btn btn-ghost" href="tel:+8801712000000">Call Instead</a>
           </div>
           <div class="form-msg" id="formMsg">Opening WhatsApp with your booking details — just press send there and we will confirm shortly. ☕</div>
+          <div class="form-msg err" id="formErr" role="alert"></div>
         </form>
       </div>
     </div>
@@ -863,6 +915,9 @@
   links.addEventListener('click', function(e){
     if(e.target.tagName === 'A'){ closeMenu(); }
   });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && links.classList.contains('open')){ closeMenu(); burger.focus(); }
+  });
 
   /* Sticky nav shrink + scroll progress */
   var header = document.getElementById('siteNav');
@@ -880,16 +935,19 @@
   }, { passive: true });
   onScroll();
 
-  /* Duplicate marquee content for seamless loop */
+  /* Duplicate marquee content for seamless loop (node cloning — no innerHTML) */
   var track = document.getElementById('marqueeTrack');
-  track.innerHTML += track.innerHTML;
+  Array.prototype.slice.call(track.children).forEach(function(node){
+    track.appendChild(node.cloneNode(true));
+  });
 
   /* Menu tabs */
   var tabs = document.querySelectorAll('.menu-tab');
   tabs.forEach(function(t){
     t.addEventListener('click', function(){
-      tabs.forEach(function(x){ x.classList.remove('active'); });
+      tabs.forEach(function(x){ x.classList.remove('active'); x.setAttribute('aria-selected','false'); });
       t.classList.add('active');
+      t.setAttribute('aria-selected','true');
       document.querySelectorAll('.menu-panel').forEach(function(p){ p.classList.remove('active'); });
       document.getElementById('panel-' + t.getAttribute('data-tab')).classList.add('active');
     });
@@ -928,35 +986,98 @@
     });
   }, 1600);
 
+  /* Card glow follows the cursor (from the EMBER dark reference) */
+  document.querySelectorAll('.sig-card,.offer,.rev,.step').forEach(function(c){
+    c.addEventListener('mousemove', function(e){
+      var r = c.getBoundingClientRect();
+      c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+
   /* Booking form -> WhatsApp */
   var form = document.getElementById('bookForm');
   var msg = document.getElementById('formMsg');
+  var err = document.getElementById('formErr');
   var dateInput = document.getElementById('fDate');
-  var today = new Date();
-  var iso = today.toISOString().split('T')[0];
-  dateInput.min = iso; dateInput.value = iso;
+  var nameInput = document.getElementById('fName');
+  var phoneInput = document.getElementById('fPhone');
+  var noteInput = document.getElementById('fNote');
+  /* Local calendar date — toISOString() is UTC and returns yesterday
+     between midnight and 6 AM in Dhaka, which let past dates through. */
+  function localISO(d){
+    var m = String(d.getMonth() + 1); if(m.length < 2) m = '0' + m;
+    var day = String(d.getDate()); if(day.length < 2) day = '0' + day;
+    return d.getFullYear() + '-' + m + '-' + day;
+  }
+  var todayISO = localISO(new Date());
+  dateInput.min = todayISO; dateInput.value = todayISO;
+
+  function showError(text, field){
+    err.textContent = text;
+    err.classList.add('show');
+    msg.classList.remove('show');
+    [nameInput, phoneInput, dateInput, noteInput].forEach(function(f){ f.classList.remove('invalid'); });
+    if(field){ field.classList.add('invalid'); field.focus(); }
+  }
+  function clearError(){
+    err.classList.remove('show');
+    [nameInput, phoneInput, dateInput, noteInput].forEach(function(f){ f.classList.remove('invalid'); });
+  }
+  [nameInput, phoneInput, dateInput, noteInput].forEach(function(f){
+    f.addEventListener('input', clearError);
+  });
+
+  var sending = false;
   form.addEventListener('submit', function(e){
     e.preventDefault();
-    var name = document.getElementById('fName').value.trim();
-    var phone = document.getElementById('fPhone').value.trim();
+    if(sending) return; /* double-submit guard: one tap, one booking */
+    var name = nameInput.value.trim().slice(0, 60);
+    var phoneRaw = phoneInput.value.trim().slice(0, 20);
+    var phone = phoneRaw.replace(/[\s\-()]/g, '');
     var date = dateInput.value;
     var time = document.getElementById('fTime').value;
     var guests = document.getElementById('fGuests').value;
     var seat = document.getElementById('fSeat').value;
-    var note = document.getElementById('fNote').value.trim();
+    var note = noteInput.value.trim().slice(0, 300);
+
+    /* Attack/abuse checks: reject anything that is not a plausible booking */
+    if(name.length < 2){
+      showError('Please tell us your name (at least 2 characters) so we can hold the table for you.', nameInput);
+      return;
+    }
+    if(!/^\+?\d{10,15}$/.test(phone)){
+      showError('That phone number does not look right — please enter a valid mobile number, e.g. 01712000000.', phoneInput);
+      return;
+    }
+    if(!date || date < localISO(new Date())){
+      showError('Please pick today or a future date for your booking.', dateInput);
+      return;
+    }
+    clearError();
+
     var lines = [
       'Hello EMBER! I would like to book a table.',
       'Name: ' + name,
-      'Phone: ' + phone,
+      'Phone: ' + phoneRaw,
       'Date: ' + date,
       'Time: ' + time,
       'Guests: ' + guests,
       'Seating: ' + seat
     ];
     if(note) lines.push('Note: ' + note);
+    /* All guest text travels as data inside encodeURIComponent — it is
+       never written into the page, so markup/script input cannot run. */
     var url = 'https://wa.me/8801712000000?text=' + encodeURIComponent(lines.join('\n'));
+    var submitBtn = form.querySelector('button[type="submit"]');
+    sending = true;
+    if(submitBtn){ submitBtn.disabled = true; submitBtn.style.opacity = '.55'; }
     msg.classList.add('show');
-    window.open(url, '_blank');
+    window.open(url, '_blank', 'noopener');
+    setTimeout(function(){
+      sending = false;
+      if(submitBtn){ submitBtn.disabled = false; submitBtn.style.opacity = ''; }
+    }, 3500);
   });
 })();
 </script>
