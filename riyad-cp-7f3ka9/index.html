@@ -322,11 +322,12 @@ var bioOK = !!(window.PublicKeyCredential && window.isSecureContext);
 
 function updateFaceSetupBtn(){
   var b = $("faceSetupBtn");
-  if (!bioOK){ b.style.display = "none"; return; }
+  if (!bioOK){ b.textContent = "Enable Face Unlock"; return; }
   b.textContent = localStorage.getItem("rcp_cred") ? "Face Unlock: ON (tap to re-setup)" : "Enable Face Unlock";
 }
 $("faceSetupBtn").addEventListener("click", function(){
-  if (!bioOK || !sessionSecret) return;
+  if (!bioOK){ $("dashMsg").innerHTML = '<div class="msg err">এই ব্রাউজারে Face Unlock চলবে না — প্যানেলের লিংকটা <b>Chrome অ্যাপে</b> খোলো, তারপর আবার এই বাটনে চাপ দাও। (চ্যাটের ভেতরের ব্রাউজারে ফেস সাপোর্ট থাকে না।)</div>'; return; }
+  if (!sessionSecret) return;
   var msg = $("dashMsg");
   navigator.credentials.create({ publicKey:{
     challenge: crypto.getRandomValues(new Uint8Array(32)),
