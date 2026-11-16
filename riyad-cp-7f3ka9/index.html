@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>RIYAD OS — Control Panel</title>
+<style>
+  :root{
+    --bg:#090D0B; --lime:#A3E635; --lime-dim:rgba(163,230,53,.55);
+    --glass:rgba(163,230,53,.05); --glass-brd:rgba(163,230,53,.22);
+    --ink:#EAF7EC; --ink-dim:#9DB8A4; --danger:#F87171; --gold:#FACC15;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{min-height:100%}
+  body{
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",sans-serif;
+    background:
+      radial-gradient(900px 500px at 85% -10%, rgba(163,230,53,.10), transparent 60%),
+      radial-gradient(700px 500px at -10% 110%, rgba(163,230,53,.07), transparent 60%),
+      var(--bg);
+    color:var(--ink); min-height:100dvh; padding:22px 16px 40px;
+  }
+  .wrap{max-width:880px;margin:0 auto}
+  .glass{background:var(--glass);border:1px solid var(--glass-brd);border-radius:20px;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+
+  /* ---------- LOCK SCREEN ---------- */
+  #lockScreen{max-width:430px;margin:4dvh auto 0;padding:34px 26px 28px;text-align:center;position:relative;overflow:hidden}
+  .brand{font-size:12px;letter-spacing:.34em;color:var(--ink-dim);font-weight:700}
+  .brand b{color:var(--lime)}
+  h1.lock-title{font-size:27px;font-weight:800;margin-top:8px;letter-spacing:.02em}
+  h1.lock-title em{font-style:normal;color:var(--lime)}
+  .lock-sub{color:var(--ink-dim);font-size:13.5px;margin-top:6px}
+  .scanner-zone{margin:26px auto 6px;width:216px;height:216px;position:relative;display:grid;place-items:center}
+  .scanner{width:188px;height:188px;border-radius:50%;position:relative;border:2px solid rgba(163,230,53,.45);
+    background:radial-gradient(circle at 50% 42%, rgba(163,230,53,.10), rgba(163,230,53,.02) 62%);
+    box-shadow:0 0 44px rgba(163,230,53,.16), inset 0 0 34px rgba(163,230,53,.10);overflow:hidden}
+  .scanner::before,.scanner::after{content:"";position:absolute;inset:-2px;border-radius:50%;border:2px solid transparent}
+  .scanner::before{border-top-color:var(--lime);animation:spin 3.4s linear infinite}
+  .scanner::after{border-bottom-color:rgba(163,230,53,.5);animation:spin 5.2s linear infinite reverse}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .scan-grid{position:absolute;inset:0;background:
+    repeating-linear-gradient(0deg, rgba(163,230,53,.07) 0 1px, transparent 1px 14px),
+    repeating-linear-gradient(90deg, rgba(163,230,53,.07) 0 1px, transparent 1px 14px)}
+  .scanline{position:absolute;left:7%;right:7%;height:3px;border-radius:3px;top:12%;
+    background:linear-gradient(90deg,transparent,var(--lime),transparent);
+    box-shadow:0 0 18px var(--lime),0 0 42px rgba(163,230,53,.5);animation:sweep 2.3s ease-in-out infinite}
+  @keyframes sweep{0%,100%{top:12%}50%{top:84%}}
+  .face-ico{position:relative;z-index:2;opacity:.92}
+  .corner{position:absolute;width:26px;height:26px;border:3px solid var(--lime);opacity:.85}
+  .corner.tl{top:0;left:0;border-right:none;border-bottom:none;border-radius:10px 0 0 0}
+  .corner.tr{top:0;right:0;border-left:none;border-bottom:none;border-radius:0 10px 0 0}
+  .corner.bl{bottom:0;left:0;border-right:none;border-top:none;border-radius:0 0 0 10px}
+  .corner.br{bottom:0;right:0;border-left:none;border-top:none;border-radius:0 0 10px 0}
+  .scanner-zone.scanning .scanline{animation-duration:.8s}
+  .scanner-zone.scanning .scanner{box-shadow:0 0 64px rgba(163,230,53,.35), inset 0 0 40px rgba(163,230,53,.18)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:none;cursor:pointer;font-weight:800;
+    border-radius:14px;padding:14px 20px;font-size:15px;transition:transform .12s, box-shadow .2s, background .2s;width:100%}
+  .btn:active{transform:scale(.97)}
+  .btn-lime{background:linear-gradient(145deg,var(--lime),#65A30D);color:#0B1C0E;box-shadow:0 8px 26px rgba(163,230,53,.28)}
+  .btn-ghost{background:rgba(163,230,53,.07);color:var(--lime);border:1px solid var(--glass-brd);width:auto;padding:10px 16px;font-size:13.5px;border-radius:12px}
+  .btn-ghost:active{transform:scale(.96)}
+  #faceBtn{margin-top:16px}
+  .divider{display:flex;align-items:center;gap:12px;margin:24px 0 16px;color:var(--ink-dim);font-size:11.5px;letter-spacing:.22em;font-weight:700}
+  .divider::before,.divider::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--glass-brd),transparent)}
+  .pw-row{display:flex;gap:10px}
+  .pw-row input{flex:1;background:rgba(0,0,0,.35);border:1px solid var(--glass-brd);border-radius:14px;color:var(--ink);
+    padding:14px 16px;font-size:15px;outline:none;min-width:0}
+  .pw-row input:focus{border-color:var(--lime);box-shadow:0 0 0 3px rgba(163,230,53,.15)}
+  .pw-row .btn{width:auto;padding:14px 22px}
+  #lockMsg{min-height:20px;margin-top:14px;font-size:13.5px;color:var(--ink-dim)}
+  #lockMsg.err{color:var(--danger)}
+  #lockMsg.ok{color:var(--lime)}
+  .shake{animation:shake .4s}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+  .lock-note{margin-top:18px;font-size:12px;color:var(--ink-dim);line-height:1.55}
+
+  /* ---------- DASHBOARD ---------- */
+  #dash{display:none}
+  .dash-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+  .dash-title{font-size:21px;font-weight:800}
+  .dash-title em{font-style:normal;color:var(--lime)}
+  .dash-actions{display:flex;gap:8px;flex-wrap:wrap}
+  #demoBanner{display:none;margin-bottom:14px;padding:12px 16px;border-radius:14px;font-size:13.5px;line-height:1.55;
+    background:rgba(250,204,21,.08);border:1px solid rgba(250,204,21,.35);color:#FDE68A}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+  .stat{padding:16px 14px;text-align:center}
+  .stat .num{font-size:27px;font-weight:800;color:var(--lime)}
+  .stat .lbl{font-size:11.5px;letter-spacing:.14em;color:var(--ink-dim);font-weight:700;margin-top:3px;text-transform:uppercase}
+  .order{padding:18px;margin-bottom:12px}
+  .order-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+  .o-name{font-size:17px;font-weight:800}
+  .o-date{font-size:12px;color:var(--ink-dim);margin-top:2px}
+  .badge{font-size:11px;font-weight:800;letter-spacing:.06em;padding:5px 10px;border-radius:999px;white-space:nowrap;
+    border:1px solid var(--glass-brd);color:var(--ink-dim)}
+  .badge.standard{color:var(--lime);border-color:rgba(163,230,53,.5)}
+  .badge.premium{background:linear-gradient(145deg,var(--lime),#65A30D);color:#0B1C0E;border:none}
+  .o-meta{margin-top:10px;font-size:14px;line-height:1.65;color:var(--ink)}
+  .o-meta span{color:var(--ink-dim)}
+  .o-msg{margin-top:8px;font-size:14px;line-height:1.6;background:rgba(0,0,0,.28);border:1px solid rgba(163,230,53,.12);
+    border-radius:12px;padding:11px 13px;white-space:pre-wrap;word-break:break-word}
+  .o-actions{margin-top:13px;display:flex;gap:9px}
+  .wa-reply{flex:1;text-decoration:none}
+  .empty{padding:34px 20px;text-align:center;color:var(--ink-dim);font-size:14.5px;line-height:1.6}
+  #dashMsg{font-size:13.5px;color:var(--ink-dim);margin-bottom:10px;min-height:18px}
+  #dashMsg.err{color:var(--danger)}
+  @media (max-width:520px){ .stats{grid-template-columns:repeat(3,1fr);gap:8px} .stat .num{font-size:22px} .pw-row{flex-direction:column} .pw-row .btn{width:100%} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ================= LOCK SCREEN ================= -->
+  <section id="lockScreen" class="glass">
+    <div class="brand">RIYAD <b>OS</b> · PRIVATE</div>
+    <h1 class="lock-title">Control <em>Panel</em></h1>
+    <p class="lock-sub">Owner access only — face scan or password</p>
+
+    <div class="scanner-zone" id="scannerZone">
+      <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+      <div class="scanner">
+        <div class="scan-grid"></div>
+        <div class="scanline"></div>
+        <svg class="face-ico" width="86" height="86" viewBox="0 0 24 24" fill="none" stroke="#A3E635" stroke-width="1.5" stroke-linecap="round">
+          <path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/>
+          <circle cx="9" cy="10" r=".6" fill="#A3E635"/><circle cx="15" cy="10" r=".6" fill="#A3E635"/>
+          <path d="M12 10v3l-1.2 1.2M9.5 16.5c.7.6 1.6.9 2.5.9s1.8-.3 2.5-.9"/>
+        </svg>
+      </div>
+    </div>
+
+    <button class="btn btn-lime" id="faceBtn" type="button">Scan Face to Unlock</button>
+
+    <div class="divider">OR USE PASSWORD</div>
+    <form id="pwForm" class="pw-row" autocomplete="off">
+      <input id="pwInput" type="password" placeholder="Secret password" aria-label="Secret password">
+      <button class="btn btn-lime" type="submit">Unlock</button>
+    </form>
+    <div id="lockMsg"></div>
+    <p class="lock-note">Face unlock uses your phone's own face / fingerprint system — no photo of your face is ever stored here. First time? Unlock with the password once, then tap “Enable Face Unlock” inside.</p>
+  </section>
+
+  <!-- ================= DASHBOARD ================= -->
+  <section id="dash">
+    <div class="dash-head">
+      <div>
+        <div class="brand">RIYAD <b>OS</b> · PRIVATE</div>
+        <div class="dash-title">Client <em>Orders</em></div>
+      </div>
+      <div class="dash-actions">
+        <button class="btn btn-ghost" id="faceSetupBtn" type="button">Enable Face Unlock</button>
+        <button class="btn btn-ghost" id="refreshBtn" type="button">Refresh</button>
+        <button class="btn btn-ghost" id="lockBtn" type="button">Lock</button>
+      </div>
+    </div>
+
+    <div id="demoBanner">Demo data — এগুলো নমুনা অর্ডার। Supabase কানেক্ট হলেই এখানে আসল ক্লায়েন্ট অর্ডার আসবে।</div>
+    <div id="dashMsg"></div>
+
+    <div class="stats">
+      <div class="stat glass"><div class="num" id="stTotal">–</div><div class="lbl">Total orders</div></div>
+      <div class="stat glass"><div class="num" id="stWeek">–</div><div class="lbl">Last 7 days</div></div>
+      <div class="stat glass"><div class="num" id="stTop" style="font-size:19px;padding-top:5px">–</div><div class="lbl">Top package</div></div>
+    </div>
+
+    <div id="orders"></div>
+  </section>
+
+</div>
+
+<script>
+/* ================= CONFIG — filled in when the Supabase project keys arrive ================= */
+var PANEL_DB = { url: "", key: "" };
+var PW_HASH = "14a78343e120585c1d1ad09894573ff3a562e31709bab2e73bd75102973ae7e4"; /* sha256(owner password) */
+
+/* ---------- SHA-256 (crypto.subtle, with a pure-JS fallback) ---------- */
+function sha256Sync(ascii){
+  function rr(v,a){ return (v>>>a)|(v<<(32-a)); }
+  var maxWord = Math.pow(2,32), i, j, result = "";
+  var words = [], bitLen = ascii.length*8;
+  var hash = sha256Sync.h = sha256Sync.h || [], k = sha256Sync.k = sha256Sync.k || [];
+  var primeCounter = k.length, isComposite = {};
+  for (var candidate = 2; primeCounter < 64; candidate++){
+    if (!isComposite[candidate]){
+      for (i = 0; i < 313; i += candidate) isComposite[i] = candidate;
+      hash[primeCounter] = (Math.pow(candidate,.5)*maxWord)|0;
+      k[primeCounter++] = (Math.pow(candidate,1/3)*maxWord)|0;
+    }
+  }
+  ascii += "\x80";
+  while (ascii.length % 64 - 56) ascii += "\x00";
+  for (i = 0; i < ascii.length; i++){
+    j = ascii.charCodeAt(i); if (j >> 8) return "";
+    words[i>>2] |= j << ((3 - i) % 4) * 8;
+  }
+  words[words.length] = (bitLen/maxWord)|0;
+  words[words.length] = bitLen;
+  for (j = 0; j < words.length;){
+    var w = words.slice(j, j += 16), oldHash = hash;
+    hash = hash.slice(0, 8);
+    for (i = 0; i < 64; i++){
+      var w15 = w[i-15], w2 = w[i-2], a = hash[0], e = hash[4];
+      var temp1 = hash[7]
+        + (rr(e,6) ^ rr(e,11) ^ rr(e,25))
+        + ((e & hash[5]) ^ ((~e) & hash[6]))
+        + k[i]
+        + (w[i] = (i < 16) ? w[i] : (w[i-16] + (rr(w15,7) ^ rr(w15,18) ^ (w15>>>3)) + w[i-7] + (rr(w2,17) ^ rr(w2,19) ^ (w2>>>10)))|0);
+      var temp2 = (rr(a,2) ^ rr(a,13) ^ rr(a,22)) + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+      hash = [(temp1 + temp2)|0].concat(hash);
+      hash[4] = (hash[4] + temp1)|0;
+    }
+    for (i = 0; i < 8; i++) hash[i] = (hash[i] + oldHash[i])|0;
+  }
+  for (i = 0; i < 8; i++){
+    for (j = 3; j + 1; j--){
+      var b = (hash[i] >> (j*8)) & 255;
+      result += ((b < 16) ? "0" : "") + b.toString(16);
+    }
+  }
+  return result;
+}
+function sha256Hex(str){
+  if (window.crypto && crypto.subtle && window.TextEncoder){
+    return crypto.subtle.digest("SHA-256", new TextEncoder().encode(str)).then(function(buf){
+      return Array.prototype.map.call(new Uint8Array(buf), function(b){ return ("0" + b.toString(16)).slice(-2); }).join("");
+    });
+  }
+  return Promise.resolve(sha256Sync(unescape(encodeURIComponent(str))));
+}
+
+/* ---------- helpers ---------- */
+var sessionSecret = null;
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+function lockSay(msg, cls){ var m = $("lockMsg"); m.textContent = msg || ""; m.className = cls || ""; }
+
+/* ---------- password unlock ---------- */
+$("pwForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  var pw = $("pwInput").value;
+  if (!pw){ lockSay("আগে পাসওয়ার্ডটা লেখো।", "err"); return; }
+  sha256Hex(pw).then(function(h){
+    if (h === PW_HASH){ doUnlock(pw); }
+    else {
+      lockSay("ভুল পাসওয়ার্ড — আবার চেষ্টা করো।", "err");
+      var card = $("lockScreen"); card.classList.remove("shake"); void card.offsetWidth; card.classList.add("shake");
+    }
+  });
+});
+
+function doUnlock(pw){
+  sessionSecret = pw;
+  $("lockScreen").style.display = "none";
+  $("dash").style.display = "block";
+  lockSay("");
+  updateFaceSetupBtn();
+  loadOrders();
+}
+$("lockBtn").addEventListener("click", function(){
+  sessionSecret = null;
+  $("dash").style.display = "none";
+  $("lockScreen").style.display = "block";
+  $("pwInput").value = "";
+});
+$("refreshBtn").addEventListener("click", loadOrders);
+
+/* ---------- orders ---------- */
+function demoOrders(){
+  var now = Date.now();
+  return [
+    { name:"Tanvir Ahmed", phone:"01712345678", business:"Restaurant — Khilgaon", package:"Standard — ৳8,000", message:"আমার রেস্টুরেন্টের জন্য QR মেনুসহ একটা ওয়েবসাইট চাই। হোম ডেলিভারির অপশন থাকলে ভালো হয়।", created_at:new Date(now - 2*3600e3).toISOString() },
+    { name:"Shakib Rahman", phone:"01898765432", business:"Gents Parlour — Mirpur 10", package:"Basic — ৳5,000", message:"সেলুনের ওয়েবসাইট লাগবে, WhatsApp বুকিংসহ।", created_at:new Date(now - 26*3600e3).toISOString() },
+    { name:"Nusrat Jahan", phone:"01911223344", business:"Boutique — Uttara", package:"Premium — ৳12,000", message:"অনলাইন শপ + অর্ডার সিস্টেম চাই। ডিজাইনটা প্রিমিয়াম হতে হবে।", created_at:new Date(now - 3*86400e3).toISOString() }
+  ];
+}
+function loadOrders(){
+  var msg = $("dashMsg"); msg.textContent = "Loading…"; msg.className = "";
+  if (!(PANEL_DB.url && PANEL_DB.key)){ renderOrders(demoOrders(), true); msg.textContent = ""; return; }
+  fetch(PANEL_DB.url + "/rest/v1/rpc/get_orders", { method:"POST",
+    headers:{ "apikey":PANEL_DB.key, "Authorization":"Bearer " + PANEL_DB.key, "Content-Type":"application/json" },
+    body: JSON.stringify({ p_secret: sessionSecret })
+  }).then(function(r){ if (!r.ok) throw new Error("rpc"); return r.json(); })
+    .then(function(rows){ renderOrders(rows, false); msg.textContent = ""; })
+    .catch(function(){ msg.textContent = "সার্ভার থেকে অর্ডার আনা যাচ্ছে না — ইন্টারনেট চেক করে Refresh দাও।"; msg.className = "err"; });
+}
+function renderOrders(rows, demo){
+  $("demoBanner").style.display = demo ? "block" : "none";
+  rows = rows || [];
+  $("stTotal").textContent = rows.length;
+  $("stWeek").textContent = rows.filter(function(r){ return (Date.now() - new Date(r.created_at).getTime()) < 7*86400e3; }).length;
+  var counts = {}, top = "–", best = 0;
+  rows.forEach(function(r){ var p = (r.package || "").split("—")[0].trim() || "—"; counts[p] = (counts[p] || 0) + 1; if (counts[p] > best){ best = counts[p]; top = p; } });
+  $("stTop").textContent = rows.length ? top : "–";
+  var box = $("orders");
+  if (!rows.length){
+    box.innerHTML = '<div class="empty glass">এখনো কোনো অর্ডার আসেনি।<br>কেউ পোর্টফোলিও সাইট থেকে অর্ডার করলেই এখানে দেখা যাবে।</div>';
+    return;
+  }
+  box.innerHTML = rows.map(function(r){
+    var d = new Date(r.created_at);
+    var when = isNaN(d) ? "" : d.toLocaleString("en-GB", { timeZone:"Asia/Dhaka", day:"numeric", month:"short", hour:"numeric", minute:"2-digit", hour12:true });
+    var intl = String(r.phone || "").replace(/[\s-]/g, "");
+    if (intl.indexOf("01") === 0) intl = "880" + intl.slice(1);
+    var pkgName = (r.package || "").split("—")[0].trim().toLowerCase();
+    var cls = pkgName.indexOf("premium") === 0 ? "premium" : (pkgName.indexOf("standard") === 0 ? "standard" : "");
+    var reply = "আসসালামু আলাইকুম " + (r.name || "") + ", আমি Riyad (Riyad Web Studio)। আপনার " + (r.package || "") + " অর্ডারটা পেয়েছি — ধন্যবাদ! আজই বিস্তারিত কথা বলছি।";
+    var wa = "https://wa.me/" + intl + "?text=" + encodeURIComponent(reply);
+    return '<article class="order glass">'
+      + '<div class="order-top"><div><div class="o-name">' + esc(r.name) + '</div><div class="o-date">' + esc(when) + '</div></div>'
+      + '<span class="badge ' + cls + '">' + esc(r.package || "No package") + '</span></div>'
+      + '<div class="o-meta"><span>WhatsApp:</span> ' + esc(r.phone) + (r.business ? '<br><span>Business:</span> ' + esc(r.business) : '') + '</div>'
+      + (r.message ? '<div class="o-msg">' + esc(r.message) + '</div>' : '')
+      + '<div class="o-actions"><a class="btn btn-lime wa-reply" target="_blank" rel="noopener" href="' + wa + '">Reply on WhatsApp</a></div>'
+      + '</article>';
+  }).join("");
+}
+
+/* ---------- face unlock (WebAuthn — the phone's own biometric) ---------- */
+function b64url(buf){ return btoa(String.fromCharCode.apply(null, new Uint8Array(buf))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); }
+function unb64url(s){ s = s.replace(/-/g, "+").replace(/_/g, "/"); while (s.length % 4) s += "="; var bin = atob(s); var arr = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i); return arr.buffer; }
+var bioOK = !!(window.PublicKeyCredential && window.isSecureContext);
+
+function updateFaceSetupBtn(){
+  var b = $("faceSetupBtn");
+  if (!bioOK){ b.style.display = "none"; return; }
+  b.textContent = localStorage.getItem("rcp_cred") ? "Face Unlock: ON (tap to re-setup)" : "Enable Face Unlock";
+}
+$("faceSetupBtn").addEventListener("click", function(){
+  if (!bioOK || !sessionSecret) return;
+  var msg = $("dashMsg");
+  navigator.credentials.create({ publicKey:{
+    challenge: crypto.getRandomValues(new Uint8Array(32)),
+    rp:{ name:"Riyad OS Control Panel" },
+    user:{ id:new Uint8Array([82,73,89,65,68,45,79,83]), name:"riyad", displayName:"Riyad" },
+    pubKeyCredParams:[{ type:"public-key", alg:-7 }, { type:"public-key", alg:-257 }],
+    authenticatorSelection:{ authenticatorAttachment:"platform", userVerification:"required", residentKey:"preferred" },
+    timeout:60000
+  }}).then(function(cred){
+    localStorage.setItem("rcp_cred", b64url(cred.rawId));
+    localStorage.setItem("rcp_secret", sessionSecret);
+    updateFaceSetupBtn();
+    msg.textContent = "Face Unlock চালু হয়েছে — এখন থেকে লক স্ক্রিনে Scan বাটন চাপলেই ফেস/ফিঙ্গারপ্রিন্ট দিয়ে খুলবে।"; msg.className = "";
+  }).catch(function(){
+    msg.textContent = "Face setup হয়নি — ফোনের স্ক্রিন লকে ফেস/ফিঙ্গারপ্রিন্ট চালু আছে তো?"; msg.className = "err";
+  });
+});
+
+$("faceBtn").addEventListener("click", function(){
+  var credId = null;
+  try { credId = localStorage.getItem("rcp_cred"); } catch(e){}
+  if (!bioOK){ lockSay("এভাবে খুললে Face Unlock চলবে না — প্যানেলের লাইভ (গোপন) লিংক থেকে খোলো, অথবা পাসওয়ার্ড দাও।", "err"); return; }
+  if (!credId){ lockSay("Face Unlock এখনো setup হয়নি — আগে একবার পাসওয়ার্ড দিয়ে খুলে, ভেতর থেকে “Enable Face Unlock” চাপ দাও।", "err"); return; }
+  var zone = $("scannerZone"); zone.classList.add("scanning");
+  lockSay("Scanning… ফোনের ফেস / ফিঙ্গারপ্রিন্ট স্ক্রিনটা দেখো।", "");
+  navigator.credentials.get({ publicKey:{
+    challenge: crypto.getRandomValues(new Uint8Array(32)),
+    allowCredentials:[{ type:"public-key", id: unb64url(credId), transports:["internal"] }],
+    userVerification:"required", timeout:60000
+  }}).then(function(){
+    zone.classList.remove("scanning");
+    var saved = null;
+    try { saved = localStorage.getItem("rcp_secret"); } catch(e){}
+    if (saved){ lockSay("Face matched ✓", "ok"); doUnlock(saved); }
+    else lockSay("Face ঠিক আছে, কিন্তু এই ফোনে saved password নেই — পাসওয়ার্ড দিয়ে খোলো।", "err");
+  }).catch(function(){
+    zone.classList.remove("scanning");
+    lockSay("Face scan সম্পূর্ণ হয়নি — আবার চেষ্টা করো, অথবা পাসওয়ার্ড দাও।", "err");
+  });
+});
+</script>
+</body>
+</html>
