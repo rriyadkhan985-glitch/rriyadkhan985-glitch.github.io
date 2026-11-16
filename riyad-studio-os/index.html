@@ -880,6 +880,9 @@ a{color:inherit}
     });
   });
 
+  /* ---------- private cloud config (Supabase — filled in when the project keys arrive) ---------- */
+  window.RIYAD_DB = { url: "", key: "" };
+
   /* ---------- order form ---------- */
   var form = document.getElementById("orderForm");
   function mark(id, bad){ document.getElementById(id).classList.toggle("invalid", bad); return !bad; }
@@ -904,6 +907,16 @@ a{color:inherit}
     if (biz) lines.push("Business: " + biz);
     lines.push("Package: " + pkg);
     if (msg) lines.push("Details: " + msg);
+    /* silent cloud save — fire-and-forget, never blocks WhatsApp */
+    try{
+      var DB = window.RIYAD_DB;
+      if (DB && DB.url && DB.key){
+        fetch(DB.url + "/rest/v1/orders", { method:"POST", keepalive:true,
+          headers:{ "apikey":DB.key, "Authorization":"Bearer " + DB.key, "Content-Type":"application/json", "Prefer":"return=minimal" },
+          body: JSON.stringify({ name:name, phone:phone, business:biz, package:pkg, message:msg, source:"portfolio-os" })
+        }).catch(function(){});
+      }
+    }catch(err){}
     window.open("https://wa.me/8801867553204?text=" + encodeURIComponent(lines.join("\n")), "_blank");
   });
   ["fName","fPhone","fPkg"].forEach(function(id){
