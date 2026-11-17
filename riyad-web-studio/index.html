@@ -1,667 +1,826 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="color-scheme" content="dark" />
-<meta name="description" content="Riyad Web Studio — Premium websites for businesses of every size in Bangladesh. Business sites, QR ordering, online shops, salon & restaurant websites." />
-<link rel="icon" href="data:," />
-<title>Riyad Web Studio — Premium Websites for Every Business</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Riyad Web Studio — Premium Websites for Businesses in Bangladesh</title>
+<meta name="description" content="Riyad Web Studio designs and builds premium websites, QR ordering systems, online shops and web apps for businesses in Bangladesh. Honest pricing, WhatsApp booking, full testing before delivery.">
+<meta name="keywords" content="web design Bangladesh, website maker Dhaka, Riyad Web Studio, QR ordering, salon website, restaurant website, construction website">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Riyad Web Studio — Premium Websites for Businesses in Bangladesh">
+<meta property="og:description" content="Websites that win customers. Business sites, QR ordering, online shops, 3D showcases — built in Dhaka, priced honestly in BDT.">
+<meta property="og:url" content="https://rriyadkhan985-glitch.github.io/riyad-web-studio/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0c0c0f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230c0c0f'/%3E%3Ctext x='32' y='44' font-family='Arial' font-weight='700' font-size='36' fill='%237c5cff' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0a0a0c; --bg2:#111114; --bg3:#17171b; --card:#131317;
-  --ink:#f2efe6; --muted:#a9a79c; --muted2:#7d7b72;
-  --gold:#C9A24B; --gold-soft:#e3c87e; --gold-dim:rgba(201,162,75,.16);
-  --line:rgba(242,239,230,.09); --line-gold:rgba(201,162,75,.35);
-  --radius:18px; --radius-sm:12px;
-  --font-d:"Playfair Display",Georgia,serif; --font-b:"Manrope",system-ui,sans-serif;
+  --bg:#0c0c0f; --bg2:#101014; --panel:#141419; --panel2:#191920;
+  --ink:#f3f0e7; --mut:#a49d8d; --dim:#6f6a5e;
+  --acc:#7c5cff; --acc2:#9d86ff; --accSoft:rgba(124,92,255,.13);
+  --line:rgba(243,240,231,.12); --line2:rgba(243,240,231,.07);
+  --rad:18px; --font:'Inter',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+  --disp:'Space Grotesk','Inter',system-ui,Arial,sans-serif;
 }
-*{box-sizing:border-box}
+*{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-html:focus-within{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-b);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-::selection{background:var(--gold);color:#0a0a0c}
-a{color:inherit}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:var(--acc);color:#fff}
+a{color:inherit;text-decoration:none}
 img{max-width:100%}
-button,[role="button"],select,summary,input:not([type=checkbox],[type=radio]),textarea{ min-height:2.75rem; }
-.wrap{width:min(1180px,100% - 40px);margin-inline:auto}
-@media(max-width:560px){.wrap{width:calc(100% - 32px)}}
-
-/* ---------- background glow / parallax ---------- */
-.glow{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.glow::before{content:"";position:absolute;width:900px;height:900px;left:50%;top:-420px;transform:translateX(-50%);background:radial-gradient(circle,rgba(201,162,75,.13) 0%,transparent 62%);filter:blur(10px)}
-.glow::after{content:"";position:absolute;width:640px;height:640px;right:-260px;top:38%;background:radial-gradient(circle,rgba(201,162,75,.07) 0%,transparent 62%)}
-.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.5;background-image:radial-gradient(rgba(255,255,255,.028) 1px,transparent 1px);background-size:22px 22px}
-main,header,footer{position:relative;z-index:2}
-
-/* ---------- preloader ---------- */
-#preloader{position:fixed;inset:0;z-index:200;background:#08080a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;transition:opacity .7s ease,visibility .7s;animation:preFade .6s ease 2.4s forwards}
-@keyframes preFade{to{opacity:0;visibility:hidden;pointer-events:none}}
-#preloader.done{opacity:0;visibility:hidden}
-.pre-mark{font-family:var(--font-d);font-size:clamp(2rem,6vw,3.2rem);font-weight:700;letter-spacing:.02em;color:var(--ink)}
-.pre-mark em{font-style:italic;color:var(--gold)}
-.pre-bar{width:min(260px,60vw);height:2px;background:rgba(255,255,255,.12);overflow:hidden;border-radius:99px}
-.pre-bar i{display:block;height:100%;width:0;background:var(--gold);animation:preload 1.15s cubic-bezier(.6,0,.2,1) forwards}
-@keyframes preload{to{width:100%}}
-.pre-sub{font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:var(--muted)}
-
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+.disp{font-family:var(--disp)}
+/* ---------- page fade ---------- */
+#fade{position:fixed;inset:0;background:var(--bg);z-index:200;pointer-events:none;opacity:1;transition:opacity .7s ease}
+body.loaded #fade{opacity:0}
+/* ---------- custom cursor (desktop) ---------- */
+#cur,#curRing{position:fixed;top:0;left:0;pointer-events:none;z-index:300;border-radius:50%;display:none}
+@media (pointer:fine){
+  #cur{display:block;width:7px;height:7px;background:var(--acc2);transform:translate(-50%,-50%)}
+  #curRing{display:block;width:36px;height:36px;border:1.5px solid rgba(157,134,255,.65);transform:translate(-50%,-50%);transition:width .25s,height .25s,border-color .25s,background .25s}
+  #curRing.big{width:58px;height:58px;background:rgba(124,92,255,.10);border-color:rgba(157,134,255,.9)}
+}
 /* ---------- nav ---------- */
-header{position:sticky;top:0;z-index:100;backdrop-filter:blur(14px);background:rgba(10,10,12,.78);border-bottom:1px solid var(--line)}
-.nav{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px 0}
-.logo{font-family:var(--font-d);font-weight:700;font-size:1.28rem;line-height:1;text-decoration:none;letter-spacing:.01em;white-space:nowrap}
-.logo span{color:var(--gold);font-style:italic}
-.logo small{display:block;font-family:var(--font-b);font-size:.6rem;letter-spacing:.34em;text-transform:uppercase;color:var(--muted);margin-top:5px;font-weight:600}
-.nav-links{display:flex;gap:6px;align-items:center}
-.nav-links a{text-decoration:none;font-size:.9rem;font-weight:600;color:var(--muted);padding:10px 12px;border-radius:99px;transition:.25s}
-.nav-links a:hover{color:var(--ink);background:rgba(255,255,255,.05)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;text-decoration:none;font-weight:700;font-size:.92rem;padding:13px 22px;border-radius:99px;border:1px solid transparent;cursor:pointer;transition:transform .25s,box-shadow .25s,background .25s,color .25s;min-height:48px;will-change:transform}
-.btn-gold{background:var(--gold);color:#141005;box-shadow:0 10px 30px -12px rgba(201,162,75,.7)}
-.btn-gold:hover{background:var(--gold-soft)}
-.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line)}
-.btn-ghost:hover{border-color:var(--line-gold);color:var(--gold-soft)}
-.btn-sm{padding:10px 18px;min-height:44px;font-size:.86rem}
-.nav-cta{flex-shrink:0}
-@media(max-width:860px){.nav-links{display:none}}
-@media(max-width:480px){.logo{font-size:1.08rem}.nav-cta .btn{padding:10px 14px;font-size:.82rem}}
-
+header{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(14px);background:rgba(12,12,15,.72);border-bottom:1px solid var(--line2)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{font-family:var(--disp);font-weight:700;font-size:19px;letter-spacing:.02em;display:flex;align-items:center;gap:10px}
+.logo .mark{width:34px;height:34px;border-radius:10px;background:var(--acc);color:#fff;display:grid;place-items:center;font-size:18px;box-shadow:0 6px 22px rgba(124,92,255,.45)}
+.logo small{display:block;font-size:10px;font-weight:500;color:var(--mut);letter-spacing:.24em;text-transform:uppercase;font-family:var(--font)}
+.nav nav{display:flex;gap:30px;font-size:14.5px;color:var(--mut)}
+.nav nav a{position:relative;padding:4px 0;transition:color .25s}
+.nav nav a:hover{color:var(--ink)}
+.nav nav a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--acc);transition:width .3s}
+.nav nav a:hover::after{width:100%}
+.navCta{display:flex;align-items:center;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:15px;padding:13px 24px;border-radius:999px;border:1px solid transparent;cursor:pointer;transition:transform .25s,box-shadow .25s,background .25s,color .25s;font-family:var(--font)}
+.btn:active{transform:scale(.97)}
+.btnAcc{background:var(--acc);color:#fff;box-shadow:0 8px 28px rgba(124,92,255,.35)}
+.btnAcc:hover{background:#6d4dff;transform:translateY(-2px)}
+.btnGhost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btnGhost:hover{border-color:var(--acc2);color:var(--acc2)}
+.btnSm{padding:10px 19px;font-size:14px}
+#burger{display:none;background:none;border:1px solid var(--line);border-radius:10px;width:42px;height:42px;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+#burger span{display:block;width:18px;height:2px;background:var(--ink);transition:.3s}
+#mobileMenu{display:none;border-top:1px solid var(--line2);padding:14px 24px 20px;background:rgba(12,12,15,.97)}
+#mobileMenu a{display:block;padding:11px 0;color:var(--mut);font-size:16px;border-bottom:1px solid var(--line2)}
+#mobileMenu a:last-of-type{border-bottom:none}
+#mobileMenu.open{display:block}
 /* ---------- hero ---------- */
-.hero{padding:clamp(56px,9vw,110px) 0 70px;text-align:center;position:relative}
-.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;font-weight:700;color:var(--gold);border:1px solid var(--line-gold);padding:9px 16px;border-radius:99px;background:var(--gold-dim)}
-.eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold)}
-.hero h1{font-family:var(--font-d);font-weight:700;font-size:clamp(2.5rem,7.2vw,4.9rem);line-height:1.06;margin:28px auto 0;max-width:920px;letter-spacing:-.01em}
-.hero h1 .gold{color:var(--gold);font-style:italic}
-.hero h1 .word{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.08em;margin-bottom:-.08em}
-.hero h1 .word>span{display:inline-block}
-.js .hero h1 .word>span{transform:translateY(110%);animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(var(--i)*70ms + 350ms)}
+.hero{position:relative;padding:158px 0 84px;overflow:hidden}
+.hero::before{content:"";position:absolute;top:-260px;right:-160px;width:640px;height:640px;border-radius:50%;background:radial-gradient(circle,rgba(124,92,255,.20),transparent 65%);pointer-events:none}
+.hero::after{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line2) 1px,transparent 1px),linear-gradient(90deg,var(--line2) 1px,transparent 1px);background-size:76px 76px;mask-image:radial-gradient(ellipse 90% 62% at 50% 0%,#000 30%,transparent 75%);pointer-events:none}
+.heroIn{position:relative;z-index:2}
+.kicker{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--acc2);border:1px solid rgba(124,92,255,.4);background:var(--accSoft);padding:8px 16px;border-radius:999px;font-weight:600}
+.kicker .dot{width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 10px #4ade80;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+h1{font-family:var(--disp);font-weight:700;font-size:clamp(46px,8.6vw,104px);line-height:1.02;letter-spacing:-.015em;margin:28px 0 8px;text-transform:uppercase}
+h1 .row{display:block;overflow:hidden}
+h1 .row span{display:inline-block;transform:translateY(110%);animation:rise 1s cubic-bezier(.2,.75,.25,1) forwards}
+h1 .row:nth-child(2) span{animation-delay:.12s}
+h1 .row:nth-child(3) span{animation-delay:.24s}
 @keyframes rise{to{transform:translateY(0)}}
-.hero-sub{max-width:640px;margin:24px auto 0;color:var(--muted);font-size:clamp(1rem,2.4vw,1.14rem);line-height:1.7}
-.hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:36px}
-.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:820px;margin:56px auto 0}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 14px;text-align:center}
-.stat b{font-family:var(--font-d);font-size:clamp(1.7rem,4.5vw,2.4rem);color:var(--gold);display:flex;align-items:baseline;justify-content:center;gap:3px;line-height:1;white-space:nowrap}
-.stat b .count,.stat b .suffix{font-size:1em;line-height:1}
-.stat span{display:block;margin-top:8px;font-size:.8rem;color:var(--muted);font-weight:600;line-height:1.45}
-@media(max-width:560px){.hero-stats{grid-template-columns:1fr 1fr}.stat:last-child{grid-column:1/-1}}
-
+h1 .vio{color:var(--acc2)}
+h1 .outl{color:transparent;-webkit-text-stroke:1.5px var(--ink)}
+.heroSub{max-width:620px;color:var(--mut);font-size:18px;margin:22px 0 34px}
+.heroCtas{display:flex;gap:14px;flex-wrap:wrap}
+.heroStats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line2);border:1px solid var(--line2);border-radius:var(--rad);overflow:hidden;margin-top:64px}
+.hstat{background:var(--bg2);padding:22px 24px}
+.hstat b{font-family:var(--disp);font-size:30px;display:block;line-height:1.1}
+.hstat b em{font-style:normal;color:var(--acc2)}
+.hstat span{color:var(--mut);font-size:13.5px}
 /* ---------- marquee ---------- */
-.marquee{border-block:1px solid var(--line);background:var(--bg2);overflow:hidden;padding:16px 0;position:relative}
-.marquee-track{display:flex;gap:0;width:max-content;animation:scroll 30s linear infinite}
-.marquee:hover .marquee-track{animation-play-state:paused}
-.marquee-track span{display:inline-flex;align-items:center;gap:26px;padding-right:26px;font-family:var(--font-d);font-size:1.02rem;font-weight:600;white-space:nowrap;color:var(--ink)}
-.marquee-track span::after{content:"";width:7px;height:7px;background:var(--gold);transform:rotate(45deg);flex-shrink:0}
-@keyframes scroll{to{transform:translateX(-50%)}}
-
+.marquee{border-top:1px solid var(--line2);border-bottom:1px solid var(--line2);padding:16px 0;overflow:hidden;white-space:nowrap;background:var(--bg2)}
+.mqTrack{display:inline-block;animation:mq 30s linear infinite}
+.mqTrack span{font-family:var(--disp);font-size:15px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin:0 26px}
+.mqTrack i{color:var(--acc);font-style:normal}
+@keyframes mq{to{transform:translateX(-50%)}}
 /* ---------- sections ---------- */
-section{padding:clamp(64px,9vw,104px) 0}
-.sec-head{max-width:680px;margin-bottom:44px}
-.sec-head.center{margin-inline:auto;text-align:center}
-.sec-tag{display:inline-flex;align-items:center;gap:10px;font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;font-weight:800;color:var(--gold)}
-.sec-tag::before{content:"";width:26px;height:1px;background:var(--gold)}
-.sec-head.center .sec-tag::after{content:"";width:26px;height:1px;background:var(--gold)}
-.sec-head h2{font-family:var(--font-d);font-size:clamp(1.9rem,4.6vw,2.9rem);line-height:1.14;margin:14px 0 12px;font-weight:700}
-.sec-head h2 em{color:var(--gold)}
-.sec-head p{color:var(--muted);margin:0;font-size:1rem}
-.bar-anim{height:3px;background:var(--line);border-radius:99px;margin-top:22px;overflow:hidden;width:180px}
-.sec-head.center .bar-anim{margin-inline:auto}
-.bar-anim i{display:block;height:100%;width:0;background:var(--gold);transition:width 1.1s cubic-bezier(.2,.7,.2,1)}
-.inview .bar-anim i{width:100%}
+section{padding:96px 0}
+.secHead{margin-bottom:52px;max-width:760px}
+.secTag{font-size:12.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--acc2);font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.secTag::before{content:"";width:34px;height:1.5px;background:var(--acc)}
+h2{font-family:var(--disp);font-size:clamp(32px,4.6vw,52px);font-weight:700;line-height:1.12;letter-spacing:-.01em}
+.secHead p{color:var(--mut);margin-top:14px;font-size:17px}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease}
+.rv.in{opacity:1;transform:none}
+/* ---------- showcase ---------- */
+.showcase{background:var(--bg2);border-top:1px solid var(--line2);border-bottom:1px solid var(--line2)}
+.scTabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:30px}
+.scTab{font-family:var(--font);font-size:14.5px;font-weight:600;padding:11px 20px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--mut);cursor:pointer;transition:.25s}
+.scTab:hover{color:var(--ink);border-color:var(--acc2)}
+.scTab.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.scGrid{display:grid;grid-template-columns:1.25fr 1fr;gap:34px;align-items:stretch}
+.mock{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--panel);display:flex;flex-direction:column}
+.mockBar{display:flex;align-items:center;gap:7px;padding:12px 16px;border-bottom:1px solid var(--line2);background:rgba(255,255,255,.02)}
+.mockBar i{width:11px;height:11px;border-radius:50%;background:#3a3a42}
+.mockBar i:first-child{background:#554a8f}
+.mockBar .url{margin-left:10px;font-size:12.5px;color:var(--dim);background:rgba(255,255,255,.04);padding:4px 12px;border-radius:6px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mockBody{flex:1;min-height:340px;position:relative;display:grid;place-items:center;padding:38px;text-align:center;transition:background .5s}
+.mockBody .big{font-family:var(--disp);font-weight:700;font-size:clamp(30px,4vw,46px);line-height:1.1;text-transform:uppercase}
+.mockBody .small{color:rgba(243,240,231,.75);margin-top:12px;font-size:15px;max-width:420px}
+.mockBody .chip{position:absolute;font-size:11.5px;font-weight:600;letter-spacing:.08em;padding:7px 13px;border-radius:999px;background:rgba(12,12,15,.55);border:1px solid rgba(243,240,231,.25);backdrop-filter:blur(4px)}
+.scInfo{display:flex;flex-direction:column;gap:18px}
+.scInfo h3{font-family:var(--disp);font-size:30px;line-height:1.2}
+.scInfo .obj{color:var(--mut)}
+.featList{list-style:none;display:grid;gap:10px}
+.featList li{display:flex;gap:11px;font-size:15px;color:var(--ink)}
+.featList li::before{content:"✓";color:var(--acc2);font-weight:700}
+.tagRow{display:flex;gap:8px;flex-wrap:wrap}
+.tag{font-size:12px;font-weight:600;letter-spacing:.06em;padding:6px 12px;border-radius:999px;border:1px solid var(--line);color:var(--mut);text-transform:uppercase}
+.tag.demo{border-color:rgba(250,204,21,.45);color:#facc15}
+.tag.live{border-color:rgba(74,222,128,.45);color:#4ade80}
+</style>
 
-/* reveals — content is NEVER opacity-hidden (visible in any render, even if the
-   reveal trigger never fires); the motion is a slide-up + gold-tinted settle */
-.js .reveal{transform:translateY(30px);transition:transform .85s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--d,0)*90ms)}
-.js .reveal.inview{transform:none}
-
-/* services */
-.grid-services{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-@media(max-width:960px){.grid-services{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){.grid-services{grid-template-columns:1fr}}
-.svc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:30px 26px;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
-.svc:hover{border-color:var(--line-gold);transform:translateY(-4px)}
-.svc::before{content:"";position:absolute;inset:0 0 auto;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .45s}
-.svc:hover::before{transform:scaleX(1)}
-.svc .num{font-family:var(--font-d);font-style:italic;color:var(--gold);font-size:.95rem}
-.svc h3{font-family:var(--font-d);font-size:1.32rem;margin:12px 0 10px;font-weight:700;line-height:1.25}
-.svc p{color:var(--muted);font-size:.94rem;margin:0}
-
-/* work gallery */
-.work-note{display:inline-block;font-size:.78rem;font-weight:700;color:var(--gold);background:var(--gold-dim);border:1px solid var(--line-gold);padding:7px 14px;border-radius:99px;margin-bottom:26px}
-.grid-work{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-@media(max-width:960px){.grid-work{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){.grid-work{grid-template-columns:1fr}}
-.work{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:border-color .3s;transform-style:preserve-3d;will-change:transform}
-.work:hover{border-color:var(--line-gold)}
-.work-visual{height:150px;position:relative;display:flex;align-items:center;justify-content:center;background:var(--bg3);border-bottom:1px solid var(--line);overflow:hidden}
-.work-visual::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,var(--gold-dim),transparent 60%)}
-.work-visual::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:26px 26px}
-.mono{font-family:var(--font-d);font-size:2.5rem;font-weight:800;color:var(--gold);position:relative;z-index:1;border:1px solid var(--line-gold);width:76px;height:76px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(10,10,12,.55)}
-.work-body{padding:20px 22px 24px}
-.work-body h3{font-family:var(--font-d);font-size:1.18rem;margin:0 0 5px;font-weight:700}
-.work-body p{color:var(--muted);font-size:.87rem;margin:0 0 16px}
-.live-btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:.85rem;color:var(--gold);text-decoration:none;border:1px solid var(--line-gold);padding:9px 16px;border-radius:99px;transition:.25s;min-height:44px}
-.live-btn:hover{background:var(--gold);color:#141005}
-.live-btn svg{flex-shrink:0}
-
-/* process */
-.process{background:var(--bg2);border-block:1px solid var(--line)}
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-@media(max-width:960px){.steps{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:560px){.steps{grid-template-columns:1fr}}
-.step{padding:28px 24px;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg);position:relative}
-.step .n{font-family:var(--font-d);font-size:2.6rem;font-weight:800;color:transparent;-webkit-text-stroke:1.2px var(--gold);line-height:1}
-.step h3{font-size:1.05rem;margin:16px 0 8px;font-weight:800}
-.step p{color:var(--muted);font-size:.9rem;margin:0}
-
-/* pricing */
-.grid-price{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
-@media(max-width:900px){.grid-price{grid-template-columns:1fr;max-width:520px;margin-inline:auto}}
-.price{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:34px 28px;display:flex;flex-direction:column;position:relative;transition:transform .3s,border-color .3s}
-.price:hover{transform:translateY(-5px);border-color:var(--line-gold)}
-.price.featured{border-color:var(--gold);background:linear-gradient(180deg,rgba(201,162,75,.09),var(--card) 55%)}
-.price .tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--gold);color:#141005;font-size:.68rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:6px 14px;border-radius:99px;white-space:nowrap}
-.price h3{font-family:var(--font-d);font-size:1.3rem;margin:0;font-weight:700}
-.price .amount{font-family:var(--font-d);font-size:2.7rem;font-weight:800;color:var(--gold);margin:14px 0 4px;line-height:1}
-.price .amount small{font-size:.95rem;font-family:var(--font-b);color:var(--muted);font-weight:600}
-.price ul{list-style:none;padding:0;margin:20px 0 26px;display:grid;gap:11px;flex:1}
-.price li{display:flex;gap:10px;font-size:.92rem;color:var(--ink)}
-.price li::before{content:"";width:17px;height:17px;flex-shrink:0;margin-top:3px;border-radius:50%;background:var(--gold-dim) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C9A24B' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E") center/10px no-repeat}
-.price li.dim{color:var(--muted)}
-.price-note{max-width:760px;margin:30px auto 0;text-align:center;color:var(--muted);font-size:.92rem;background:var(--bg2);border:1px dashed var(--line-gold);border-radius:var(--radius-sm);padding:16px 20px}
-.price-note b{color:var(--ink)}
-
-/* why */
-.grid-why{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-@media(max-width:700px){.grid-why{grid-template-columns:1fr}}
-.why{display:flex;gap:18px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px}
-.why .ic{width:48px;height:48px;flex-shrink:0;border-radius:14px;background:var(--gold-dim);border:1px solid var(--line-gold);display:flex;align-items:center;justify-content:center;color:var(--gold)}
-.why h3{margin:2px 0 7px;font-size:1.02rem;font-weight:800}
-.why p{margin:0;color:var(--muted);font-size:.92rem}
-
-/* contact */
-.contact{background:var(--bg2);border-top:1px solid var(--line)}
-.contact-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:44px;align-items:start}
-@media(max-width:860px){.contact-grid{grid-template-columns:1fr}}
-.contact-info h2{font-family:var(--font-d);font-size:clamp(1.9rem,4.6vw,2.7rem);margin:14px 0 14px;line-height:1.15}
-.contact-info h2 em{color:var(--gold)}
-.contact-info p{color:var(--muted);margin:0 0 22px}
-.wa-direct{display:flex;align-items:center;gap:14px;background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;text-decoration:none;transition:border-color .25s}
-.wa-direct:hover{border-color:var(--line-gold)}
-.wa-direct .ic{width:46px;height:46px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#0b3d20}
-.wa-direct b{display:block;font-size:1rem}
-.wa-direct span{color:var(--muted);font-size:.85rem}
-form{background:var(--bg);border:1px solid var(--line);border-radius:22px;padding:30px 28px}
-.field{margin-bottom:18px}
-label{display:block;font-size:.84rem;font-weight:700;margin-bottom:8px}
-label small{color:var(--muted);font-weight:500}
-input[type=text],input[type=tel],select,textarea{width:100%;background:var(--bg3);border:1px solid var(--line);border-radius:12px;color:var(--ink);font-family:var(--font-b);font-size:.96rem;padding:13px 15px;outline:none;transition:border-color .2s}
-input:focus,select:focus,textarea:focus{border-color:var(--gold)}
-textarea{resize:vertical;min-height:96px}
-.err{display:none;color:#ff8a7a;font-size:.82rem;margin-top:7px;font-weight:600}
-.err.show{display:block}
-input.invalid,select.invalid{border-color:#ff8a7a}
-.form-btn{width:100%;font-size:1rem}
-.form-hint{font-size:.8rem;color:var(--muted);text-align:center;margin:13px 0 0}
-
-/* footer */
-footer{border-top:1px solid var(--line);background:#08080a;padding:52px 0 30px}
-.foot{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}
-.foot-links{display:flex;gap:8px;flex-wrap:wrap}
-.foot-links a{text-decoration:none;color:var(--muted);font-size:.9rem;font-weight:600;padding:10px 12px;border-radius:99px}
-.foot-links a:hover{color:var(--gold-soft)}
-.foot-bottom{margin-top:38px;padding-top:22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;color:var(--muted2);font-size:.83rem}
-.foot-bottom b{color:var(--gold);font-weight:700}
-
-@media (prefers-reduced-motion: reduce){
-  *,*::before,*::after{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.001s !important;scroll-behavior:auto !important}
-  .js .reveal{transform:none}
-  .js .hero h1 .word>span{transform:none}
-  .marquee-track{animation:none}
+<style>
+/* ---------- services ---------- */
+.svcList{border-top:1px solid var(--line2)}
+.svc{display:grid;grid-template-columns:70px 1fr 1.2fr 40px;gap:22px;align-items:center;padding:30px 10px;border-bottom:1px solid var(--line2);transition:background .3s,padding .3s}
+.svc:hover{background:var(--panel);padding-left:22px}
+.svc .no{font-family:var(--disp);color:var(--dim);font-size:15px}
+.svc h3{font-family:var(--disp);font-size:clamp(21px,2.6vw,28px);font-weight:600;line-height:1.25}
+.svc p{color:var(--mut);font-size:15px}
+.svc .arr{font-size:22px;color:var(--acc2);transition:transform .3s}
+.svc:hover .arr{transform:translate(4px,-4px)}
+/* ---------- work ---------- */
+.workSec{background:var(--bg2);border-top:1px solid var(--line2);border-bottom:1px solid var(--line2)}
+.fBtns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:34px}
+.fBtn{font-family:var(--font);font-size:14px;font-weight:600;padding:10px 19px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--mut);cursor:pointer;transition:.25s}
+.fBtn:hover{color:var(--ink)}
+.fBtn.on{background:var(--ink);color:#0c0c0f;border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card{background:var(--panel);border:1px solid var(--line2);border-radius:var(--rad);overflow:hidden;transition:transform .35s,border-color .35s,box-shadow .35s;transform-style:preserve-3d;will-change:transform}
+.card:hover{border-color:rgba(124,92,255,.55);box-shadow:0 22px 44px rgba(0,0,0,.45)}
+.card.hide{display:none}
+.cardArt{height:168px;position:relative;display:grid;place-items:center;overflow:hidden}
+.cardArt .mono{font-family:var(--disp);font-weight:700;font-size:52px;color:rgba(255,255,255,.92);text-shadow:0 4px 30px rgba(0,0,0,.35)}
+.cardArt .badge{position:absolute;top:13px;left:13px;font-size:11px;font-weight:700;letter-spacing:.08em;padding:5px 11px;border-radius:999px;background:rgba(10,10,12,.6);border:1px solid rgba(255,255,255,.28);color:#facc15;text-transform:uppercase}
+.cardArt .badge.live{color:#4ade80}
+.cardBody{padding:20px 22px 24px}
+.cardBody h3{font-family:var(--disp);font-size:20px;margin-bottom:5px}
+.cardBody p{color:var(--mut);font-size:14px;min-height:42px}
+.cardFoot{display:flex;justify-content:space-between;align-items:center;margin-top:15px}
+.cardFoot .cat{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);font-weight:600}
+.cardFoot .open{font-size:14px;font-weight:600;color:var(--acc2)}
+.cardFoot .open:hover{text-decoration:underline}
+/* ---------- case studies ---------- */
+.case{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line2);border-radius:22px;overflow:hidden;margin-bottom:26px;background:var(--panel)}
+.caseArt{min-height:300px;display:grid;place-items:center;padding:40px;text-align:center;position:relative}
+.caseArt .big{font-family:var(--disp);font-weight:700;font-size:clamp(28px,3.4vw,42px);text-transform:uppercase;line-height:1.12}
+.caseTxt{padding:40px 42px}
+.caseTxt h3{font-family:var(--disp);font-size:27px;margin-bottom:16px}
+.caseTxt h4{font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--acc2);margin:20px 0 7px}
+.caseTxt p{color:var(--mut);font-size:15px}
+.caseTxt ul{list-style:none;display:grid;gap:7px}
+.caseTxt ul li{font-size:15px;display:flex;gap:10px}
+.caseTxt ul li::before{content:"—";color:var(--acc2)}
+/* ---------- process ---------- */
+.process{background:var(--bg2);border-top:1px solid var(--line2);border-bottom:1px solid var(--line2)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.step{border:1px solid var(--line2);border-radius:var(--rad);padding:30px 26px;background:var(--panel);position:relative}
+.step .n{font-family:var(--disp);font-size:44px;font-weight:700;color:transparent;-webkit-text-stroke:1.2px var(--acc2);line-height:1}
+.step h3{font-family:var(--disp);font-size:20px;margin:16px 0 8px}
+.step p{color:var(--mut);font-size:14.5px}
+/* ---------- pricing ---------- */
+.priceGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
+.pCard{border:1px solid var(--line2);border-radius:22px;padding:36px 32px;background:var(--panel);display:flex;flex-direction:column;transition:transform .3s,border-color .3s}
+.pCard:hover{transform:translateY(-6px);border-color:rgba(124,92,255,.5)}
+.pCard.hot{border-color:var(--acc);background:linear-gradient(180deg,rgba(124,92,255,.10),var(--panel) 55%);position:relative}
+.pCard .pop{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--acc);color:#fff;font-size:12px;font-weight:700;letter-spacing:.1em;padding:6px 15px;border-radius:999px;text-transform:uppercase;white-space:nowrap}
+.pCard h3{font-family:var(--disp);font-size:21px;letter-spacing:.04em;text-transform:uppercase}
+.pCard .amt{font-family:var(--disp);font-size:46px;font-weight:700;margin:14px 0 4px}
+.pCard .amt small{font-size:16px;color:var(--mut);font-weight:500}
+.pCard .for{color:var(--mut);font-size:14px;margin-bottom:22px}
+.pCard ul{list-style:none;display:grid;gap:11px;margin-bottom:30px;flex:1}
+.pCard ul li{font-size:14.5px;display:flex;gap:10px}
+.pCard ul li::before{content:"✓";color:var(--acc2);font-weight:700}
+.pCard .btn{justify-content:center}
+.consStrip{margin-top:26px;border:1px dashed rgba(124,92,255,.5);border-radius:22px;padding:30px 34px;display:flex;justify-content:space-between;align-items:center;gap:26px;flex-wrap:wrap;background:var(--accSoft)}
+.consStrip h3{font-family:var(--disp);font-size:23px;margin-bottom:5px}
+.consStrip p{color:var(--mut);font-size:14.5px;max-width:560px}
+.consPrices{display:flex;gap:12px;flex-wrap:wrap}
+.consPrices div{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:13px 19px;text-align:center}
+.consPrices b{font-family:var(--disp);font-size:20px;display:block}
+.consPrices span{font-size:12px;color:var(--mut);letter-spacing:.08em;text-transform:uppercase}
+.priceNote{color:var(--dim);font-size:13.5px;margin-top:20px;text-align:center}
+/* ---------- faq ---------- */
+.faqList{max-width:840px}
+.faq{border:1px solid var(--line2);border-radius:16px;margin-bottom:13px;background:var(--panel);overflow:hidden}
+.faq button{width:100%;background:none;border:none;color:var(--ink);font-family:var(--disp);font-size:17.5px;font-weight:600;text-align:left;padding:21px 24px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.faq button .pm{color:var(--acc2);font-size:24px;font-weight:400;transition:transform .3s;flex:none}
+.faq.open button .pm{transform:rotate(45deg)}
+.faq .ans{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.faq .ans p{padding:0 24px 22px;color:var(--mut);font-size:15px}
+/* ---------- contact ---------- */
+.contact{background:var(--bg2);border-top:1px solid var(--line2)}
+.cGrid{display:grid;grid-template-columns:1fr 1.15fr;gap:44px;align-items:start}
+.cInfo h2{margin-bottom:16px}
+.cInfo p{color:var(--mut);margin-bottom:26px}
+.cRow{display:flex;gap:14px;align-items:center;padding:15px 0;border-bottom:1px solid var(--line2);font-size:15.5px}
+.cRow .ic{width:42px;height:42px;border-radius:12px;background:var(--accSoft);border:1px solid rgba(124,92,255,.35);display:grid;place-items:center;font-size:18px;flex:none}
+form{background:var(--panel);border:1px solid var(--line2);border-radius:22px;padding:34px}
+.fField{margin-bottom:18px}
+.fField label{display:block;font-size:13.5px;font-weight:600;letter-spacing:.05em;margin-bottom:8px;color:var(--ink)}
+.fField input,.fField select,.fField textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:12px;color:var(--ink);font-family:var(--font);font-size:15.5px;padding:13px 15px;outline:none;transition:border-color .25s}
+.fField input:focus,.fField select:focus,.fField textarea:focus{border-color:var(--acc)}
+.fField .err{display:none;color:#f87171;font-size:13px;margin-top:6px}
+.fField.invalid input,.fField.invalid select{border-color:#f87171}
+.fField.invalid .err{display:block}
+form .btn{width:100%;justify-content:center;font-size:16px;padding:15px}
+.formNote{color:var(--dim);font-size:13px;text-align:center;margin-top:14px}
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line2);padding:56px 0 34px;background:var(--bg)}
+.fGrid{display:flex;justify-content:space-between;gap:34px;flex-wrap:wrap;margin-bottom:38px}
+.fGrid p{color:var(--mut);font-size:14.5px;max-width:340px;margin-top:10px}
+.fCol h4{font-family:var(--disp);font-size:15px;margin-bottom:15px;letter-spacing:.05em}
+.fCol a{display:block;color:var(--mut);font-size:14.5px;padding:4px 0}
+.fCol a:hover{color:var(--acc2)}
+.fBot{border-top:1px solid var(--line2);padding-top:24px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;color:var(--dim);font-size:13.5px}
+#waFloat{position:fixed;right:20px;bottom:20px;z-index:90;width:58px;height:58px;border-radius:50%;background:#22c55e;display:grid;place-items:center;font-size:27px;box-shadow:0 10px 30px rgba(34,197,94,.4);transition:transform .25s}
+#waFloat:hover{transform:scale(1.08)}
+/* ---------- responsive ---------- */
+@media(max-width:1020px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .priceGrid{grid-template-columns:1fr;max-width:520px}
+  .scGrid,.case,.cGrid{grid-template-columns:1fr}
+  .caseArt{min-height:220px}
+  .svc{grid-template-columns:44px 1fr 34px}
+  .svc p{grid-column:2/4}
+}
+@media(max-width:640px){
+  .nav nav{display:none}
+  #burger{display:flex}
+  .navCta .btn{display:none}
+  section{padding:68px 0}
+  .hero{padding:126px 0 64px}
+  .heroStats{grid-template-columns:repeat(2,1fr)}
+  .grid{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
+  form{padding:26px 20px}
+  .caseTxt{padding:30px 24px}
+  .consStrip{padding:26px 22px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001s !important;transition-duration:.001s !important}
+  html{scroll-behavior:auto}
 }
 </style>
-<script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
-
-<div id="preloader" aria-hidden="true">
-  <div class="pre-mark">Riyad <em>Web Studio</em></div>
-  <div class="pre-bar"><i></i></div>
-  <div class="pre-sub">Premium Websites · Bangladesh</div>
-</div>
-
-<div class="glow" aria-hidden="true"></div>
-<div class="grain" aria-hidden="true"></div>
+<div id="fade"></div>
+<div id="cur"></div><div id="curRing"></div>
 
 <header>
   <div class="wrap nav">
-    <a class="logo" href="#top">Riyad <span>Web Studio</span><small>Websites that sell</small></a>
-    <nav class="nav-links" aria-label="Main">
+    <a class="logo" href="#top" aria-label="Riyad Web Studio home">
+      <span class="mark">R</span>
+      <span>RIYAD<small>Web Studio</small></span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="#showcase">Showcase</a>
       <a href="#services">Services</a>
       <a href="#work">Work</a>
       <a href="#process">Process</a>
       <a href="#pricing">Pricing</a>
-      <a href="#contact">Contact</a>
+      <a href="#faq">FAQ</a>
     </nav>
-    <div class="nav-cta">
-      <a class="btn btn-gold btn-sm magnetic" href="https://wa.me/8801867553204?text=Hello%20Riyad%20Web%20Studio%2C%20I%20want%20a%20website%20for%20my%20business." target="_blank" rel="noopener">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.48-1.77-1.65-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.9 1.22 3.1.15.2 2.1 3.2 5.1 4.49.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.09 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35M12.04 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.9-9.88a9.83 9.83 0 0 1 9.88 9.89c0 5.45-4.44 9.88-9.89 9.88m8.42-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.9c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.9 11.9 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.9 0-3.18-1.24-6.16-3.48-8.41"/></svg>
-        WhatsApp Us
-      </a>
+    <div class="navCta">
+      <a class="btn btnAcc btnSm" href="#contact">Start a Project</a>
+      <button id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
+  </div>
+  <div id="mobileMenu">
+    <a href="#showcase">Showcase</a>
+    <a href="#services">Services</a>
+    <a href="#work">Work</a>
+    <a href="#process">Process</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Start a Project →</a>
   </div>
 </header>
 
 <main id="top">
-
-  <!-- HERO -->
-  <div class="hero wrap">
-    <span class="eyebrow">Riyad Web Studio · Bangladesh</span>
-    <h1 id="heroTitle">Premium websites for businesses of <span class="gold">every size</span> — small shops to big brands.</h1>
-    <p class="hero-sub">We design and build fast, beautiful websites that turn visitors into customers — with WhatsApp booking, QR ordering, online shops and more. Simple process, honest pricing, full testing before delivery.</p>
-    <div class="hero-ctas">
-      <a class="btn btn-gold magnetic" href="#work">See Live Demos
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-      <a class="btn btn-ghost magnetic" href="https://wa.me/8801867553204?text=Hello%20Riyad%20Web%20Studio%2C%20I%20want%20a%20website%20for%20my%20business." target="_blank" rel="noopener">Order on WhatsApp</a>
+<!-- ================= HERO ================= -->
+<div class="hero">
+  <div class="wrap heroIn">
+    <span class="kicker"><span class="dot"></span> Available for projects · Dhaka, Bangladesh</span>
+    <h1>
+      <span class="row"><span>Websites</span></span>
+      <span class="row"><span>That <em class="vio" style="font-style:normal">Win</em></span></span>
+      <span class="row"><span class="outl">Customers</span></span>
+    </h1>
+    <p class="heroSub">Riyad Web Studio designs and builds premium websites for businesses of every size — small shops to big brands. WhatsApp booking, QR ordering, online shops and 3D showcases, with honest pricing in BDT and every function tested before delivery.</p>
+    <div class="heroCtas">
+      <a class="btn btnAcc" href="#work">See Live Work</a>
+      <a class="btn btnGhost" href="https://wa.me/8801867553204?text=Hello%20Riyad%20Web%20Studio%2C%20I%20want%20a%20website%20for%20my%20business." target="_blank" rel="noopener">💬 Order on WhatsApp</a>
     </div>
-    <div class="hero-stats">
-      <div class="stat"><b><span class="count" data-target="10">10</span><span class="suffix">+</span></b><span>Live demo websites you can open &amp; try right now</span></div>
-      <div class="stat"><b><span class="count" data-target="3">3</span></b><span>Clear packages — Basic, Standard &amp; Premium</span></div>
-      <div class="stat"><b><span class="count" data-target="100">100</span><span class="suffix">%</span></b><span>Function-tested before every delivery</span></div>
-    </div>
-  </div>
-
-  <!-- MARQUEE -->
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track" id="marqueeTrack">
-      <span>Business Websites</span><span>QR Ordering Systems</span><span>Online Shops</span><span>Salon &amp; Parlour Sites</span><span>Restaurant Websites</span><span>Portfolio Sites</span><span>Hotel &amp; Resort Sites</span><span>Web Apps</span>
+    <div class="heroStats">
+      <div class="hstat"><b>10<em>+</em></b><span>Live demo websites you can open &amp; try right now</span></div>
+      <div class="hstat"><b>3</b><span>Clear packages — Basic, Standard &amp; Premium</span></div>
+      <div class="hstat"><b>100<em>%</em></b><span>Function-tested before every delivery</span></div>
+      <div class="hstat"><b>50<em>%</em></b><span>Advance only — the rest when your site is delivered</span></div>
     </div>
   </div>
+</div>
 
-  <!-- SERVICES -->
-  <section id="services">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <span class="sec-tag">What we build</span>
-        <h2>Everything your business needs <em>online</em></h2>
-        <p>One studio for your complete online presence — designed to look premium and built to bring you customers.</p>
-        <div class="bar-anim"><i></i></div>
-      </div>
-      <div class="grid-services">
-        <article class="svc reveal" style="--d:0"><span class="num">— 01</span><h3>Business Website</h3><p>A complete website for your shop, company or service — pages for your story, services, gallery and contact, with Google Maps so customers find you easily.</p></article>
-        <article class="svc reveal" style="--d:1"><span class="num">— 02</span><h3>Restaurant QR Ordering</h3><p>Customers scan a QR code on the table, see your menu and order from their phone. Orders reach you instantly — no app download needed.</p></article>
-        <article class="svc reveal" style="--d:2"><span class="num">— 03</span><h3>Online Shop &amp; Catalog</h3><p>Show your products with photos and prices, let customers order on WhatsApp or bKash — a simple shop that works without expensive monthly fees.</p></article>
-        <article class="svc reveal" style="--d:3"><span class="num">— 04</span><h3>Salon &amp; Parlour Website</h3><p>Services, price lists, style galleries and WhatsApp booking — built for salons and parlours whose only presence today is a Facebook page.</p></article>
-        <article class="svc reveal" style="--d:4"><span class="num">— 05</span><h3>Portfolio &amp; Brand Website</h3><p>A striking personal or brand site that shows your work at its best — for creators, professionals, photographers and growing brands.</p></article>
-        <article class="svc reveal" style="--d:5"><span class="num">— 06</span><h3>Web App</h3><p>Your website as an installable app on the customer's home screen — opens fast like a real app, with no Play Store needed.</p></article>
-      </div>
+<div class="marquee" aria-hidden="true">
+  <div class="mqTrack" id="mqTrack">
+    <span>Business Websites</span><i>✦</i><span>QR Ordering</span><i>✦</i><span>Online Shops</span><i>✦</i><span>Salon Sites</span><i>✦</i><span>Restaurant Sites</span><i>✦</i><span>Hotel Sites</span><i>✦</i><span>3D Showcases</span><i>✦</i><span>Web Apps</span><i>✦</i>
+  </div>
+</div>
+
+<!-- ================= SHOWCASE ================= -->
+<section class="showcase" id="showcase">
+  <div class="wrap">
+    <div class="secHead rv">
+      <div class="secTag">Featured Showcase</div>
+      <h2>Not mockups. Working websites.</h2>
+      <p>Every project below is live — open it, click around, place a test booking. This is the standard your business gets.</p>
     </div>
-  </section>
-
-  <!-- WORK -->
-  <section id="work" style="padding-top:20px">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <span class="sec-tag">Live work</span>
-        <h2>Don't take our word — <em>open the demos</em></h2>
-        <p>Every card below is a real, working website. Tap any demo and try it on your phone, exactly like your customers would.</p>
-        <div class="bar-anim"><i></i></div>
-      </div>
-      <span class="work-note reveal">Demo / sample work — sample brands built to show design &amp; features</span>
-      <div class="grid-work" id="workGrid"><!-- cards injected by JS from data below, with no-JS fallback links in noscript --></div>
-      <noscript>
-        <div style="display:grid;gap:10px">
-          <a href="https://rriyadkhan985-glitch.github.io/fashion-demo/" target="_blank" rel="noopener">AMARA Fashion Store — Live Demo</a>
-          <a href="https://rriyadkhan985-glitch.github.io/gym-demo/" target="_blank" rel="noopener">IRONFORGE Gym — Live Demo</a>
-          <a href="https://rriyadkhan985-glitch.github.io/dental-demo/" target="_blank" rel="noopener">BrightSmile Dental Clinic — Live Demo</a>
-          <a href="https://rriyadkhan985-glitch.github.io/hotel-demo/" target="_blank" rel="noopener">নীল সাগর Resort — Live Demo</a>
-          <a href="https://rriyadkhan985-glitch.github.io/coffee-demo/" target="_blank" rel="noopener">EMBER Coffee — Live Demo</a>
-          <a href="https://rriyadkhan985-glitch.github.io/perfume-demo/" target="_blank" rel="noopener">NOIR ESSENCE Perfume — Live Demo</a>
-          <a href="https://rriyadkhan985-glitch.github.io/salon-demo/" target="_blank" rel="noopener">NOIR Barber Studio — Live Demo</a>
-          <a href="https://rriyadkhan985-glitch.github.io/salon-hero-demo/" target="_blank" rel="noopener">Shat Rong Gents Parlour — Live Demo</a>
-          <a href="https://rriyadkhan985-glitch.github.io/restaurant-demo/" target="_blank" rel="noopener">Restaurant QR Ordering — Live Demo</a>
-          <a href="https://rriyadkhan985-glitch.github.io/portfolio-demo/" target="_blank" rel="noopener">Portfolio Collection — Live Demo</a>
+    <div class="scTabs rv" role="tablist" aria-label="Featured projects">
+      <button class="scTab on" data-sc="0" role="tab" aria-selected="true">Meridian Builders</button>
+      <button class="scTab" data-sc="1" role="tab" aria-selected="false">Restaurant QR Ordering</button>
+      <button class="scTab" data-sc="2" role="tab" aria-selected="false">Bangaliana Masala</button>
+    </div>
+    <div class="scGrid rv">
+      <div class="mock tilt">
+        <div class="mockBar"><i></i><i></i><i></i><span class="url" id="scUrl">rriyadkhan985-glitch.github.io/construction-demo</span></div>
+        <div class="mockBody" id="scBody" style="background:linear-gradient(135deg,#17130f,#3a1410 55%,#120d0b)">
+          <span class="chip" style="top:18px;left:18px" id="scChip1">3D Viewer</span>
+          <span class="chip" style="bottom:18px;right:18px" id="scChip2">Cost Calculator</span>
+          <div>
+            <div class="big" id="scBig">Meridian<br>Builders</div>
+            <p class="small" id="scSmall">A developer's website where buyers explore buildings in 3D before they ever visit the site office.</p>
+          </div>
         </div>
-      </noscript>
-    </div>
-  </section>
-
-  <!-- PROCESS -->
-  <section id="process" class="process">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <span class="sec-tag">How it works</span>
-        <h2>From first message to <em>launch</em> — in 4 steps</h2>
-        <div class="bar-anim"><i></i></div>
       </div>
-      <div class="steps">
-        <div class="step reveal" style="--d:0"><div class="n">1</div><h3>Tell us about your business</h3><p>Message us on WhatsApp — what you sell, who your customers are, and what you want the website to do.</p></div>
-        <div class="step reveal" style="--d:1"><div class="n">2</div><h3>See a demo &amp; choose a package</h3><p>We show you a live demo in your business style. Pick Basic, Standard or Premium — no pressure, no hidden extras.</p></div>
-        <div class="step reveal" style="--d:2"><div class="n">3</div><h3>50% advance via bKash — work starts</h3><p>Pay half in advance by bKash and building begins. You see progress as we work, not just at the end.</p></div>
-        <div class="step reveal" style="--d:3"><div class="n">4</div><h3>Testing, delivery &amp; launch</h3><p>Every page and button is tested on phone and computer. Then your site goes live — in your own name.</p></div>
+      <div class="scInfo">
+        <div class="tagRow" id="scTags"><span class="tag">Construction</span><span class="tag demo">Concept Demo</span></div>
+        <h3 id="scTitle">A sales office that never closes</h3>
+        <p class="obj" id="scObj">Objective: give a Dhaka housing developer one link where buyers can browse projects, filter by budget and area, calculate flat costs and book site visits — instead of losing them in a Facebook feed.</p>
+        <ul class="featList" id="scFeats">
+          <li>Interactive 3D building viewer</li>
+          <li>Budget &amp; area project filter</li>
+          <li>Flat cost calculator &amp; construction progress tracker</li>
+          <li>Site-visit booking straight to WhatsApp</li>
+        </ul>
+        <div><a class="btn btnAcc" id="scLink" href="https://rriyadkhan985-glitch.github.io/construction-demo/" target="_blank" rel="noopener">Open Live Demo →</a></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- PRICING -->
-  <section id="pricing">
-    <div class="wrap">
-      <div class="sec-head center reveal">
-        <span class="sec-tag">Pricing</span>
-        <h2>Honest prices, <em>fixed in advance</em></h2>
-        <p>Three packages. Everything written down before you pay — no surprise charges later.</p>
-        <div class="bar-anim"><i></i></div>
-      </div>
-      <div class="grid-price">
-        <article class="price reveal" style="--d:0">
-          <h3>Basic</h3>
-          <div class="amount">৳5,000<small> / one-time</small></div>
-          <ul>
-            <li>4–5 page website</li>
-            <li>WhatsApp booking / order button</li>
-            <li>Google Maps location</li>
-            <li class="dim">Mobile-first premium design</li>
-            <li class="dim">Full testing before delivery</li>
-          </ul>
-          <a class="btn btn-ghost" href="https://wa.me/8801867553204?text=Hello%20Riyad%20Web%20Studio%2C%20I%20am%20interested%20in%20the%20Basic%20package%20(%E0%A7%B35%2C000)." target="_blank" rel="noopener">Choose Basic</a>
-        </article>
-        <article class="price featured reveal" style="--d:1">
-          <span class="tag">Most Popular</span>
-          <h3>Standard</h3>
-          <div class="amount">৳8,000<small> / one-time</small></div>
-          <ul>
-            <li>Everything in Basic</li>
-            <li>Booking / enquiry form</li>
-            <li>Offers &amp; customer reviews section</li>
-            <li>Google search setup</li>
-            <li>Home-screen web-app icon</li>
-          </ul>
-          <a class="btn btn-gold magnetic" href="https://wa.me/8801867553204?text=Hello%20Riyad%20Web%20Studio%2C%20I%20am%20interested%20in%20the%20Standard%20package%20(%E0%A7%B38%2C000)." target="_blank" rel="noopener">Choose Standard</a>
-        </article>
-        <article class="price reveal" style="--d:2">
-          <h3>Premium</h3>
-          <div class="amount">৳12,000<small> / one-time</small></div>
-          <ul>
-            <li>Everything in Standard</li>
-            <li>Premium / 3D design — or QR ordering system</li>
-            <li>Admin conveniences</li>
-            <li>1 month small-update support</li>
-            <li class="dim">Priority delivery &amp; launch help</li>
-          </ul>
-          <a class="btn btn-ghost" href="https://wa.me/8801867553204?text=Hello%20Riyad%20Web%20Studio%2C%20I%20am%20interested%20in%20the%20Premium%20package%20(%E0%A7%B312%2C000)." target="_blank" rel="noopener">Choose Premium</a>
-        </article>
-      </div>
-      <p class="price-note reveal"><b>Please note:</b> Domain + hosting is a separate yearly cost (about ৳1,500–2,500/year), registered in <b>your own name</b> — the website stays fully yours. <b>50% advance</b> before work starts.</p>
+<!-- ================= SERVICES ================= -->
+<section id="services">
+  <div class="wrap">
+    <div class="secHead rv">
+      <div class="secTag">Services</div>
+      <h2>Everything your business needs online</h2>
+      <p>One studio for your complete online presence — designed to look premium and built to bring you customers.</p>
     </div>
-  </section>
+    <div class="svcList rv">
+      <div class="svc"><span class="no">/ 01</span><h3>Business Website</h3><p>A complete website for your shop, company or service — your story, services, gallery and contact, with Google Maps so customers find you easily.</p><span class="arr">↗</span></div>
+      <div class="svc"><span class="no">/ 02</span><h3>Restaurant QR Ordering</h3><p>Customers scan a QR code on the table, see your menu and order from their phone. Orders reach you instantly — no app download needed.</p><span class="arr">↗</span></div>
+      <div class="svc"><span class="no">/ 03</span><h3>Online Shop &amp; Catalog</h3><p>Show your products with photos and prices, and let customers order on WhatsApp or bKash — a simple shop that works without expensive monthly fees.</p><span class="arr">↗</span></div>
+      <div class="svc"><span class="no">/ 04</span><h3>Salon &amp; Parlour Website</h3><p>Services, price lists, style galleries and WhatsApp booking — built for salons whose only presence today is a Facebook page.</p><span class="arr">↗</span></div>
+      <div class="svc"><span class="no">/ 05</span><h3>Hotel &amp; Hospitality</h3><p>Rooms, photos, rates and direct booking enquiries — so guests book with you instead of paying commission to middlemen.</p><span class="arr">↗</span></div>
+      <div class="svc"><span class="no">/ 06</span><h3>Web Apps &amp; Admin Panels</h3><p>Booking systems, dashboards and your own admin panel — see every order, update prices and progress yourself, from your phone.</p><span class="arr">↗</span></div>
+    </div>
+  </div>
+</section>
 
-  <!-- WHY -->
-  <section id="why" style="padding-top:10px">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <span class="sec-tag">Why Riyad Web Studio</span>
-        <h2>Built carefully, <em>sold honestly</em></h2>
-        <div class="bar-anim"><i></i></div>
-      </div>
-      <div class="grid-why">
-        <div class="why reveal" style="--d:0"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><div><h3>Fully tested before delivery</h3><p>Every button, form and link is checked on real phones and computers before you receive the site. If something doesn't work, we fix it before launch — not after.</p></div></div>
-        <div class="why reveal" style="--d:1"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M12 18h.01"/></svg></div><div><h3>Mobile-first, always</h3><p>Most of your customers will visit from a phone. Every design starts on mobile and is checked at phone width first — fast loading, easy tapping, nothing cut off.</p></div></div>
-        <div class="why reveal" style="--d:2"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div><div><h3>Talk directly to the builder</h3><p>No call centres, no middlemen. You message Riyad directly on WhatsApp and the person who builds your site is the person who answers you.</p></div></div>
-        <div class="why reveal" style="--d:3"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><h3>Honest pricing, no hidden costs</h3><p>The price is fixed before work starts and written in the package. Domain and hosting stay in your own name — you own everything, always.</p></div></div>
+<!-- ================= WORK ================= -->
+<section class="workSec" id="work">
+  <div class="wrap">
+    <div class="secHead rv">
+      <div class="secTag">Selected Work</div>
+      <h2>Live demos, by industry</h2>
+      <p>Concept demos are labelled honestly — each one is a real, working website built to show exactly what your business would get.</p>
+    </div>
+    <div class="fBtns rv" role="group" aria-label="Filter projects">
+      <button class="fBtn on" data-f="all">All Work</button>
+      <button class="fBtn" data-f="business">Business</button>
+      <button class="fBtn" data-f="restaurants">Restaurants</button>
+      <button class="fBtn" data-f="shops">Shops</button>
+      <button class="fBtn" data-f="construction">Construction</button>
+    </div>
+    <div class="grid rv" id="workGrid">
+      <article class="card tilt" data-cat="construction">
+        <div class="cardArt" style="background:linear-gradient(135deg,#17130f,#7a1f16)"><span class="badge">Concept Demo</span><span class="mono">MB</span></div>
+        <div class="cardBody"><h3>Meridian Builders</h3><p>3D building viewer, cost calculator, progress tracker and site-visit booking for a housing developer.</p>
+        <div class="cardFoot"><span class="cat">Construction · 3D</span><a class="open" href="https://rriyadkhan985-glitch.github.io/construction-demo/" target="_blank" rel="noopener">Open →</a></div></div>
+      </article>
+      <article class="card tilt" data-cat="restaurants">
+        <div class="cardArt" style="background:linear-gradient(135deg,#2a1503,#8a4b12)"><span class="badge">Concept Demo</span><span class="mono">QR</span></div>
+        <div class="cardBody"><h3>Restaurant QR Ordering</h3><p>Guests scan the table QR, browse the menu and order from their phone — no app, no waiting for a waiter.</p>
+        <div class="cardFoot"><span class="cat">Restaurant · QR System</span><a class="open" href="https://rriyadkhan985-glitch.github.io/restaurant-demo/" target="_blank" rel="noopener">Open →</a></div></div>
+      </article>
+      <article class="card tilt" data-cat="shops">
+        <div class="cardArt" style="background:linear-gradient(135deg,#2b0d12,#7a5a16)"><span class="badge live">Live Business</span><span class="mono">BM</span></div>
+        <div class="cardBody"><h3>Bangaliana Masala</h3><p>Our own spice brand's live shop — product catalog with one-tap WhatsApp ordering and home-screen app install.</p>
+        <div class="cardFoot"><span class="cat">Shop · Own Brand</span><a class="open" href="https://rriyadkhan985-glitch.github.io/" target="_blank" rel="noopener">Open →</a></div></div>
+      </article>
+      <article class="card tilt" data-cat="business">
+        <div class="cardArt" style="background:linear-gradient(135deg,#101014,#3f3f4d)"><span class="badge">Concept Demo</span><span class="mono">N</span></div>
+        <div class="cardBody"><h3>NOIR Barber Studio</h3><p>Services, price list, style gallery and WhatsApp booking for a premium gents salon.</p>
+        <div class="cardFoot"><span class="cat">Business · Salon</span><a class="open" href="https://rriyadkhan985-glitch.github.io/salon-demo/" target="_blank" rel="noopener">Open →</a></div></div>
+      </article>
+      <article class="card tilt" data-cat="business">
+        <div class="cardArt" style="background:linear-gradient(135deg,#0d1410,#1f5138)"><span class="badge">Concept Demo</span><span class="mono">IF</span></div>
+        <div class="cardBody"><h3>IRONFORGE Gym</h3><p>Trainers, plans and membership enquiries for a modern fitness studio.</p>
+        <div class="cardFoot"><span class="cat">Business · Gym</span><a class="open" href="https://rriyadkhan985-glitch.github.io/gym-demo/" target="_blank" rel="noopener">Open →</a></div></div>
+      </article>
+      <article class="card tilt" data-cat="business">
+        <div class="cardArt" style="background:linear-gradient(135deg,#0a1622,#14507a)"><span class="badge">Concept Demo</span><span class="mono">NS</span></div>
+        <div class="cardBody"><h3>Hotel Nil Sagor</h3><p>Rooms, rates and direct booking enquiries for a hotel that wants fewer middlemen.</p>
+        <div class="cardFoot"><span class="cat">Business · Hotel</span><a class="open" href="https://rriyadkhan985-glitch.github.io/hotel-demo/" target="_blank" rel="noopener">Open →</a></div></div>
+      </article>
+      <article class="card tilt" data-cat="business">
+        <div class="cardArt" style="background:linear-gradient(135deg,#170f08,#6b3410)"><span class="badge">Concept Demo</span><span class="mono">E</span></div>
+        <div class="cardBody"><h3>EMBER Coffee</h3><p>A warm, premium brand site for a coffee shop — menu, story and locations.</p>
+        <div class="cardFoot"><span class="cat">Business · Café</span><a class="open" href="https://rriyadkhan985-glitch.github.io/coffee-demo/" target="_blank" rel="noopener">Open →</a></div></div>
+      </article>
+      <article class="card tilt" data-cat="shops">
+        <div class="cardArt" style="background:linear-gradient(135deg,#120a1a,#4b2070)"><span class="badge">Concept Demo</span><span class="mono">NE</span></div>
+        <div class="cardBody"><h3>NOIR ESSENCE</h3><p>A luxury 3D-style product showcase for a perfume brand.</p>
+        <div class="cardFoot"><span class="cat">Shop · Perfume</span><a class="open" href="https://rriyadkhan985-glitch.github.io/perfume-demo/" target="_blank" rel="noopener">Open →</a></div></div>
+      </article>
+      <article class="card tilt" data-cat="shops">
+        <div class="cardArt" style="background:linear-gradient(135deg,#1c0f16,#7a2450)"><span class="badge">Concept Demo</span><span class="mono">A</span></div>
+        <div class="cardBody"><h3>AMARA Fashion</h3><p>A clean catalog site for a fashion label, with WhatsApp ordering built in.</p>
+        <div class="cardFoot"><span class="cat">Shop · Fashion</span><a class="open" href="https://rriyadkhan985-glitch.github.io/fashion-demo/" target="_blank" rel="noopener">Open →</a></div></div>
+      </article>
+      <article class="card tilt" data-cat="business">
+        <div class="cardArt" style="background:linear-gradient(135deg,#081a1c,#0f5f6b)"><span class="badge">Concept Demo</span><span class="mono">BS</span></div>
+        <div class="cardBody"><h3>BrightSmile Dental</h3><p>Treatments, doctor profiles and appointment requests for a dental clinic.</p>
+        <div class="cardFoot"><span class="cat">Business · Clinic</span><a class="open" href="https://rriyadkhan985-glitch.github.io/dental-demo/" target="_blank" rel="noopener">Open →</a></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CASE STUDIES ================= -->
+<section id="cases">
+  <div class="wrap">
+    <div class="secHead rv">
+      <div class="secTag">Case Studies</div>
+      <h2>How each project was thought through</h2>
+      <p>Good websites are decisions, not decorations. Two of our demos, broken down.</p>
+    </div>
+
+    <div class="case rv">
+      <div class="caseArt" style="background:linear-gradient(140deg,#17130f,#5c1a12)"><div class="big">Meridian<br>Builders</div></div>
+      <div class="caseTxt">
+        <h3>Meridian Builders — construction company website</h3>
+        <div class="tagRow"><span class="tag">Construction</span><span class="tag demo">Concept Demo</span></div>
+        <h4>Objective</h4>
+        <p>Developers sell flats from Facebook posts that vanish in two days. The goal: one permanent link where a buyer — often an expatriate Bangladeshi — can study projects seriously and book a visit.</p>
+        <h4>Design decisions</h4>
+        <p>Dark, confident editorial layout with a single strong accent; project cards carry real starting prices so nothing feels hidden; every screen pushes toward one action — book a site visit.</p>
+        <h4>Key features</h4>
+        <ul><li>Interactive 3D building viewer</li><li>Filter projects by budget &amp; area</li><li>Flat cost calculator and live construction progress tracker</li><li>Visit booking that lands on WhatsApp</li></ul>
       </div>
     </div>
-  </section>
 
-  <!-- CONTACT -->
-  <section id="contact" class="contact">
-    <div class="wrap contact-grid">
-      <div class="contact-info reveal">
-        <span class="sec-tag">Start your project</span>
-        <h2>Ready for a website that <em>works for you?</em></h2>
-        <p>Fill in the form and it opens WhatsApp with your message ready — or message us directly. Tell us about your business; we reply with a demo and a clear price.</p>
-        <a class="wa-direct" href="https://wa.me/8801867553204" target="_blank" rel="noopener">
-          <span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.48-1.77-1.65-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.9 1.22 3.1.15.2 2.1 3.2 5.1 4.49.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.09 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35M12.04 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.9-9.88a9.83 9.83 0 0 1 9.88 9.89c0 5.45-4.44 9.88-9.89 9.88m8.42-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.9c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.9 11.9 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.9 0-3.18-1.24-6.16-3.48-8.41"/></svg></span>
-          <span><b>WhatsApp: +880 1867-553204</b><span>Fastest reply — usually the same day</span></span>
-        </a>
+    <div class="case rv">
+      <div class="caseArt" style="background:linear-gradient(140deg,#241203,#7a3f0e)"><div class="big">QR<br>Ordering</div></div>
+      <div class="caseTxt">
+        <h3>Restaurant QR Ordering — scan, order, done</h3>
+        <div class="tagRow"><span class="tag">Restaurant</span><span class="tag demo">Concept Demo</span></div>
+        <h4>Objective</h4>
+        <p>Busy restaurants lose orders at peak hour and printed menus are costly to change. The goal: guests order from their own phone in under a minute, and the owner can change the menu anytime.</p>
+        <h4>Design decisions</h4>
+        <p>Built phone-first for one-hand use at a table; big photos, bigger buttons; no download, no sign-up — the two things that kill QR systems. The owner gets an admin view of incoming orders.</p>
+        <h4>Key features</h4>
+        <ul><li>Table QR code opens the live menu instantly</li><li>Cart and order placement from the guest's phone</li><li>Orders reach the restaurant immediately</li><li>Menu and prices editable without printing anything</li></ul>
       </div>
-      <form id="orderForm" class="reveal" novalidate>
-        <div class="field">
-          <label for="fName">Your name *</label>
-          <input type="text" id="fName" name="name" placeholder="e.g. Md. Karim Rahman" autocomplete="name">
-          <p class="err" id="errName">Please write your name so we know who we're talking to.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROCESS ================= -->
+<section class="process" id="process">
+  <div class="wrap">
+    <div class="secHead rv">
+      <div class="secTag">Process</div>
+      <h2>Simple process. No surprises.</h2>
+    </div>
+    <div class="steps rv">
+      <div class="step"><div class="n">01</div><h3>Discover</h3><p>A free conversation about your business, your customers and what the website must do. You get a clear price before anything starts.</p></div>
+      <div class="step"><div class="n">02</div><h3>Design</h3><p>We design the look around your brand and show you a preview. Nothing is final until you approve it.</p></div>
+      <div class="step"><div class="n">03</div><h3>Build &amp; Test</h3><p>We build the full site and test every button, form and link — on real phones — the way your customers will actually use it.</p></div>
+      <div class="step"><div class="n">04</div><h3>Launch &amp; Support</h3><p>Your site goes live on your own domain, in your name. Updates can be done for you, or by you from your own admin panel.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRICING ================= -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="secHead rv">
+      <div class="secTag">Pricing</div>
+      <h2>Honest pricing, in taka</h2>
+      <p>Three clear packages. 50% advance to start, the rest on delivery. Domain and hosting stay in your own name — always.</p>
+    </div>
+    <div class="priceGrid rv">
+      <div class="pCard">
+        <h3>Basic</h3>
+        <div class="amt">৳5,000</div>
+        <p class="for">For small businesses getting online properly for the first time.</p>
+        <ul><li>4–5 page complete website</li><li>WhatsApp booking / order button</li><li>Google Maps location</li><li>Mobile-first premium design</li><li>Contact details &amp; social links</li></ul>
+        <button class="btn btnGhost pkgBtn" data-pkg="Basic — ৳5,000">Choose Basic</button>
+      </div>
+      <div class="pCard hot">
+        <span class="pop">Most Popular</span>
+        <h3>Standard</h3>
+        <div class="amt">৳8,000</div>
+        <p class="for">For businesses that want bookings and enquiries handled properly.</p>
+        <ul><li>Everything in Basic</li><li>Booking / enquiry form</li><li>Offers &amp; customer reviews sections</li><li>Google search setup</li><li>Home-screen web app icon</li></ul>
+        <button class="btn btnAcc pkgBtn" data-pkg="Standard — ৳8,000">Choose Standard</button>
+      </div>
+      <div class="pCard">
+        <h3>Premium</h3>
+        <div class="amt">৳12,000</div>
+        <p class="for">For brands that want the full experience and control.</p>
+        <ul><li>Everything in Standard</li><li>Premium / 3D-style design or QR ordering</li><li>Admin conveniences for easy updates</li><li>1 month of small-update support</li><li>Priority delivery</li></ul>
+        <button class="btn btnGhost pkgBtn" data-pkg="Premium — ৳12,000">Choose Premium</button>
+      </div>
+    </div>
+
+    <div class="consStrip rv">
+      <div>
+        <h3>🏗️ Construction Package — for developers &amp; builders</h3>
+        <p>Project pages, 3D building viewer, cost calculator, progress tracker and your own admin panel — the full Meridian Builders system, built for your company.</p>
+      </div>
+      <div class="consPrices">
+        <div><b>৳15,000</b><span>Basic</span></div>
+        <div><b>৳25,000</b><span>Standard</span></div>
+        <div><b>৳40,000</b><span>Premium</span></div>
+      </div>
+      <button class="btn btnAcc pkgBtn" data-pkg="Construction Package">Ask About Construction</button>
+    </div>
+    <p class="priceNote">Domain + hosting is a separate yearly cost (roughly ৳1,500–2,500/year), registered in your own name. Optional update service available at ৳1,000–2,000/month.</p>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section id="faq" style="padding-top:20px">
+  <div class="wrap">
+    <div class="secHead rv">
+      <div class="secTag">FAQ</div>
+      <h2>Questions every client asks</h2>
+    </div>
+    <div class="faqList rv">
+      <div class="faq"><button aria-expanded="false">How much does a website cost?<span class="pm">+</span></button><div class="ans"><p>Packages start at ৳5,000 (Basic), ৳8,000 (Standard) and ৳12,000 (Premium). Construction company websites have a specialist package at ৳15,000–40,000. You pay 50% advance to start and the rest only when your site is delivered.</p></div></div>
+      <div class="faq"><button aria-expanded="false">Will the website and domain be mine?<span class="pm">+</span></button><div class="ans"><p>Yes — completely. Your domain is registered in your own name and the website is your property. We never hold a client's site hostage; that is a promise we put in writing before work begins.</p></div></div>
+      <div class="faq"><button aria-expanded="false">I already have a Facebook page. Why do I need a website?<span class="pm">+</span></button><div class="ans"><p>A Facebook post disappears in two days; a website stays on Google for years. Customers — especially expatriate Bangladeshis — search Google when they are ready to buy. Your page brings attention; your website closes the sale.</p></div></div>
+      <div class="faq"><button aria-expanded="false">How long does it take?<span class="pm">+</span></button><div class="ans"><p>Basic sites are usually ready within a few days of receiving your photos and details. Bigger projects get a clear, written timeline before we start — and progress you can actually see.</p></div></div>
+      <div class="faq"><button aria-expanded="false">Can I update the site myself later?<span class="pm">+</span></button><div class="ans"><p>Yes. With an admin panel you can change prices, offers and project progress from your phone. Or take our update service (৳1,000–2,000/month) and we handle everything for you.</p></div></div>
+      <div class="faq"><button aria-expanded="false">How do I pay?<span class="pm">+</span></button><div class="ans"><p>By bKash Send Money — 50% advance to start work, 50% on delivery. You confirm the payment in your own bKash app; we never ask for your PIN or any password.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="cGrid">
+      <div class="cInfo rv">
+        <div class="secTag">Contact</div>
+        <h2>Let's build yours.</h2>
+        <p>Tell us about your business and we'll reply on WhatsApp with honest advice — and a clear price. No pressure, no obligation.</p>
+        <div class="cRow"><span class="ic">💬</span><span>WhatsApp — <b>01867-553204</b></span></div>
+        <div class="cRow"><span class="ic">📍</span><span>Dhaka, Bangladesh — working with clients nationwide</span></div>
+        <div class="cRow"><span class="ic">🕘</span><span>Open every day, 9 AM – 11 PM</span></div>
+        <div class="cRow"><span class="ic">📸</span><span>Instagram — <b>@riyad000016</b></span></div>
+      </div>
+      <form id="enquiry" class="rv" novalidate>
+        <div class="fField" id="fwName">
+          <label for="fName">Your Name *</label>
+          <input id="fName" type="text" placeholder="e.g. Md. Karim" autocomplete="name">
+          <div class="err">Please write your name.</div>
         </div>
-        <div class="field">
-          <label for="fPhone">Your mobile number <small>(optional — BD format 01xxxxxxxxx)</small></label>
-          <input type="tel" id="fPhone" name="phone" placeholder="01xxxxxxxxx" autocomplete="tel" inputmode="tel">
-          <p class="err" id="errPhone">That doesn't look like a Bangladeshi mobile number. It should be 11 digits starting with 01 — or leave it empty.</p>
+        <div class="fField" id="fwPhone">
+          <label for="fPhone">WhatsApp Number *</label>
+          <input id="fPhone" type="tel" placeholder="01XXXXXXXXX" autocomplete="tel">
+          <div class="err">Please write a valid Bangladeshi mobile number (01XXXXXXXXX).</div>
         </div>
-        <div class="field">
-          <label for="fBiz">Business type</label>
-          <select id="fBiz" name="biz">
-            <option value="">Select your business type…</option>
-            <option>Restaurant / Cafe</option>
-            <option>Salon / Parlour / Barber</option>
-            <option>Fashion / Clothing Shop</option>
-            <option>Gym / Fitness</option>
-            <option>Clinic / Dental</option>
-            <option>Hotel / Resort</option>
-            <option>Perfume / Cosmetics</option>
-            <option>General Shop / Business</option>
-            <option>Personal Portfolio / Brand</option>
-            <option>Other</option>
-          </select>
+        <div class="fField">
+          <label for="fBiz">Business Name / Type</label>
+          <input id="fBiz" type="text" placeholder="e.g. Sunrise Restaurant, Khulna">
         </div>
-        <div class="field">
-          <label for="fPkg">Package</label>
-          <select id="fPkg" name="pkg">
-            <option value="">Not sure yet — advise me</option>
+        <div class="fField" id="fwPkg">
+          <label for="fPkg">Package *</label>
+          <select id="fPkg">
+            <option value="">— Choose a package —</option>
             <option>Basic — ৳5,000</option>
             <option>Standard — ৳8,000</option>
             <option>Premium — ৳12,000</option>
+            <option>Construction Package</option>
+            <option>Not sure yet — advise me</option>
           </select>
+          <div class="err">Please choose a package (or "Not sure yet").</div>
         </div>
-        <div class="field">
-          <label for="fMsg">Tell us about your business <small>(optional)</small></label>
-          <textarea id="fMsg" name="msg" placeholder="What do you sell? Where is your business? Anything you want on the website…"></textarea>
+        <div class="fField">
+          <label for="fMsg">Anything we should know?</label>
+          <textarea id="fMsg" rows="3" placeholder="Your pages, features, deadline..."></textarea>
         </div>
-        <button type="submit" class="btn btn-gold form-btn magnetic">
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.48-1.77-1.65-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.9 1.22 3.1.15.2 2.1 3.2 5.1 4.49.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.09 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35M12.04 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.9-9.88a9.83 9.83 0 0 1 9.88 9.89c0 5.45-4.44 9.88-9.89 9.88m8.42-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.9c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.9 11.9 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.9 0-3.18-1.24-6.16-3.48-8.41"/></svg>
-          Send via WhatsApp
-        </button>
-        <p class="form-hint">This opens WhatsApp with your message ready to send — nothing is sent until you tap send there.</p>
+        <button type="submit" class="btn btnAcc">Send Enquiry on WhatsApp →</button>
+        <p class="formNote">Submitting opens WhatsApp with your enquiry ready — just press send there. We never ask for passwords or PINs.</p>
       </form>
     </div>
-  </section>
+  </div>
+</section>
 </main>
 
 <footer>
   <div class="wrap">
-    <div class="foot">
-      <a class="logo" href="#top">Riyad <span>Web Studio</span><small>Websites that sell</small></a>
-      <nav class="foot-links" aria-label="Footer">
-        <a href="#services">Services</a><a href="#work">Work</a><a href="#process">Process</a><a href="#pricing">Pricing</a><a href="#contact">Contact</a>
-        <a href="https://wa.me/8801867553204" target="_blank" rel="noopener">WhatsApp</a>
-      </nav>
+    <div class="fGrid">
+      <div>
+        <a class="logo" href="#top"><span class="mark">R</span><span>RIYAD<small>Web Studio</small></span></a>
+        <p>Premium websites and digital experiences for businesses in Bangladesh — designed in Dhaka, priced honestly, tested thoroughly.</p>
+      </div>
+      <div class="fCol"><h4>Studio</h4><a href="#showcase">Showcase</a><a href="#services">Services</a><a href="#work">Work</a><a href="#pricing">Pricing</a></div>
+      <div class="fCol"><h4>Popular</h4><a href="https://rriyadkhan985-glitch.github.io/construction-demo/" target="_blank" rel="noopener">Construction Demo</a><a href="https://rriyadkhan985-glitch.github.io/restaurant-demo/" target="_blank" rel="noopener">QR Ordering Demo</a><a href="https://rriyadkhan985-glitch.github.io/riyad-studio-os/" target="_blank" rel="noopener">Studio Portfolio</a></div>
+      <div class="fCol"><h4>Contact</h4><a href="https://wa.me/8801867553204" target="_blank" rel="noopener">WhatsApp: 01867-553204</a><a href="https://www.instagram.com/riyad000016" target="_blank" rel="noopener">Instagram: @riyad000016</a><a href="#contact">Enquiry Form</a></div>
     </div>
-    <div class="foot-bottom">
-      <span>© 2026 Riyad Web Studio. All rights reserved.</span>
-      <span>Made in <b>Bangladesh</b></span>
-    </div>
+    <div class="fBot"><span>© 2026 Riyad Web Studio · Dhaka, Bangladesh</span><span>Every demo on this page is a real working website.</span></div>
   </div>
 </footer>
 
+<a id="waFloat" href="https://wa.me/8801867553204?text=Hello%20Riyad%20Web%20Studio%2C%20I%20want%20a%20website%20for%20my%20business." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">💬</a>
+
 <script>
+window.RIYAD_DB = { url: "https://rujggtfhpvyzargzgrhg.supabase.co", key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ1amdndGZocHZ5emFyZ3pncmhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ0ODE0ODUsImV4cCI6MjExMDA1NzQ4NX0.v5ibbAomC63BdwG90jUJVkgaQhNTz9qI3Y4fvbowqNw" };
+window.addEventListener('load', function(){ document.body.classList.add('loaded'); });
+setTimeout(function(){ document.body.classList.add('loaded'); }, 1200);
+
+/* ---------- custom cursor (fine pointers only) ---------- */
 (function(){
-  "use strict";
-  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  /* ---- preloader ---- */
-  var pre = document.getElementById("preloader");
-  function hidePre(){ if(pre){ pre.classList.add("done"); setTimeout(function(){ pre.remove(); }, 800); } }
-  window.addEventListener("load", function(){ setTimeout(hidePre, reduced ? 50 : 700); });
-  setTimeout(hidePre, 2600); /* safety */
-
-  /* ---- hero kinetic split ---- */
-  var h1 = document.getElementById("heroTitle");
-  if(h1 && !reduced){
-    var nodes = Array.prototype.slice.call(h1.childNodes), idx = 0, out = "";
-    nodes.forEach(function(node){
-      if(node.nodeType === 3){
-        node.textContent.split(/(\s+)/).forEach(function(part){
-          if(!part) return;
-          if(/^\s+$/.test(part)){ out += " "; }
-          else { out += '<span class="word"><span style="--i:'+(idx++)+'">'+part.replace(/</g,"&lt;")+'</span></span>'; }
-        });
-      } else if(node.nodeType === 1){
-        var cls = node.className || "";
-        node.textContent.split(/(\s+)/).forEach(function(part){
-          if(!part) return;
-          if(/^\s+$/.test(part)){ out += " "; }
-          else { out += '<span class="word"><span class="'+cls+'" style="--i:'+(idx++)+'">'+part.replace(/</g,"&lt;")+'</span></span>'; }
-        });
-      }
-    });
-    h1.innerHTML = out;
-  }
-
-  /* ---- work cards ---- */
-  var demos = [
-    {n:"AMARA Fashion Store", c:"Online fashion store with product catalog", u:"https://rriyadkhan985-glitch.github.io/fashion-demo/", m:"A"},
-    {n:"IRONFORGE Gym", c:"Gym website with plans & membership enquiry", u:"https://rriyadkhan985-glitch.github.io/gym-demo/", m:"I"},
-    {n:"BrightSmile Dental Clinic", c:"Clinic website with services & appointment booking", u:"https://rriyadkhan985-glitch.github.io/dental-demo/", m:"B"},
-    {n:"নীল সাগর Resort", c:"Resort website with rooms, gallery & booking", u:"https://rriyadkhan985-glitch.github.io/hotel-demo/", m:"ন"},
-    {n:"EMBER Coffee", c:"Coffee shop website with menu & story", u:"https://rriyadkhan985-glitch.github.io/coffee-demo/", m:"E"},
-    {n:"NOIR ESSENCE Perfume", c:"3D perfume shop with premium product showcase", u:"https://rriyadkhan985-glitch.github.io/perfume-demo/", m:"N"},
-    {n:"NOIR Barber Studio", c:"Barber studio with 3D style gallery & booking", u:"https://rriyadkhan985-glitch.github.io/salon-demo/", m:"N"},
-    {n:"Shat Rong Gents Parlour", c:"Gents parlour website with services & prices", u:"https://rriyadkhan985-glitch.github.io/salon-hero-demo/", m:"S"},
-    {n:"Restaurant QR Ordering", c:"Scan, browse the menu & order from the table", u:"https://rriyadkhan985-glitch.github.io/restaurant-demo/", m:"R"},
-    {n:"Portfolio Collection", c:"Personal portfolio websites for professionals", u:"https://rriyadkhan985-glitch.github.io/portfolio-demo/", m:"P"}
-  ];
-  var grid = document.getElementById("workGrid");
-  if(grid){
-    demos.forEach(function(d, i){
-      var card = document.createElement("article");
-      card.className = "work reveal tilt"; card.style.setProperty("--d", i % 3);
-      card.innerHTML =
-        '<div class="work-visual"><span class="mono"></span></div>' +
-        '<div class="work-body"><h3></h3><p></p>' +
-        '<a class="live-btn" target="_blank" rel="noopener">Live Demo ' +
-        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a></div>';
-      card.querySelector(".mono").textContent = d.m;
-      card.querySelector("h3").textContent = d.n;
-      card.querySelector("p").textContent = d.c;
-      var a = card.querySelector("a"); a.href = d.u; a.setAttribute("aria-label", d.n + " — open live demo");
-      grid.appendChild(card);
-    });
-  }
-
-  /* ---- marquee duplicate for seamless loop ---- */
-  var track = document.getElementById("marqueeTrack");
-  if(track){ track.innerHTML += track.innerHTML; }
-
-  /* ---- scroll reveals + section bars ---- */
-  var revealEls = document.querySelectorAll(".reveal, .sec-head");
-  if("IntersectionObserver" in window && !reduced){
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("inview"); io.unobserve(e.target); } });
-    }, {threshold: .12});
-    revealEls.forEach(function(el){ io.observe(el); });
-  } else {
-    revealEls.forEach(function(el){ el.classList.add("inview"); });
-  }
-
-  /* ---- animated counters ---- */
-  var counters = document.querySelectorAll(".count");
-  function runCount(el){
-    var target = parseInt(el.getAttribute("data-target"), 10) || 0;
-    if(reduced){ el.textContent = target; return; }
-    var start = null, dur = 1400;
-    function step(ts){
-      if(!start) start = ts;
-      var p = Math.min((ts - start) / dur, 1);
-      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
-      if(p < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-  if("IntersectionObserver" in window){
-    var cio = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){ if(e.isIntersecting){ runCount(e.target); cio.unobserve(e.target); } });
-    }, {threshold: .5});
-    counters.forEach(function(c){ cio.observe(c); });
-  } else { counters.forEach(runCount); }
-
-  /* ---- tilt cards (fine pointer only) ---- */
-  if(window.matchMedia("(pointer: fine)").matches && !reduced){
-    document.querySelectorAll(".tilt").forEach(function(card){
-      card.addEventListener("pointermove", function(ev){
-        var r = card.getBoundingClientRect();
-        var x = (ev.clientX - r.left) / r.width - .5, y = (ev.clientY - r.top) / r.height - .5;
-        card.style.transform = "perspective(900px) rotateY(" + (x * 6) + "deg) rotateX(" + (-y * 6) + "deg) translateY(-4px)";
-      });
-      card.addEventListener("pointerleave", function(){ card.style.transform = ""; });
-    });
-
-    /* ---- magnetic buttons ---- */
-    document.querySelectorAll(".magnetic").forEach(function(btn){
-      btn.addEventListener("pointermove", function(ev){
-        var r = btn.getBoundingClientRect();
-        var x = ev.clientX - r.left - r.width / 2, y = ev.clientY - r.top - r.height / 2;
-        btn.style.transform = "translate(" + x * .18 + "px," + y * .28 + "px)";
-      });
-      btn.addEventListener("pointerleave", function(){ btn.style.transform = ""; });
-    });
-  }
-
-  /* ---- subtle parallax on glow ---- */
-  if(!reduced){
-    var glow = document.querySelector(".glow");
-    var ticking = false;
-    window.addEventListener("scroll", function(){
-      if(!ticking){ ticking = true; requestAnimationFrame(function(){
-        glow.style.transform = "translateY(" + (window.scrollY * .06) + "px)"; ticking = false;
-      }); }
-    }, {passive: true});
-  }
-
-  /* ---- order form -> WhatsApp ---- */
-  var form = document.getElementById("orderForm");
-  form.addEventListener("submit", function(ev){
-    ev.preventDefault();
-    var name = document.getElementById("fName"),
-        phone = document.getElementById("fPhone"),
-        biz = document.getElementById("fBiz"),
-        pkg = document.getElementById("fPkg"),
-        msg = document.getElementById("fMsg"),
-        errName = document.getElementById("errName"),
-        errPhone = document.getElementById("errPhone"),
-        ok = true;
-
-    function mark(input, err, bad){
-      input.classList.toggle("invalid", bad);
-      err.classList.toggle("show", bad);
-      if(bad) ok = false;
-    }
-    mark(name, errName, name.value.trim().length < 2);
-    var pv = phone.value.trim().replace(/[\s-]/g, "");
-    mark(phone, errPhone, pv !== "" && !/^01[3-9]\d{8}$/.test(pv));
-    if(!ok){ (name.classList.contains("invalid") ? name : phone).focus(); return; }
-
-    var lines = ["Hello Riyad Web Studio, I want a website for my business."];
-    lines.push("Name: " + name.value.trim());
-    if(pv) lines.push("My mobile: " + pv);
-    if(biz.value) lines.push("Business type: " + biz.value);
-    lines.push("Package: " + (pkg.value || "Not sure yet — please advise"));
-    if(msg.value.trim()) lines.push("About my business: " + msg.value.trim());
-    window.open("https://wa.me/8801867553204?text=" + encodeURIComponent(lines.join("\n")), "_blank", "noopener");
+  if (!window.matchMedia('(pointer:fine)').matches) return;
+  var cur = document.getElementById('cur'), ring = document.getElementById('curRing');
+  var mx = -100, my = -100, rx = -100, ry = -100;
+  document.addEventListener('mousemove', function(e){ mx = e.clientX; my = e.clientY; cur.style.left = mx+'px'; cur.style.top = my+'px'; });
+  (function loop(){ rx += (mx-rx)*.16; ry += (my-ry)*.16; ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(loop); })();
+  document.querySelectorAll('a, button, .card, .svc').forEach(function(el){
+    el.addEventListener('mouseenter', function(){ ring.classList.add('big'); });
+    el.addEventListener('mouseleave', function(){ ring.classList.remove('big'); });
   });
-  ["fName","fPhone"].forEach(function(id){
-    document.getElementById(id).addEventListener("input", function(){
-      this.classList.remove("invalid");
-      var err = document.getElementById(id === "fName" ? "errName" : "errPhone");
-      if(err) err.classList.remove("show");
+})();
+
+/* ---------- marquee: duplicate for seamless loop ---------- */
+(function(){ var t = document.getElementById('mqTrack'); t.innerHTML += t.innerHTML; })();
+
+/* ---------- reveal on scroll ---------- */
+(function(){
+  var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: .12 });
+  document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+})();
+
+/* ---------- mobile menu ---------- */
+(function(){
+  var b = document.getElementById('burger'), m = document.getElementById('mobileMenu');
+  b.addEventListener('click', function(){
+    var open = m.classList.toggle('open');
+    b.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  m.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ m.classList.remove('open'); b.setAttribute('aria-expanded','false'); }); });
+})();
+
+/* ---------- showcase tabs ---------- */
+var SC = [
+  { url:'rriyadkhan985-glitch.github.io/construction-demo', bg:'linear-gradient(135deg,#17130f,#3a1410 55%,#120d0b)', chip1:'3D Viewer', chip2:'Cost Calculator',
+    big:'Meridian<br>Builders', small:"A developer's website where buyers explore buildings in 3D before they ever visit the site office.",
+    tags:'<span class="tag">Construction</span><span class="tag demo">Concept Demo</span>', title:'A sales office that never closes',
+    obj:'Objective: give a Dhaka housing developer one link where buyers can browse projects, filter by budget and area, calculate flat costs and book site visits — instead of losing them in a Facebook feed.',
+    feats:['Interactive 3D building viewer','Budget & area project filter','Flat cost calculator & construction progress tracker','Site-visit booking straight to WhatsApp'],
+    link:'https://rriyadkhan985-glitch.github.io/construction-demo/' },
+  { url:'rriyadkhan985-glitch.github.io/restaurant-demo', bg:'linear-gradient(135deg,#241203,#7a3f0e 60%,#170b02)', chip1:'Scan & Order', chip2:'No App Needed',
+    big:'QR<br>Ordering', small:'Guests scan the table code and order from their own phone — the kitchen gets it instantly.',
+    tags:'<span class="tag">Restaurant</span><span class="tag demo">Concept Demo</span>', title:'Peak hour, without the chaos',
+    obj:'Objective: help busy restaurants take more orders at peak hour with fewer mistakes — and let the owner change menu prices anytime, without reprinting anything.',
+    feats:['Table QR opens the live menu instantly','Cart and ordering from the guest\u2019s phone','Orders reach the restaurant immediately','Menu editable from an admin view'],
+    link:'https://rriyadkhan985-glitch.github.io/restaurant-demo/' },
+  { url:'rriyadkhan985-glitch.github.io', bg:'linear-gradient(135deg,#2b0d12,#6d5416 60%,#1c090d)', chip1:'WhatsApp Orders', chip2:'Installable App',
+    big:'Bangaliana<br>Masala', small:'Our own spice brand, selling online with a catalog and one-tap WhatsApp ordering.',
+    tags:'<span class="tag">Online Shop</span><span class="tag live">Live Business</span>', title:'Our own brand — proof, not promises',
+    obj:'Objective: sell Bangaliana Masala spice packets online without paying for an expensive payment gateway — a clean catalog where every product is one tap away from a WhatsApp order.',
+    feats:['Product catalog with photos and prices','One-tap WhatsApp ordering','Installable web app (home-screen icon)','Built and run by this studio, end to end'],
+    link:'https://rriyadkhan985-glitch.github.io/' }
+];
+(function(){
+  var tabs = document.querySelectorAll('.scTab');
+  function setSc(i){
+    var d = SC[i];
+    tabs.forEach(function(t, j){ t.classList.toggle('on', j === i); t.setAttribute('aria-selected', j === i ? 'true' : 'false'); });
+    document.getElementById('scUrl').textContent = d.url;
+    var body = document.getElementById('scBody'); body.style.background = d.bg;
+    document.getElementById('scChip1').textContent = d.chip1;
+    document.getElementById('scChip2').textContent = d.chip2;
+    document.getElementById('scBig').innerHTML = d.big;
+    document.getElementById('scSmall').textContent = d.small;
+    document.getElementById('scTags').innerHTML = d.tags;
+    document.getElementById('scTitle').textContent = d.title;
+    document.getElementById('scObj').textContent = d.obj;
+    document.getElementById('scFeats').innerHTML = d.feats.map(function(f){ return '<li>' + f + '</li>'; }).join('');
+    document.getElementById('scLink').href = d.link;
+  }
+  tabs.forEach(function(t){ t.addEventListener('click', function(){ setSc(parseInt(t.dataset.sc, 10)); }); });
+})();
+
+/* ---------- work filter ---------- */
+(function(){
+  var btns = document.querySelectorAll('.fBtn'), cards = document.querySelectorAll('#workGrid .card');
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      btns.forEach(function(x){ x.classList.remove('on'); });
+      b.classList.add('on');
+      var f = b.dataset.f;
+      cards.forEach(function(c){ c.classList.toggle('hide', f !== 'all' && c.dataset.cat !== f); });
     });
+  });
+})();
+
+/* ---------- subtle 3D tilt (desktop) ---------- */
+(function(){
+  if (!window.matchMedia('(pointer:fine)').matches) return;
+  document.querySelectorAll('.tilt').forEach(function(el){
+    el.addEventListener('mousemove', function(e){
+      var r = el.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      el.style.transform = 'perspective(900px) rotateY(' + (x * 5) + 'deg) rotateX(' + (-y * 5) + 'deg)';
+    });
+    el.addEventListener('mouseleave', function(){ el.style.transform = ''; });
+  });
+})();
+
+/* ---------- FAQ accordion ---------- */
+document.querySelectorAll('.faq').forEach(function(f){
+  var btn = f.querySelector('button'), ans = f.querySelector('.ans');
+  btn.addEventListener('click', function(){
+    var open = f.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    ans.style.maxHeight = open ? ans.scrollHeight + 'px' : '0px';
+  });
+});
+
+/* ---------- pricing CTAs -> prefill form ---------- */
+document.querySelectorAll('.pkgBtn').forEach(function(b){
+  b.addEventListener('click', function(){
+    var sel = document.getElementById('fPkg'), want = b.dataset.pkg;
+    for (var i = 0; i < sel.options.length; i++){ if (sel.options[i].text === want){ sel.selectedIndex = i; break; } }
+    document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+/* ---------- enquiry form: validation + WhatsApp + silent panel save ---------- */
+(function(){
+  var form = document.getElementById('enquiry');
+  function mark(id, bad){ document.getElementById(id).classList.toggle('invalid', bad); return !bad; }
+  function cleanPhone(p){ return p.replace(/[\s-]/g, ''); }
+  function validPhone(p){
+    p = cleanPhone(p);
+    if (/^\+8801[3-9]\d{8}$/.test(p)) return true;
+    if (/^8801[3-9]\d{8}$/.test(p)) return true;
+    if (/^01[3-9]\d{8}$/.test(p)) return true;
+    return false;
+  }
+  ['fName','fPhone','fPkg'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', function(){
+      var fw = { fName:'fwName', fPhone:'fwPhone', fPkg:'fwPkg' }[id];
+      document.getElementById(fw).classList.remove('invalid');
+    });
+  });
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('fName').value.trim();
+    var phone = document.getElementById('fPhone').value.trim();
+    var biz = document.getElementById('fBiz').value.trim();
+    var pkg = document.getElementById('fPkg').value;
+    var msg = document.getElementById('fMsg').value.trim();
+    var ok = true;
+    ok = mark('fwName', name.length < 2) && ok;
+    ok = mark('fwPhone', !validPhone(phone)) && ok;
+    ok = mark('fwPkg', pkg === '') && ok;
+    if (!ok) return;
+    var lines = ['New enquiry — Riyad Web Studio', 'Name: ' + name, 'Phone: ' + phone];
+    if (biz) lines.push('Business: ' + biz);
+    lines.push('Package: ' + pkg);
+    if (msg) lines.push('Details: ' + msg);
+    try {
+      var DB = window.RIYAD_DB;
+      if (DB && DB.url && DB.key){
+        fetch(DB.url + '/rest/v1/orders', { method: 'POST', keepalive: true,
+          headers: { 'apikey': DB.key, 'Authorization': 'Bearer ' + DB.key, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+          body: JSON.stringify({ name: name, phone: phone, business: biz, package: pkg, message: msg, source: 'flagship-v2' })
+        }).catch(function(){});
+      }
+    } catch (err) {}
+    window.open('https://wa.me/8801867553204?text=' + encodeURIComponent(lines.join('\n')), '_blank');
   });
 })();
 </script>
