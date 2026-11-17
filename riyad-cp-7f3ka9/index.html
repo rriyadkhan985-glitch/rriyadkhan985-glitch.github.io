@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <title>RIYAD OS — Control Panel</title>
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0A0F0A">
 <style>
   :root{
     --bg:#090D0B; --lime:#A3E635; --lime-dim:rgba(163,230,53,.55);
@@ -104,6 +108,25 @@
   .empty{padding:34px 20px;text-align:center;color:var(--ink-dim);font-size:14.5px;line-height:1.6}
   #dashMsg{font-size:13.5px;color:var(--ink-dim);margin-bottom:10px;min-height:18px}
   #dashMsg.err{color:var(--danger)}
+  /* ---------- SITE UPDATE ---------- */
+  .upd{padding:18px;margin-bottom:12px}
+  .upd h3{font-size:16.5px;font-weight:800;margin-bottom:4px}
+  .upd h3 em{font-style:normal;color:var(--lime)}
+  .upd .hint{font-size:12.5px;color:var(--ink-dim);line-height:1.55;margin-bottom:12px}
+  .upd-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+  .upd label{font-size:11.5px;color:var(--ink-dim);font-weight:700;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:5px}
+  .upd input{width:100%;background:rgba(0,0,0,.35);border:1px solid var(--glass-brd);border-radius:12px;color:var(--ink);padding:12px 13px;font-size:14.5px;outline:none;min-width:0}
+  .upd input:focus{border-color:var(--lime);box-shadow:0 0 0 3px rgba(163,230,53,.15)}
+  .upd .btn{margin-top:12px}
+  .demo-row{display:flex;align-items:center;gap:9px;background:rgba(0,0,0,.28);border:1px solid rgba(163,230,53,.12);border-radius:12px;padding:10px 12px;margin-bottom:8px}
+  .demo-row .di{flex:1;min-width:0}
+  .demo-row .dn{font-weight:800;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .demo-row .dt{font-size:12px;color:var(--ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .demo-del{background:rgba(248,113,113,.12);color:#FCA5A5;border:1px solid rgba(248,113,113,.35);border-radius:10px;padding:8px 12px;font-weight:800;cursor:pointer;font-size:13px}
+  #updMsg{font-size:13.5px;color:var(--ink-dim);margin-top:10px;min-height:18px}
+  #updMsg.err{color:var(--danger)}
+  #updMsg.ok{color:var(--lime)}
+  @media (max-width:520px){ .upd-grid{grid-template-columns:1fr} }
   @media (max-width:520px){ .stats{grid-template-columns:repeat(3,1fr);gap:8px} .stat .num{font-size:22px} .pw-row{flex-direction:column} .pw-row .btn{width:100%} }
 </style>
 </head>
@@ -164,6 +187,33 @@
     </div>
 
     <div id="orders"></div>
+
+    <div class="dash-title" style="margin:22px 0 12px">Site <em>আপডেট</em></div>
+
+    <div class="upd glass">
+      <h3>প্যাকেজের <em>দাম</em></h3>
+      <div class="hint">দাম বদলে সেভ করলেই পোর্টফোলিও সাইটে অটোমেটিক বদলে যাবে — সাইট নতুন করে বানাতে হবে না।</div>
+      <div class="upd-grid">
+        <div><label>Basic (৳)</label><input id="cpBasic" type="number" min="0" step="100"></div>
+        <div><label>Standard (৳)</label><input id="cpStandard" type="number" min="0" step="100"></div>
+        <div><label>Premium (৳)</label><input id="cpPremium" type="number" min="0" step="100"></div>
+      </div>
+      <button class="btn btn-lime" id="savePricesBtn" type="button">দাম সেভ করো</button>
+    </div>
+
+    <div class="upd glass">
+      <h3>Live Work <em>ডেমো</em></h3>
+      <div class="hint">নতুন ডেমো যোগ করো বা পুরনোটা মুছে ফেলো — তারপর "ডেমো লিস্ট সেভ করো" চাপ দিলেই সাইটের Live Work-এ অটোমেটিক দেখা যাবে।</div>
+      <div id="demoList"></div>
+      <div class="upd-grid">
+        <div><label>ডেমোর নাম</label><input id="ndName" type="text" placeholder="যেমন: City Salon"></div>
+        <div><label>ধরন</label><input id="ndType" type="text" placeholder="Website · Salon"></div>
+        <div><label>লিংক (URL)</label><input id="ndUrl" type="url" placeholder="https://..."></div>
+      </div>
+      <button class="btn btn-ghost" id="addDemoBtn" type="button" style="width:100%;margin-top:10px">+ তালিকায় যোগ করো</button>
+      <button class="btn btn-lime" id="saveDemosBtn" type="button">ডেমো লিস্ট সেভ করো</button>
+      <div id="updMsg"></div>
+    </div>
   </section>
 
 </div>
@@ -255,6 +305,7 @@ function doUnlock(pw){
   lockSay("");
   updateFaceSetupBtn();
   loadOrders();
+  loadContent();
 }
 $("lockBtn").addEventListener("click", function(){
   sessionSecret = null;
@@ -314,6 +365,67 @@ function renderOrders(rows, demo){
       + '</article>';
   }).join("");
 }
+
+/* ---------- site content (admin -> customer auto-update) ---------- */
+var demoArr = [];
+function updSay(msg, cls){ var m = $("updMsg"); if (m){ m.textContent = msg || ""; m.className = cls || ""; } }
+function rpc(name, body){
+  return fetch(PANEL_DB.url + "/rest/v1/rpc/" + name, { method:"POST",
+    headers:{ "apikey":PANEL_DB.key, "Authorization":"Bearer " + PANEL_DB.key, "Content-Type":"application/json" },
+    body: JSON.stringify(body)
+  }).then(function(r){ if (!r.ok) throw new Error(name); return r.json().catch(function(){ return null; }); });
+}
+function loadContent(){
+  rpc("get_content", {}).then(function(c){
+    c = c || {};
+    if (c.packages){
+      $("cpBasic").value = c.packages.basic || "";
+      $("cpStandard").value = c.packages.standard || "";
+      $("cpPremium").value = c.packages.premium || "";
+    }
+    demoArr = Array.isArray(c.demos) ? c.demos.slice() : [];
+    renderDemoList();
+  }).catch(function(){ updSay("সাইটের বর্তমান কনটেন্ট আনা যাচ্ছে না — ইন্টারনেট চেক করো।", "err"); });
+}
+function renderDemoList(){
+  var box = $("demoList");
+  if (!demoArr.length){ box.innerHTML = '<div class="empty" style="padding:16px">কোনো ডেমো নেই।</div>'; return; }
+  box.innerHTML = demoArr.map(function(d, i){
+    return '<div class="demo-row"><div class="di"><div class="dn">' + esc(d.name) + '</div><div class="dt">' + esc(d.type || "") + " · " + esc(d.url) + '</div></div>'
+      + '<button class="demo-del" type="button" data-del="' + i + '">মুছো</button></div>';
+  }).join("");
+  box.querySelectorAll("[data-del]").forEach(function(b){
+    b.addEventListener("click", function(){
+      demoArr.splice(Number(b.getAttribute("data-del")), 1);
+      renderDemoList();
+      updSay("তালিকা থেকে সরানো হয়েছে — এখন \"ডেমো লিস্ট সেভ করো\" চাপ দিলে সাইটে কার্যকর হবে।");
+    });
+  });
+}
+$("addDemoBtn").addEventListener("click", function(){
+  var name = $("ndName").value.trim(), type = $("ndType").value.trim(), url = $("ndUrl").value.trim();
+  if (!name || !url){ updSay("ডেমোর নাম আর লিংক দুটোই লাগবে।", "err"); return; }
+  if (!/^https:\/\//i.test(url)){ updSay("লিংকটা https:// দিয়ে শুরু হতে হবে।", "err"); return; }
+  if (demoArr.some(function(d){ return d.url === url; })){ updSay("এই লিংকের ডেমো ইতিমধ্যে তালিকায় আছে।", "err"); return; }
+  demoArr.push({ name:name, type:type || "Website", url:url });
+  $("ndName").value = ""; $("ndType").value = ""; $("ndUrl").value = "";
+  renderDemoList();
+  updSay("তালিকায় যোগ হয়েছে — এখন \"ডেমো লিস্ট সেভ করো\" চাপ দাও।");
+});
+$("savePricesBtn").addEventListener("click", function(){
+  var v = { basic:Number($("cpBasic").value), standard:Number($("cpStandard").value), premium:Number($("cpPremium").value) };
+  if (!(v.basic > 0 && v.standard > 0 && v.premium > 0)){ updSay("তিনটা দামই ঠিকমতো লিখো (0-এর বেশি)।", "err"); return; }
+  updSay("সেভ হচ্ছে…");
+  rpc("set_content", { p_secret: sessionSecret, p_key:"packages", p_value: v })
+    .then(function(){ updSay("✓ দাম সেভ হয়েছে — সাইটে এখন নতুন দাম দেখাবে।", "ok"); })
+    .catch(function(){ updSay("সেভ হয়নি — পাসওয়ার্ড বা ইন্টারনেট চেক করে আবার চেষ্টা করো।", "err"); });
+});
+$("saveDemosBtn").addEventListener("click", function(){
+  updSay("সেভ হচ্ছে…");
+  rpc("set_content", { p_secret: sessionSecret, p_key:"demos", p_value: demoArr })
+    .then(function(){ updSay("✓ ডেমো লিস্ট সেভ হয়েছে — সাইটের Live Work-এ এখন এগুলোই দেখাবে।", "ok"); })
+    .catch(function(){ updSay("সেভ হয়নি — পাসওয়ার্ড বা ইন্টারনেট চেক করে আবার চেষ্টা করো।", "err"); });
+});
 
 /* ---------- face unlock (WebAuthn — the phone's own biometric) ---------- */
 function b64url(buf){ return btoa(String.fromCharCode.apply(null, new Uint8Array(buf))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); }
