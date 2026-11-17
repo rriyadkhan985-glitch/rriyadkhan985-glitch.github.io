@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRONFORGE GYM — UI/UX Design Board</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0B0B0B;--panel:#141414;--panel2:#1A1A1A;--line:#2A2A2A;--volt:#D4FF3F;--white:#FFFFFF;--grey:#9BA8AB;--dim:#6B6B6B}
+body{background:var(--bg);color:var(--white);font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;padding:28px 18px 60px}
+.wrap{max-width:1180px;margin:0 auto}
+.kicker{color:var(--volt);font-size:12px;letter-spacing:4px;font-weight:700;text-transform:uppercase}
+h1{font-size:clamp(34px,6vw,58px);font-weight:900;line-height:1.05;margin:10px 0 6px;text-transform:uppercase}
+h1 span{color:var(--volt)}
+.sub{color:var(--grey);font-size:15px;max-width:640px;line-height:1.6}
+h2{font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin:44px 0 6px}
+h2 i{color:var(--volt);font-style:normal}
+.note{color:var(--dim);font-size:13px;margin-bottom:16px}
+.grid{display:grid;gap:14px}
+.swatches{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.sw{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel)}
+.sw .chip{height:74px}
+.sw .meta{padding:10px 12px}
+.sw .name{font-weight:700;font-size:14px}
+.sw .hex{color:var(--grey);font-size:12px;font-family:monospace}
+.typebox{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+.typebox .big{font-size:40px;font-weight:900;text-transform:uppercase;line-height:1.1}
+.typebox .mid{font-size:20px;font-weight:700;margin-top:8px}
+.typebox .small{color:var(--grey);font-size:14px;margin-top:6px;line-height:1.6}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+.btn{display:inline-block;padding:13px 26px;border-radius:999px;font-weight:800;font-size:14px;text-transform:uppercase;letter-spacing:.5px}
+.btn-volt{background:var(--volt);color:#0B0B0B}
+.btn-ghost{border:2px solid var(--white);color:var(--white)}
+.btn-wa{background:#25D366;color:#06281 4}
+.btn-wa{background:#25D366;color:#052e16}
+.flow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.step{background:var(--panel2);border:1px solid var(--line);padding:12px 16px;border-radius:12px;font-weight:700;font-size:14px}
+.step b{color:var(--volt)}
+.arrow{color:var(--volt);font-weight:900}
+.phones{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:22px;margin-top:8px}
+.phone{background:#000;border:2px solid #333;border-radius:34px;padding:10px;box-shadow:0 18px 40px rgba(0,0,0,.6)}
+.screen{background:#101010;border-radius:26px;overflow:hidden;min-height:430px;display:flex;flex-direction:column}
+.scr-head{padding:14px 14px 8px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:900;font-size:15px;letter-spacing:.5px}
+.logo span{color:var(--volt)}
+.burger{color:var(--grey);font-size:18px}
+.scr-body{padding:6px 14px 16px;flex:1}
+.tag{display:inline-block;background:rgba(212,255,63,.14);color:var(--volt);font-size:10px;font-weight:800;padding:4px 9px;border-radius:999px;letter-spacing:1px;text-transform:uppercase}
+.hero-t{font-size:27px;font-weight:900;line-height:1.12;text-transform:uppercase;margin:10px 0 8px}
+.hero-t span{color:var(--volt)}
+.hero-p{color:var(--grey);font-size:12px;line-height:1.55}
+.mini-btn{display:block;text-align:center;background:var(--volt);color:#0B0B0B;font-weight:800;font-size:13px;padding:11px;border-radius:999px;margin-top:12px;text-transform:uppercase}
+.mini-ghost{display:block;text-align:center;border:1.5px solid #444;color:#fff;font-weight:700;font-size:12px;padding:10px;border-radius:999px;margin-top:8px}
+.stat-row{display:flex;gap:8px;margin-top:14px}
+.stat{flex:1;background:#181818;border:1px solid #262626;border-radius:12px;padding:9px 6px;text-align:center}
+.stat b{display:block;font-size:16px;color:var(--volt)}
+.stat small{color:var(--grey);font-size:9.5px;text-transform:uppercase;letter-spacing:.4px}
+.plan{background:#181818;border:1px solid #262626;border-radius:14px;padding:13px;margin-top:10px}
+.plan.hot{border-color:var(--volt);background:rgba(212,255,63,.06)}
+.plan .pn{font-weight:800;font-size:14px;text-transform:uppercase}
+.plan .pp{font-size:22px;font-weight:900;margin:3px 0}
+.plan .pp small{font-size:11px;color:var(--grey);font-weight:600}
+.plan ul{list-style:none;color:var(--grey);font-size:11.5px;line-height:1.7}
+.plan ul li::before{content:'✓ ';color:var(--volt);font-weight:900}
+.feat{display:flex;gap:10px;background:#181818;border:1px solid #262626;border-radius:12px;padding:11px;margin-top:9px;align-items:flex-start}
+.feat .ic{font-size:19px}
+.feat b{font-size:13px;display:block}
+.feat p{color:var(--grey);font-size:11px;line-height:1.5}
+.trainer{display:flex;gap:10px;align-items:center;background:#181818;border:1px solid #262626;border-radius:12px;padding:10px;margin-top:9px}
+.avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#2b2b2b,#454545);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.trainer b{font-size:13px;display:block}
+.trainer small{color:var(--grey);font-size:11px}
+.field{background:#181818;border:1px solid #2c2c2c;border-radius:10px;padding:11px 12px;color:#777;font-size:12.5px;margin-top:9px}
+.wa-btn{display:block;text-align:center;background:#25D366;color:#052e16;font-weight:800;font-size:13px;padding:12px;border-radius:999px;margin-top:12px}
+.scr-label{text-align:center;color:var(--grey);font-size:13px;font-weight:700;margin-top:10px}
+.scr-label b{color:#fff}
+footer{margin-top:52px;border-top:1px solid var(--line);padding-top:18px;color:var(--dim);font-size:13px;line-height:1.7}
+footer b{color:var(--volt)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="kicker">Riyad Web Studio — UI/UX Design</div>
+<h1>IRONFORGE <span>GYM</span></h1>
+<p class="sub">জিমের ওয়েবসাইটের সম্পূর্ণ UI/UX ডিজাইন বোর্ড — কালার সিস্টেম, টাইপোগ্রাফি, ইউজার ফ্লো আর সব স্ক্রিনের মকআপ। ভেতরে আছে PDF-এর ৫টা অটোমেশন সিস্টেমও (নতুন মেম্বার এন্ট্রি, মেয়াদ রিমাইন্ডার, বিকাশ পেমেন্ট, ডেইলি রিপোর্ট, এরর অ্যালার্ট)।</p>
+
+<h2><i>01</i> — কালার সিস্টেম</h2>
+<p class="note">ডার্ক বেস + ভোল্ট অ্যাকসেন্ট — জিমের এনার্জি আর প্রিমিয়াম ফিল একসাথে।</p>
+<div class="grid swatches">
+<div class="sw"><div class="chip" style="background:#0B0B0B"></div><div class="meta"><div class="name">Ink Black</div><div class="hex">#0B0B0B · ব্যাকগ্রাউন্ড</div></div></div>
+<div class="sw"><div class="chip" style="background:#1A1A1A"></div><div class="meta"><div class="name">Panel Grey</div><div class="hex">#1A1A1A · কার্ড</div></div></div>
+<div class="sw"><div class="chip" style="background:#D4FF3F"></div><div class="meta"><div class="name">Volt</div><div class="hex">#D4FF3F · অ্যাকসেন্ট / CTA</div></div></div>
+<div class="sw"><div class="chip" style="background:#FFFFFF"></div><div class="meta"><div class="name">White</div><div class="hex">#FFFFFF · হেডিং</div></div></div>
+<div class="sw"><div class="chip" style="background:#9BA8AB"></div><div class="meta"><div class="name">Steel Grey</div><div class="hex">#9BA8AB · বডি টেক্সট</div></div></div>
+<div class="sw"><div class="chip" style="background:#25D366"></div><div class="meta"><div class="name">WhatsApp Green</div><div class="hex">#25D366 · জয়েন বাটন</div></div></div>
+</div>
+
+<h2><i>02</i> — টাইপোগ্রাফি ও বাটন</h2>
+<div class="typebox">
+<div class="big">Train Hard.<br>Stay Humble.</div>
+<div class="mid">হেডিং — ExtraBold, Uppercase, টাইট লাইন-হাইট</div>
+<p class="small">বডি টেক্সট — Steel Grey, 15–16px, লাইন-হাইট 1.6। বাংলা ও ইংরেজি দুটোতেই একই ওজন বজায় থাকে।</p>
+<div class="btns"><span class="btn btn-volt">এখনই জয়েন করো</span><span class="btn btn-ghost">প্যাকেজ দেখো</span><span class="btn btn-wa">WhatsApp করো</span></div>
+</div>
+
+<h2><i>03</i> — ইউজার ফ্লো</h2>
+<p class="note">ভিজিটর থেকে পেইং মেম্বার — মাত্র ৪ ধাপে।</p>
+<div class="flow">
+<div class="step"><b>১.</b> হোম — হিরো + অফার</div><div class="arrow">→</div>
+<div class="step"><b>২.</b> প্যাকেজ বাছাই</div><div class="arrow">→</div>
+<div class="step"><b>৩.</b> WhatsApp-এ জয়েন ফর্ম</div><div class="arrow">→</div>
+<div class="step"><b>৪.</b> অটোমেশন — রিমাইন্ডার + বিকাশ পেমেন্ট</div>
+</div>
+
+<h2><i>04</i> — স্ক্রিন মকআপ (মোবাইল)</h2>
+<p class="note">বাংলাদেশের ৯০%+ ভিজিটর মোবাইলে আসে — তাই ডিজাইন মোবাইল-ফার্স্ট।</p>
+<div class="phones">
+
+<div>
+<div class="phone"><div class="screen">
+<div class="scr-head"><div class="logo">IRON<span>FORGE</span></div><div class="burger">☰</div></div>
+<div class="scr-body">
+<span class="tag">ঢাকার প্রিমিয়াম জিম</span>
+<div class="hero-t">শক্তি গড়ো।<br><span>অজুহাত না।</span></div>
+<p class="hero-p">আধুনিক ইকুইপমেন্ট, সার্টিফাইড ট্রেইনার আর স্মার্ট অটোমেশন — মেম্বারশিপ রিমাইন্ডার থেকে বিকাশ পেমেন্ট, সব অটোমেটিক।</p>
+<span class="mini-btn">এখনই জয়েন করো</span>
+<span class="mini-ghost">প্যাকেজ দেখো ↓</span>
+<div class="stat-row">
+<div class="stat"><b>500+</b><small>মেম্বার</small></div>
+<div class="stat"><b>12</b><small>ট্রেইনার</small></div>
+<div class="stat"><b>4.9★</b><small>রেটিং</small></div>
+</div>
+</div></div></div>
+<div class="scr-label"><b>স্ক্রিন ১</b> — হোম / হিরো</div>
+</div>
+
+<div>
+<div class="phone"><div class="screen">
+<div class="scr-head"><div class="logo">IRON<span>FORGE</span></div><div class="burger">☰</div></div>
+<div class="scr-body">
+<span class="tag">মেম্বারশিপ</span>
+<div class="hero-t" style="font-size:22px">প্যাকেজ <span>বাছাই করো</span></div>
+<div class="plan"><div class="pn">Monthly</div><div class="pp">৳১,৫০০ <small>/ মাস</small></div><ul><li>সব ইকুইপমেন্ট অ্যাক্সেস</li><li>লকার সুবিধা</li></ul></div>
+<div class="plan hot"><div class="pn">Quarterly ⭐ জনপ্রিয়</div><div class="pp">৳৩,৫০০ <small>/ ৩ মাস</small></div><ul><li>সব Monthly সুবিধা</li><li>১টা ফ্রি ডায়েট প্ল্যান</li><li>মেয়াদ রিমাইন্ডার (WhatsApp)</li></ul></div>
+<div class="plan"><div class="pn">Yearly</div><div class="pp">৳১০,০০০ <small>/ বছর</small></div><ul><li>সব সুবিধা + পার্সোনাল ট্রেইনার</li><li>বিকাশে কিস্তি সুবিধা</li></ul></div>
+<span class="mini-btn">এই প্যাকেজে জয়েন করো</span>
+</div></div></div>
+<div class="scr-label"><b>স্ক্রিন ২</b> — মেম্বারশিপ প্যাকেজ</div>
+</div>
+
+<div>
+<div class="phone"><div class="screen">
+<div class="scr-head"><div class="logo">IRON<span>FORGE</span></div><div class="burger">☰</div></div>
+<div class="scr-body">
+<span class="tag">স্মার্ট অটোমেশন</span>
+<div class="hero-t" style="font-size:22px">জিম চলে <span>অটো-পাইলটে</span></div>
+<div class="feat"><div class="ic">📝</div><div><b>নতুন মেম্বার এন্ট্রি</b><p>ভর্তি হলেই ডেটা অটো সেভ — খাতা-কলমের ঝামেলা শেষ।</p></div></div>
+<div class="feat"><div class="ic">⏰</div><div><b>মেয়াদ রিমাইন্ডার</b><p>মেয়াদ শেষের আগেই WhatsApp-এ অটো রিমাইন্ডার।</p></div></div>
+<div class="feat"><div class="ic">💸</div><div><b>বিকাশ পেমেন্ট আপডেট</b><p>পেমেন্ট এলেই রেকর্ড আপডেট + কনফার্মেশন মেসেজ।</p></div></div>
+<div class="feat"><div class="ic">📊</div><div><b>ডেইলি রিপোর্ট</b><p>প্রতিদিনের আয়-ভর্তির হিসাব মালিকের ফোনে।</p></div></div>
+<div class="feat"><div class="ic">🛡️</div><div><b>এরর অ্যালার্ট</b><p>কিছু ভুল হলেই সাথে সাথে নোটিফিকেশন।</p></div></div>
+</div></div></div>
+<div class="scr-label"><b>স্ক্রিন ৩</b> — অটোমেশন সিস্টেম (PDF থেকে)</div>
+</div>
+
+<div>
+<div class="phone"><div class="screen">
+<div class="scr-head"><div class="logo">IRON<span>FORGE</span></div><div class="burger">☰</div></div>
+<div class="scr-body">
+<span class="tag">টিম</span>
+<div class="hero-t" style="font-size:22px">আমাদের <span>ট্রেইনাররা</span></div>
+<div class="trainer"><div class="avatar">🏋️</div><div><b>আরিফ হোসেন</b><small>হেড কোচ · ৮ বছরের অভিজ্ঞতা</small></div></div>
+<div class="trainer"><div class="avatar">💪</div><div><b>তানভীর আহমেদ</b><small>স্ট্রেংথ ট্রেইনার · ISSA সার্টিফাইড</small></div></div>
+<div class="trainer"><div class="avatar">🧘</div><div><b>সুমাইয়া রহমান</b><small>যোগা ও ফিটনেস কোচ</small></div></div>
+<div class="trainer"><div class="avatar">🥊</div><div><b>রাকিব খান</b><small>কার্ডিও ও বক্সিং কোচ</small></div></div>
+<span class="tag" style="margin-top:14px">আজকের শিডিউল</span>
+<p class="hero-p" style="margin-top:8px">সকাল ৬টা — কার্ডিও ব্যাচ<br>বিকাল ৫টা — ওয়েট ট্রেনিং<br>সন্ধ্যা ৭টা — যোগা সেশন</p>
+</div></div></div>
+<div class="scr-label"><b>স্ক্রিন ৪</b> — ট্রেইনার + শিডিউল</div>
+</div>
+
+<div>
+<div class="phone"><div class="screen">
+<div class="scr-head"><div class="logo">IRON<span>FORGE</span></div><div class="burger">☰</div></div>
+<div class="scr-body">
+<span class="tag">ভর্তি ফর্ম</span>
+<div class="hero-t" style="font-size:22px">আজই <span>শুরু করো</span></div>
+<div class="field">তোমার নাম</div>
+<div class="field">মোবাইল নম্বর (01XXXXXXXXX)</div>
+<div class="field">প্যাকেজ — Quarterly ৳৩,৫০০ ▾</div>
+<div class="field">লক্ষ্য — ওজন কমানো / মাসল / ফিটনেস</div>
+<span class="wa-btn">WhatsApp-এ পাঠাও ✓</span>
+<p class="hero-p" style="margin-top:10px;text-align:center">ফর্ম পাঠালেই তোমার তথ্য জিমের সিস্টেমে সেভ হয়ে যাবে — মেয়াদের রিমাইন্ডারও পাবে অটোমেটিক।</p>
+</div></div></div>
+<div class="scr-label"><b>স্ক্রিন ৫</b> — জয়েন / যোগাযোগ</div>
+</div>
+
+</div>
+
+<footer>
+<b>পরের ধাপ:</b> এই ডিজাইন পছন্দ হলে এই স্টাইলেই পুরো ওয়েবসাইটটা বানাব — হোম, প্যাকেজ, ট্রেইনার, গ্যালারি, জয়েন ফর্মসহ। রঙ বা লেআউটে কিছু বদলাতে চাইলে শুধু বলো।<br>
+ডিজাইন: Riyad Web Studio · ক্লায়েন্ট ডেমো: IRONFORGE GYM
+</footer>
+</div>
+</body>
+</html>
