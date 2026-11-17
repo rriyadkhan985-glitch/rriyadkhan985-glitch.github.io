@@ -198,6 +198,12 @@
         <div><label>Standard (৳)</label><input id="cpStandard" type="number" min="0" step="100"></div>
         <div><label>Premium (৳)</label><input id="cpPremium" type="number" min="0" step="100"></div>
       </div>
+      <div class="hint" style="margin-top:14px"><b>Construction Package</b> — শুধু ডেভেলপার ও নির্মাণ কোম্পানির জন্য</div>
+      <div class="upd-grid">
+        <div><label>Construction Basic (৳)</label><input id="cpConsB" type="number" min="0" step="100"></div>
+        <div><label>Construction Standard (৳)</label><input id="cpConsS" type="number" min="0" step="100"></div>
+        <div><label>Construction Premium (৳)</label><input id="cpConsP" type="number" min="0" step="100"></div>
+      </div>
       <button class="btn btn-lime" id="savePricesBtn" type="button">দাম সেভ করো</button>
     </div>
 
@@ -448,6 +454,15 @@ function loadContent(){
       $("cpStandard").value = c.packages.standard || "";
       $("cpPremium").value = c.packages.premium || "";
     }
+    if (c.construction){
+      $("cpConsB").value = Number(c.construction.basic) || 15000;
+      $("cpConsS").value = Number(c.construction.standard) || 25000;
+      $("cpConsP").value = Number(c.construction.premium) || 40000;
+    } else {
+      $("cpConsB").value = 15000;
+      $("cpConsS").value = 25000;
+      $("cpConsP").value = 40000;
+    }
     demoArr = Array.isArray(c.demos) ? c.demos.slice() : [];
     renderDemoList();
   }).catch(function(){ updSay("সাইটের বর্তমান কনটেন্ট আনা যাচ্ছে না — ইন্টারনেট চেক করো।", "err"); });
@@ -480,8 +495,11 @@ $("addDemoBtn").addEventListener("click", function(){
 $("savePricesBtn").addEventListener("click", function(){
   var v = { basic:Number($("cpBasic").value), standard:Number($("cpStandard").value), premium:Number($("cpPremium").value) };
   if (!(v.basic > 0 && v.standard > 0 && v.premium > 0)){ updSay("তিনটা দামই ঠিকমতো লিখো (0-এর বেশি)।", "err"); return; }
+  var cv = { basic:Number($("cpConsB").value), standard:Number($("cpConsS").value), premium:Number($("cpConsP").value) };
+  if (!(cv.basic > 0 && cv.standard > 0 && cv.premium > 0)){ updSay("Construction প্যাকেজের তিনটা দামই ঠিকমতো লিখো (0-এর বেশি)।", "err"); return; }
   updSay("সেভ হচ্ছে…");
   rpc("set_content", { p_secret: sessionSecret, p_key:"packages", p_value: v })
+    .then(function(){ return rpc("set_content", { p_secret: sessionSecret, p_key:"construction", p_value: cv }); })
     .then(function(){ updSay("✓ দাম সেভ হয়েছে — সাইটে এখন নতুন দাম দেখাবে।", "ok"); })
     .catch(function(){ updSay("সেভ হয়নি — পাসওয়ার্ড বা ইন্টারনেট চেক করে আবার চেষ্টা করো।", "err"); });
 });

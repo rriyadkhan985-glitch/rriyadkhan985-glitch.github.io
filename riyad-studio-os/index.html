@@ -257,6 +257,15 @@ a{color:inherit}
 .price-card .pkg-order:hover{background:rgba(163,230,53,.12)}
 .price-card .pkg-order:active{transform:scale(.97)}
 .price-card.pop .pkg-order{background:linear-gradient(145deg,var(--lime),#65a30d);color:#0b1c0e;border:none}
+.cons-card{margin-top:14px;padding:19px;position:relative}
+.cons-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.cons-title{font-size:17px;font-weight:700;color:var(--gold);font-family:"Hind Siliguri","Space Grotesk",sans-serif}
+.cons-sub{font-size:12px;color:var(--ink-dim)}
+.cons-tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:13px}
+.cons-name{font-size:11px;letter-spacing:.16em;color:var(--ink-dim);font-weight:700;text-transform:uppercase}
+.cons-amt{font-size:24px;font-weight:700;color:var(--gold);margin-top:4px;font-family:"Hind Siliguri","Space Grotesk",sans-serif}
+.cons-feats{margin-top:13px;font-size:12.5px;color:var(--ink-dim);line-height:1.55}
+@media (max-width:640px){.cons-tiers{grid-template-columns:1fr}}
 .price-notes{margin-top:14px;padding:13px 17px;font-size:12.5px;color:var(--ink-dim);display:flex;gap:10px;align-items:flex-start;line-height:1.55}
 .price-notes svg{width:16px;height:16px;flex:0 0 auto;color:var(--lime);margin-top:1px}
 
@@ -588,6 +597,28 @@ a{color:inherit}
             </ul>
             <button class="pkg-order" data-package="Premium — ৳12,000">Order Premium</button>
           </div>
+        </div>
+
+        <div class="cons-card glass">
+          <div class="cons-head">
+            <div class="cons-title">Construction Package</div>
+            <div class="cons-sub">শুধু ডেভেলপার ও নির্মাণ কোম্পানির জন্য</div>
+          </div>
+          <div class="cons-tiers">
+            <div class="cons-tier">
+              <div class="cons-name">Basic</div>
+              <div class="cons-amt" id="consB">৳15,000</div>
+            </div>
+            <div class="cons-tier">
+              <div class="cons-name">Standard</div>
+              <div class="cons-amt" id="consS">৳25,000</div>
+            </div>
+            <div class="cons-tier">
+              <div class="cons-name">Premium</div>
+              <div class="cons-amt" id="consP">৳40,000</div>
+            </div>
+          </div>
+          <div class="cons-feats">3D বিল্ডিং ভিউয়ার · কস্ট ক্যালকুলেটর · প্রগ্রেস ট্র্যাকার · বুকিং সিস্টেম · নিজের অ্যাডমিন প্যানেল</div>
         </div>
 
         <div class="price-notes glass">
@@ -930,6 +961,15 @@ a{color:inherit}
             if (sel) for (var i = 0; i < sel.options.length; i++){
               if (sel.options[i].text.toLowerCase().indexOf(pair[1].toLowerCase()) === 0) sel.options[i].text = label;
             }
+          });
+        }
+        if (c.construction){
+          var cfmt = function(n){ return "৳" + Number(n).toLocaleString("en-IN"); };
+          [["basic","consB"],["standard","consS"],["premium","consP"]].forEach(function(pair){
+            var cval = Number(c.construction[pair[0]]);
+            if (!(cval > 0)) return;
+            var cel = document.getElementById(pair[1]);
+            if (cel) cel.textContent = cfmt(cval);
           });
         }
         if (Array.isArray(c.demos) && c.demos.length && window.__setProjects) window.__setProjects(c.demos);
