@@ -719,13 +719,23 @@ a{color:inherit}
 
   /* ---------- live work drawer list ---------- */
   var dList = document.getElementById("dList");
-  PROJECTS.forEach(function(p){
-    var a = document.createElement("a");
-    a.className = "d-item"; a.href = p.url; a.target = "_blank"; a.rel = "noopener";
-    a.dataset.search = (p.name + " " + p.type).toLowerCase();
-    a.innerHTML = '<span class="d-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">' + p.icon + '</svg></span><span><b>' + p.name + '</b><span>' + p.type + '</span></span><span class="d-arrow">↗</span>';
-    dList.appendChild(a);
-  });
+  var ICON_BY_URL = {};
+  PROJECTS.forEach(function(p){ ICON_BY_URL[p.url] = p.icon; });
+  var DEFAULT_ICON = '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.3 3.9 5.2 3.9 8.5s-1.3 6.2-3.9 8.5c-2.6-2.3-3.9-5.2-3.9-8.5s1.3-6.2 3.9-8.5Z"/>';
+  function escHtml(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  function renderProjects(list){
+    dList.innerHTML = "";
+    (list || []).forEach(function(p){
+      if (!p || !/^https:\/\//i.test(p.url || "")) return;
+      var a = document.createElement("a");
+      a.className = "d-item"; a.href = p.url; a.target = "_blank"; a.rel = "noopener";
+      a.dataset.search = (p.name + " " + (p.type || "")).toLowerCase();
+      a.innerHTML = '<span class="d-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">' + (ICON_BY_URL[p.url] || DEFAULT_ICON) + '</svg></span><span><b>' + escHtml(p.name) + '</b><span>' + escHtml(p.type || "") + '</span></span><span class="d-arrow">↗</span>';
+      dList.appendChild(a);
+    });
+  }
+  renderProjects(PROJECTS);
+  window.__setProjects = renderProjects;
   var dFilter = document.getElementById("dFilter"), dEmpty = document.getElementById("dEmpty");
   dFilter.addEventListener("input", function(){
     var q = dFilter.value.trim().toLowerCase(), shown = 0;
@@ -882,6 +892,46 @@ a{color:inherit}
 
   /* ---------- private cloud config (Supabase — filled in when the project keys arrive) ---------- */
   window.RIYAD_DB = { url: "https://rujggtfhpvyzargzgrhg.supabase.co", key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ1amdndGZocHZ5emFyZ3pncmhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ0ODE0ODUsImV4cCI6MjExMDA1NzQ4NX0.v5ibbAomC63BdwG90jUJVkgaQhNTz9qI3Y4fvbowqNw" };
+
+  /* ---------- live content from the control panel (Supabase) ----------
+     Prices + Live Work demos are read from the DB on every load, so an
+     edit in Riyad's private panel appears here automatically. Any
+     failure (offline, DB down) silently keeps the built-in defaults. */
+  (function(){
+    try{
+      var DB = window.RIYAD_DB;
+      if (!DB || !DB.url || !DB.key) return;
+      fetch(DB.url + "/rest/v1/rpc/get_content", { method:"POST",
+        headers:{ "apikey":DB.key, "Authorization":"Bearer " + DB.key, "Content-Type":"application/json" },
+        body: "{}"
+      }).then(function(r){ if (!r.ok) throw new Error("content"); return r.json(); })
+      .then(function(c){
+        if (!c) return;
+        if (c.packages){
+          var fmt = function(n){ return "৳" + Number(n).toLocaleString("en-IN"); };
+          [["basic","Basic"],["standard","Standard"],["premium","Premium"]].forEach(function(pair){
+            var val = Number(c.packages[pair[0]]);
+            if (!(val > 0)) return;
+            var label = pair[1] + " — " + fmt(val);
+            document.querySelectorAll(".price-card").forEach(function(card){
+              var pkgEl = card.querySelector(".pkg");
+              if (pkgEl && pkgEl.textContent.trim().toLowerCase() === pair[1].toLowerCase()){
+                var amt = card.querySelector(".amount");
+                if (amt) amt.innerHTML = fmt(val) + " <small>one-time</small>";
+                var btn = card.querySelector(".pkg-order");
+                if (btn) btn.dataset.package = label;
+              }
+            });
+            var sel = document.getElementById("fPkg");
+            if (sel) for (var i = 0; i < sel.options.length; i++){
+              if (sel.options[i].text.toLowerCase().indexOf(pair[1].toLowerCase()) === 0) sel.options[i].text = label;
+            }
+          });
+        }
+        if (Array.isArray(c.demos) && c.demos.length && window.__setProjects) window.__setProjects(c.demos);
+      }).catch(function(){});
+    }catch(err){}
+  })();
 
   /* ---------- order form ---------- */
   var form = document.getElementById("orderForm");
