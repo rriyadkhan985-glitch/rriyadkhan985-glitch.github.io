@@ -296,6 +296,24 @@ function $(id){ return document.getElementById(id); }
 function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
 function lockSay(msg, cls){ var m = $("lockMsg"); m.textContent = msg || ""; m.className = cls || ""; }
 
+/* ---------- remember me: 30-day auto-login on this device ---------- */
+var REMEMBER_KEY = "rp_remember", REMEMBER_MS = 30*24*3600*1000;
+function rememberSave(pw){
+  try{ localStorage.setItem(REMEMBER_KEY, JSON.stringify({ s: pw, exp: Date.now() + REMEMBER_MS })); }catch(e){}
+}
+function rememberClear(){
+  try{ localStorage.removeItem(REMEMBER_KEY); }catch(e){}
+}
+function rememberRead(){
+  try{
+    var raw = localStorage.getItem(REMEMBER_KEY);
+    if (!raw) return null;
+    var o = JSON.parse(raw);
+    if (!o || !o.s || !o.exp || o.exp <= Date.now()){ rememberClear(); return null; }
+    return o.s;
+  }catch(e){ return null; }
+}
+
 /* ---------- password unlock ---------- */
 $("pwForm").addEventListener("submit", function(e){
   e.preventDefault();
@@ -319,6 +337,9 @@ $("pwForm").addEventListener("submit", function(e){
 
 function doUnlock(pw){
   sessionSecret = pw;
+  /* Every successful unlock (password, app face/PIN, or WebAuthn) starts a
+     fresh 30-day remember-me window on this device. */
+  rememberSave(pw);
   $("lockScreen").style.display = "none";
   $("dash").style.display = "block";
   lockSay("");
@@ -333,11 +354,30 @@ function doUnlock(pw){
 /* Called by the app after its face/PIN check passes. */
 window.__appUnlock = function(pw){ if (pw && !sessionSecret) doUnlock(pw); };
 $("lockBtn").addEventListener("click", function(){
+  rememberClear();
   sessionSecret = null;
   $("dash").style.display = "none";
   $("lockScreen").style.display = "block";
   $("pwInput").value = "";
 });
+
+/* ---------- remember me: silent auto-login on load ---------- */
+(function(){
+  var had = false;
+  try{ had = !!localStorage.getItem(REMEMBER_KEY); }catch(e){}
+  if (!had) return;
+  var saved = rememberRead();
+  if (!saved){ lockSay("সেশন শেষ — আবার পাসওয়ার্ড দাও।", "err"); return; }
+  if (!(PANEL_DB.url && PANEL_DB.key)) return;
+  lockSay("লগইন হচ্ছে…");
+  fetch(PANEL_DB.url + "/rest/v1/rpc/get_orders", { method:"POST",
+    headers:{ "apikey":PANEL_DB.key, "Authorization":"Bearer " + PANEL_DB.key, "Content-Type":"application/json" },
+    body: JSON.stringify({ p_secret: saved })
+  }).then(function(r){
+    if (r.ok){ doUnlock(saved); }
+    else { rememberClear(); lockSay("সেশন শেষ — আবার পাসওয়ার্ড দাও।", "err"); }
+  }).catch(function(){ rememberClear(); lockSay("সেশন শেষ — আবার পাসওয়ার্ড দাও।", "err"); });
+})();
 $("refreshBtn").addEventListener("click", loadOrders);
 
 /* ---------- orders ---------- */
@@ -463,6 +503,7 @@ $("changePwBtn").addEventListener("click", function(){
   sha256Hex(a).then(function(h){
     rpc("set_password", { p_secret: sessionSecret, p_new_hash: h }).then(function(){
       sessionSecret = a;
+      rememberSave(a);
       try{ if (localStorage.getItem("rcp_secret")) localStorage.setItem("rcp_secret", a); }catch(e){}
       $("npNew").value = ""; $("npAgain").value = "";
       m.textContent = "✓ পাসওয়ার্ড বদলে গেছে — পরের বার নতুনটা দিয়ে ঢুকবে।"; m.className = "ok";
