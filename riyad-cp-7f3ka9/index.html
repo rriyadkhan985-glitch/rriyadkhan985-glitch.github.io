@@ -323,9 +323,15 @@ function doUnlock(pw){
   $("dash").style.display = "block";
   lockSay("");
   updateFaceSetupBtn();
+  try{ if (window.RiyadApp) $("faceSetupBtn").style.display = "none"; }catch(e){}
   loadOrders();
   loadContent();
+  /* Inside the Riyad OS Panel app: hand the secret to the app's own
+     face/PIN lock so next open can unlock biometrically. */
+  try{ if (window.RiyadApp && RiyadApp.saveSecret) RiyadApp.saveSecret(pw); }catch(e){}
 }
+/* Called by the app after its face/PIN check passes. */
+window.__appUnlock = function(pw){ if (pw && !sessionSecret) doUnlock(pw); };
 $("lockBtn").addEventListener("click", function(){
   sessionSecret = null;
   $("dash").style.display = "none";
@@ -460,6 +466,7 @@ $("changePwBtn").addEventListener("click", function(){
       try{ if (localStorage.getItem("rcp_secret")) localStorage.setItem("rcp_secret", a); }catch(e){}
       $("npNew").value = ""; $("npAgain").value = "";
       m.textContent = "✓ পাসওয়ার্ড বদলে গেছে — পরের বার নতুনটা দিয়ে ঢুকবে।"; m.className = "ok";
+      try{ if (window.RiyadApp && RiyadApp.saveSecret) RiyadApp.saveSecret(a); }catch(e){}
     }).catch(function(){ m.textContent = "বদলানো যায়নি — ইন্টারনেট চেক করে আবার চেষ্টা করো।"; m.className = "err"; });
   });
 });
