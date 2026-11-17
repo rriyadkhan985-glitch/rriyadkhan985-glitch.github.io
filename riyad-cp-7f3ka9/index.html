@@ -123,9 +123,9 @@
   .demo-row .dn{font-weight:800;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .demo-row .dt{font-size:12px;color:var(--ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .demo-del{background:rgba(248,113,113,.12);color:#FCA5A5;border:1px solid rgba(248,113,113,.35);border-radius:10px;padding:8px 12px;font-weight:800;cursor:pointer;font-size:13px}
-  #updMsg{font-size:13.5px;color:var(--ink-dim);margin-top:10px;min-height:18px}
-  #updMsg.err{color:var(--danger)}
-  #updMsg.ok{color:var(--lime)}
+  #updMsg,#pwMsg{font-size:13.5px;color:var(--ink-dim);margin-top:10px;min-height:18px}
+  #updMsg.err,#pwMsg.err{color:var(--danger)}
+  #updMsg.ok,#pwMsg.ok{color:var(--lime)}
   @media (max-width:520px){ .upd-grid{grid-template-columns:1fr} }
   @media (max-width:520px){ .stats{grid-template-columns:repeat(3,1fr);gap:8px} .stat .num{font-size:22px} .pw-row{flex-direction:column} .pw-row .btn{width:100%} }
 </style>
@@ -214,6 +214,17 @@
       <button class="btn btn-lime" id="saveDemosBtn" type="button">ডেমো লিস্ট সেভ করো</button>
       <div id="updMsg"></div>
     </div>
+
+    <div class="upd glass">
+      <h3>প্যানেলের <em>পাসওয়ার্ড</em> বদলাও</h3>
+      <div class="hint">নতুন পাসওয়ার্ডটা শুধু এখানেই লেখো — চ্যাটে বা কোথাও পাঠাবে না। বদলানোর পর পুরনো পাসওয়ার্ড আর কাজ করবে না। ফোন নম্বর বা জন্মসালের মতো অনুমান-করা-যায় এমন পাসওয়ার্ড দিও না।</div>
+      <div class="upd-grid" style="grid-template-columns:1fr 1fr">
+        <div><label>নতুন পাসওয়ার্ড</label><input id="npNew" type="password" autocomplete="new-password"></div>
+        <div><label>নতুনটা আবার লেখো</label><input id="npAgain" type="password" autocomplete="new-password"></div>
+      </div>
+      <button class="btn btn-lime" id="changePwBtn" type="button">পাসওয়ার্ড বদলাও</button>
+      <div id="pwMsg"></div>
+    </div>
   </section>
 
 </div>
@@ -221,7 +232,8 @@
 <script>
 /* ================= CONFIG — filled in when the Supabase project keys arrive ================= */
 var PANEL_DB = { url: "https://rujggtfhpvyzargzgrhg.supabase.co", key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ1amdndGZocHZ5emFyZ3pncmhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ0ODE0ODUsImV4cCI6MjExMDA1NzQ4NX0.v5ibbAomC63BdwG90jUJVkgaQhNTz9qI3Y4fvbowqNw" };
-var PW_HASH = "14a78343e120585c1d1ad09894573ff3a562e31709bab2e73bd75102973ae7e4"; /* sha256(owner password) */
+/* Panel password lives only as a hash in Supabase panel_config and is
+   verified server-side at login — it can be changed from the panel. */
 
 /* ---------- SHA-256 (crypto.subtle, with a pure-JS fallback) ---------- */
 function sha256Sync(ascii){
@@ -289,13 +301,20 @@ $("pwForm").addEventListener("submit", function(e){
   e.preventDefault();
   var pw = $("pwInput").value;
   if (!pw){ lockSay("আগে পাসওয়ার্ডটা লেখো।", "err"); return; }
-  sha256Hex(pw).then(function(h){
-    if (h === PW_HASH){ doUnlock(pw); }
+  if (!(PANEL_DB.url && PANEL_DB.key)){ doUnlock(pw); return; }
+  /* Password is verified by the server (Supabase panel_config), so a
+     password changed from inside the panel works everywhere at once. */
+  lockSay("যাচাই হচ্ছে…");
+  fetch(PANEL_DB.url + "/rest/v1/rpc/get_orders", { method:"POST",
+    headers:{ "apikey":PANEL_DB.key, "Authorization":"Bearer " + PANEL_DB.key, "Content-Type":"application/json" },
+    body: JSON.stringify({ p_secret: pw })
+  }).then(function(r){
+    if (r.ok){ doUnlock(pw); }
     else {
       lockSay("ভুল পাসওয়ার্ড — আবার চেষ্টা করো।", "err");
       var card = $("lockScreen"); card.classList.remove("shake"); void card.offsetWidth; card.classList.add("shake");
     }
-  });
+  }).catch(function(){ lockSay("সার্ভারে পৌঁছানো যাচ্ছে না — ইন্টারনেট চেক করে আবার চেষ্টা করো।", "err"); });
 });
 
 function doUnlock(pw){
@@ -425,6 +444,24 @@ $("saveDemosBtn").addEventListener("click", function(){
   rpc("set_content", { p_secret: sessionSecret, p_key:"demos", p_value: demoArr })
     .then(function(){ updSay("✓ ডেমো লিস্ট সেভ হয়েছে — সাইটের Live Work-এ এখন এগুলোই দেখাবে।", "ok"); })
     .catch(function(){ updSay("সেভ হয়নি — পাসওয়ার্ড বা ইন্টারনেট চেক করে আবার চেষ্টা করো।", "err"); });
+});
+
+/* ---------- change panel password (verified + stored server-side) ---------- */
+$("changePwBtn").addEventListener("click", function(){
+  var m = $("pwMsg");
+  var a = $("npNew").value, b = $("npAgain").value;
+  if (!a || a.length < 6){ m.textContent = "নতুন পাসওয়ার্ড অন্তত ৬ অক্ষরের হতে হবে।"; m.className = "err"; return; }
+  if (a !== b){ m.textContent = "দুইবার একই পাসওয়ার্ড লেখোনি — মিলছে না।"; m.className = "err"; return; }
+  if (a === sessionSecret){ m.textContent = "এটাই তো বর্তমান পাসওয়ার্ড — নতুন একটা দাও।"; m.className = "err"; return; }
+  m.textContent = "বদলানো হচ্ছে…"; m.className = "";
+  sha256Hex(a).then(function(h){
+    rpc("set_password", { p_secret: sessionSecret, p_new_hash: h }).then(function(){
+      sessionSecret = a;
+      try{ if (localStorage.getItem("rcp_secret")) localStorage.setItem("rcp_secret", a); }catch(e){}
+      $("npNew").value = ""; $("npAgain").value = "";
+      m.textContent = "✓ পাসওয়ার্ড বদলে গেছে — পরের বার নতুনটা দিয়ে ঢুকবে।"; m.className = "ok";
+    }).catch(function(){ m.textContent = "বদলানো যায়নি — ইন্টারনেট চেক করে আবার চেষ্টা করো।"; m.className = "err"; });
+  });
 });
 
 /* ---------- face unlock (WebAuthn — the phone's own biometric) ---------- */
