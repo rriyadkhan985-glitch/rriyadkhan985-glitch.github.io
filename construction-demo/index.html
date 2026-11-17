@@ -155,6 +155,23 @@
   .pcard .status i{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent-hi);margin-right:.4rem;vertical-align:1px}
   .pcard .status.done i{background:#fff}
   .pcard .pct{position:absolute;top:.85rem;right:.85rem;font-family:"JetBrains Mono",monospace;font-weight:700;font-size:.8rem;background:rgba(8,8,10,.82);padding:.32rem .6rem;border-radius:8px}
+  .pcard .price{display:block;margin-top:.35rem;font-family:"JetBrains Mono",monospace;font-size:.78rem;font-weight:700;color:#fff}
+  .pcard .price b{color:var(--accent-hi);font-weight:700}
+  .pcard[hidden]{display:none}
+
+  /* project filter bar */
+  .proj-filter{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:var(--r-md);padding:1rem 1.1rem;margin-bottom:1rem;display:flex;gap:.9rem;flex-wrap:wrap;align-items:flex-end}
+  .pf-group{display:flex;flex-direction:column;gap:.35rem;flex:1 1 200px;min-width:0}
+  .pf-group label{font-family:"JetBrains Mono",monospace;font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+  .pf-group select{width:100%;padding:.68rem .8rem;border:1.5px solid var(--line2);border-radius:10px;background:var(--panel);color:var(--ink);font:inherit;font-size:.98rem;cursor:pointer}
+  .pf-group select:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px rgba(236,28,36,.22)}
+  .pf-reset{flex:none}
+  .pf-count{font-size:.92rem;color:var(--muted);margin:0 0 1.2rem}
+  .pf-count b{color:var(--ink)}
+  .pf-empty{grid-column:1/-1;text-align:center;border:1.5px dashed var(--line2);border-radius:var(--r-md);padding:2.6rem 1.4rem;background:var(--surface)}
+  .pf-empty h3{font-family:"Archivo",sans-serif;text-transform:uppercase;font-size:1.35rem;margin:0 0 .45rem}
+  .pf-empty p{color:var(--muted);margin:0 auto 1.2rem;max-width:46ch}
+  @media (max-width:600px){ .pf-reset{width:100%} }
 
   /* ---------- 3D showcase ---------- */
   .tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
@@ -508,6 +525,23 @@
         </div>
         <a class="viewall" href="#showcase">View all projects <span aria-hidden="true">→</span></a>
       </div>
+      <div class="proj-filter" role="search" aria-label="Filter projects by area and budget">
+        <div class="pf-group">
+          <label for="fltArea">এলাকা · Area</label>
+          <select id="fltArea"><option value="all">সব এলাকা (All areas)</option></select>
+        </div>
+        <div class="pf-group">
+          <label for="fltBudget">বাজেট · Budget (শুরু · from)</label>
+          <select id="fltBudget">
+            <option value="all">সব বাজেট (All budgets)</option>
+            <option value="under1">৳১ কোটির নিচে — Under ৳1 Cr</option>
+            <option value="mid">৳১ – ১.৩ কোটি — ৳1–1.3 Cr</option>
+            <option value="over">৳১.৩ কোটির বেশি — Over ৳1.3 Cr</option>
+          </select>
+        </div>
+        <button class="btn btn-acc pf-reset" type="button" id="fltReset">সব দেখুন · Reset</button>
+      </div>
+      <p class="pf-count" id="fltCount" role="status" aria-live="polite"></p>
       <div class="pcards" id="projCards"></div>
     </div>
   </section>
@@ -965,21 +999,86 @@
 
   /* ================= PROJECT CARDS ================= */
   var cardsEl = document.getElementById("projCards");
+  var projCardEls = [];
+  function areaOf(p){ return p.loc.split(",")[0].trim(); }
+  function startPrice(p){ return p.sizeMin * p.rate; }
   PROJECTS.forEach(function(p){
     var b = document.createElement("button");
     b.type = "button"; b.className = "pcard";
     b.setAttribute("aria-label", "View " + p.name + " in the 3D showcase");
+    b.setAttribute("data-id", p.id);
+    b.setAttribute("data-area", areaOf(p));
+    b.setAttribute("data-price", String(startPrice(p)));
     b.innerHTML = '<img src="' + p.img + '" alt="' + p.name + ', ' + p.loc + '" loading="lazy" />' +
       '<span class="scrim"></span>' +
       '<span class="status' + (p.pct === 100 ? " done" : "") + '"><i></i>' + (p.pct === 100 ? "Completed" : p.stageName) + '</span>' +
       '<span class="pct">' + p.pct + '%</span>' +
-      '<span class="pc-body"><h3>' + p.name + '</h3><span class="cat"><b>' + p.cat + '</b> · ' + p.loc + '</span></span>';
+      '<span class="pc-body"><h3>' + p.name + '</h3><span class="cat"><b>' + p.cat + '</b> · ' + p.loc + '</span>' +
+      '<span class="price">From <b>' + fmtBDT(startPrice(p)) + '</b></span></span>';
     b.addEventListener("click", function(){
       selectProject(p.id, false);
       document.getElementById("showcase").scrollIntoView({behavior: REDUCED ? "auto" : "smooth"});
     });
     cardsEl.appendChild(b);
+    projCardEls.push({ el: b, p: p });
   });
+
+  /* ================= PROJECT FILTER (AREA + BUDGET) ================= */
+  function toBn(n){ return String(n).replace(/\d/g, function(d){ return "০১২৩৪৫৬৭৮৯"[Number(d)]; }); }
+  var fltArea = document.getElementById("fltArea");
+  var fltBudget = document.getElementById("fltBudget");
+  var fltCount = document.getElementById("fltCount");
+  var seenAreas = {};
+  PROJECTS.forEach(function(p){
+    var a = areaOf(p);
+    if(seenAreas[a]) return;
+    seenAreas[a] = true;
+    var o = document.createElement("option");
+    o.value = a; o.textContent = p.loc;
+    fltArea.appendChild(o);
+  });
+  var emptyState = document.createElement("div");
+  emptyState.className = "pf-empty";
+  emptyState.hidden = true;
+  emptyState.innerHTML = '<h3>কোনো প্রজেক্ট মেলেনি</h3>' +
+    '<p>দুঃখিত, এই এলাকা ও বাজেটে এখন কোনো প্রজেক্ট নেই। বাজেট বা এলাকা বদলে দেখুন — অথবা সব প্রজেক্ট একসাথে দেখুন।</p>' +
+    '<button class="btn btn-acc" type="button">সব প্রজেক্ট দেখুন</button>';
+  emptyState.querySelector("button").addEventListener("click", resetFilter);
+  cardsEl.appendChild(emptyState);
+  function budgetMatch(price, val){
+    if(val === "under1") return price < 10000000;
+    if(val === "mid") return price >= 10000000 && price <= 13000000;
+    if(val === "over") return price > 13000000;
+    return true;
+  }
+  function applyFilter(){
+    var area = fltArea.value, budget = fltBudget.value;
+    var visible = [];
+    projCardEls.forEach(function(item){
+      var show = (area === "all" || areaOf(item.p) === area) && budgetMatch(startPrice(item.p), budget);
+      item.el.hidden = !show;
+      if(show) visible.push(item.p);
+    });
+    emptyState.hidden = visible.length > 0;
+    fltCount.innerHTML = visible.length > 0
+      ? "<b>" + toBn(visible.length) + "টি</b> প্রজেক্ট পাওয়া গেছে"
+      : "<b>০টি</b> প্রজেক্ট পাওয়া গেছে";
+    /* keep the 3D viewer / tracker in sync: if the open project was filtered
+       out, move gracefully to the first project that is still visible */
+    if(visible.length > 0 && typeof cur !== "undefined" && cur){
+      var stillVisible = visible.some(function(p){ return p.id === cur.id; });
+      if(!stillVisible) selectProject(visible[0].id, false);
+    }
+  }
+  function resetFilter(){
+    fltArea.value = "all";
+    fltBudget.value = "all";
+    applyFilter();
+  }
+  fltArea.addEventListener("change", applyFilter);
+  fltBudget.addEventListener("change", applyFilter);
+  document.getElementById("fltReset").addEventListener("click", resetFilter);
+  fltCount.innerHTML = "<b>" + toBn(PROJECTS.length) + "টি</b> প্রজেক্ট পাওয়া গেছে";
 
   /* ================= SHOWCASE STATE ================= */
   var cur = PROJECTS[0], curFloor = 7;
