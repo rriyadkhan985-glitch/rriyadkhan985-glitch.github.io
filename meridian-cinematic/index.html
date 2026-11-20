@@ -446,6 +446,61 @@ input[type=range]{width:100%;accent-color:var(--brass);cursor:pointer}
 </style>
 <noscript><style>#loader{display:none}.rv,.hero-sub,.hero-ctas,.hero-foot{opacity:1;transform:none}.hero h1 .line-in{transform:none}.statement .big .w{opacity:1;transform:none}</style></noscript>
 <style>.emi-total,.t-pct,.specrow,.est-row b,.ctl output{font-variant-numeric:tabular-nums}#b3dTimebar button svg{width:14px;height:14px;vertical-align:-2px;margin-right:3px}</style>
+<style>
+/* ============ SCROLL-FILM HERO (v5 addition, fh- scoped) ============ */
+#fhLoader{position:fixed;inset:0;z-index:150;background:#0a0a0b;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:18px;transition:opacity .7s ease}
+#fhLoader.done{opacity:0;pointer-events:none}
+#fhLoader .fh-word{font-family:Georgia,'Times New Roman',Times,serif;font-size:clamp(26px,6vw,40px);
+  letter-spacing:.42em;text-indent:.42em;color:#f4ecdc}
+#fhLoader .fh-sub{font-size:11px;letter-spacing:.34em;text-indent:.34em;color:#c9a24b;text-transform:uppercase}
+#fhLoader .fh-track{width:min(240px,60vw);height:2px;background:rgba(201,162,75,.22);overflow:hidden}
+#fhLoader .fh-fill{height:100%;width:0%;background:#c9a24b;transition:width .25s ease}
+#fhLoader .fh-pct{font-size:12px;letter-spacing:.2em;color:#b9ac8f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
+
+#filmHero{position:relative;height:700vh;background:#060607}
+#filmHero .fh-stage{position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden;background:#060607;z-index:1}
+#fhCv{position:absolute;inset:0;width:100% !important;height:100% !important;display:block}
+#filmHero .fh-shade{position:absolute;inset:0;pointer-events:none;z-index:2;
+  background:linear-gradient(to bottom,rgba(5,5,8,.38) 0%,rgba(5,5,8,0) 18%,rgba(5,5,8,0) 62%,rgba(5,5,8,.5) 100%)}
+#filmHero .fh-vignette{position:absolute;inset:0;pointer-events:none;z-index:2;
+  background:radial-gradient(ellipse at 50% 44%,rgba(0,0,0,0) 55%,rgba(0,0,0,.38) 100%)}
+
+#filmHero .fh-brand{position:absolute;top:calc(86px + env(safe-area-inset-top,0px));left:20px;z-index:4;pointer-events:none}
+#filmHero .fh-brand-name{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  font-size:12px;font-weight:600;letter-spacing:.34em;color:#f4ecdc;text-transform:uppercase;
+  text-shadow:0 1px 10px rgba(0,0,0,.65)}
+#filmHero .fh-brand-rule{margin-top:7px;width:44px;height:1px;background:#c9a24b}
+
+#filmHero .fh-beat{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;
+  justify-content:flex-end;text-align:center;padding:0 22px 11vh;pointer-events:none;opacity:0;
+  will-change:opacity,transform;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
+#filmHero .fh-kicker{font-size:11px;letter-spacing:.36em;text-indent:.36em;text-transform:uppercase;color:#c9a24b;
+  margin-bottom:14px;text-shadow:0 1px 8px rgba(0,0,0,.7)}
+#filmHero .fh-beat h2{font-family:Georgia,'Times New Roman',Times,serif;font-weight:400;
+  font-size:clamp(34px,8.6vw,64px);line-height:1.08;color:#f4ecdc;
+  text-shadow:0 2px 26px rgba(0,0,0,.75);max-width:12em}
+#filmHero .fh-sub2{margin-top:14px;font-size:clamp(13px,3.4vw,16px);letter-spacing:.12em;color:#e8dfc9;
+  text-shadow:0 1px 10px rgba(0,0,0,.8)}
+
+#fhBeat1{justify-content:flex-end;padding-bottom:9vh}
+#fhBeat1 .fh-cue-text{font-size:12px;letter-spacing:.3em;text-indent:.3em;text-transform:uppercase;color:#efe6cf;
+  text-shadow:0 1px 10px rgba(0,0,0,.85)}
+#fhBeat1 .fh-cue-line{margin-top:16px;width:1px;height:56px;background:rgba(201,162,75,.25);position:relative;overflow:hidden}
+#fhBeat1 .fh-cue-line::after{content:"";position:absolute;left:0;top:-40%;width:100%;height:40%;background:#c9a24b;
+  animation:fhCueDrop 2.1s ease-in-out infinite}
+@keyframes fhCueDrop{0%{top:-40%}60%,100%{top:110%}}
+
+#fhBeat3 .fh-cta{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+#fhBeat3 .fh-cta a{pointer-events:none;display:inline-block;padding:14px 26px;border-radius:999px;font-size:14px;
+  letter-spacing:.08em;text-decoration:none;font-weight:600}
+#fhBeat3.live .fh-cta a{pointer-events:auto}
+#fhBeat3 .fh-wa{background:#c9a24b;color:#171106}
+#fhBeat3 .fh-pk{border:1px solid rgba(244,236,220,.75);color:#f4ecdc;background:rgba(10,10,12,.35)}
+
+.fh-rm #fhBeat1 .fh-cue-line::after{animation:none}
+</style>
+
 </head>
 <body>
 
@@ -483,6 +538,225 @@ input[type=range]{width:100%;accent-color:var(--brass);cursor:pointer}
     <a class="btn btn-light head-cta" href="https://wa.me/8801867553204?text=Hello%20Meridian%20Builders%2C%20I%20would%20like%20to%20book%20a%20site%20visit." target="_blank" rel="noopener">Book a Visit</a>
   </div>
 </header>
+
+<!-- ================= SCROLL-FILM HERO (v5) ================= -->
+<div id="fhLoader" role="status" aria-label="Loading experience">
+  <div class="fh-word">MERIDIAN</div>
+  <div class="fh-sub">Builders</div>
+  <div class="fh-track"><div class="fh-fill" id="fhFill"></div></div>
+  <div class="fh-pct" id="fhPct">0%</div>
+</div>
+
+<section id="filmHero" aria-label="Cinematic scroll film">
+  <div class="fh-stage">
+    <canvas id="fhCv"></canvas>
+    <div class="fh-shade"></div>
+    <div class="fh-vignette"></div>
+
+    <div class="fh-brand" id="fhBrand" aria-hidden="true">
+      <div class="fh-brand-name">Meridian Builders</div>
+      <div class="fh-brand-rule"></div>
+    </div>
+
+    <div class="fh-beat" id="fhBeat1">
+      <div class="fh-cue-text">Scroll — the journey begins</div>
+      <div class="fh-cue-line"></div>
+    </div>
+
+    <div class="fh-beat" id="fhBeat2">
+      <div class="fh-kicker">Meridian Builders</div>
+      <h2>Rise Above the Shore</h2>
+      <p class="fh-sub2">Luxury residences by Meridian Builders</p>
+    </div>
+
+    <div class="fh-beat" id="fhBeat3">
+      <div class="fh-kicker">Your Residence Awaits</div>
+      <h2>Step Inside Your Story</h2>
+      <div class="fh-cta">
+        <a class="fh-wa" href="https://wa.me/8801867553204" target="_blank" rel="noopener">WhatsApp Us</a>
+        <a class="fh-pk" href="#top" id="fhExplore">Explore the Project</a>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(function(){
+"use strict";
+var RM = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (RM) document.documentElement.classList.add("fh-rm");
+
+var NA = 79, NB = 79, N = NA + NB;
+var cv = document.getElementById("fhCv");
+var ctx = cv.getContext("2d");
+var imgs = new Array(N);
+var ready = new Array(N).fill(false);
+var loadedCount = 0;
+var loaderHidden = false;
+
+var fillEl = document.getElementById("fhFill");
+var pctEl = document.getElementById("fhPct");
+var loaderEl = document.getElementById("fhLoader");
+
+function hideLoader(){
+  if (loaderHidden) return;
+  loaderHidden = true;
+  loaderEl.classList.add("done");
+  setTimeout(function(){ loaderEl.style.display = "none"; }, 800);
+}
+function firstChunkReady(){
+  for (var i = 0; i < 20 && i < N; i++) if (!ready[i]) return false;
+  return true;
+}
+function addImg(idx, src){
+  var im = new Image();
+  im.onload = function(){
+    ready[idx] = true; loadedCount++;
+    var pct = Math.round(loadedCount / N * 100);
+    fillEl.style.width = pct + "%";
+    pctEl.textContent = pct + "%";
+    if (loadedCount >= Math.ceil(N * 0.9) || firstChunkReady()) hideLoader();
+  };
+  im.onerror = function(){ if (!ready[idx]){ ready[idx] = true; loadedCount++; } };
+  im.src = src;
+  imgs[idx] = im;
+}
+/* consume frames appended by the chunk files (window.__FA / window.__FB) */
+var consumedA = 0, consumedB = 0;
+function pump(){
+  var fa = window.__FA || [], fb = window.__FB || [];
+  while (consumedA < fa.length && consumedA < NA){ addImg(consumedA, fa[consumedA]); consumedA++; }
+  while (consumedB < fb.length && consumedB < NB){ addImg(NA + consumedB, fb[consumedB]); consumedB++; }
+}
+/* progressive, in-order chunk loading: fa1 first so the film can start early */
+var CHUNKS = ["frames/fa1.js","frames/fa2.js","frames/fa3.js","frames/fa4.js",
+              "frames/fb1.js","frames/fb2.js","frames/fb3.js","frames/fb4.js"];
+var ci = 0;
+function nextChunk(){
+  if (ci >= CHUNKS.length) return;
+  var s = document.createElement("script");
+  s.src = CHUNKS[ci]; ci++;
+  s.onload = function(){ pump(); nextChunk(); };
+  s.onerror = function(){ nextChunk(); };
+  document.head.appendChild(s);
+}
+nextChunk();
+var pumpIv = setInterval(function(){
+  pump();
+  if (consumedA >= NA && consumedB >= NB) clearInterval(pumpIv);
+}, 200);
+setTimeout(hideLoader, 9000); /* never trap the visitor */
+
+/* ---------- canvas fit (mandatory refit pattern) ---------- */
+function fit(){
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var w = cv.clientWidth, h = cv.clientHeight;
+  if (!w || !h) return;
+  var nw = Math.round(w * dpr), nh = Math.round(h * dpr);
+  if (cv.width !== nw || cv.height !== nh){ cv.width = nw; cv.height = nh; }
+}
+function refit(){ fit(); drawCurrent(true); }
+window.addEventListener("load", refit);
+window.addEventListener("resize", refit);
+window.addEventListener("orientationchange", function(){ setTimeout(refit, 60); });
+if (window.visualViewport) window.visualViewport.addEventListener("resize", refit);
+[300, 800, 1500].forEach(function(t){ setTimeout(refit, t); });
+fit();
+
+/* ---------- drawing ---------- */
+var cur = 0;               /* eased float frame index */
+var lastDrawn = -1;
+function nearestReady(i){
+  if (i < 0) i = 0; if (i > N - 1) i = N - 1;
+  if (ready[i]) return i;
+  for (var d = 1; d < N; d++){
+    if (i - d >= 0 && ready[i - d]) return i - d;
+    if (i + d < N && ready[i + d]) return i + d;
+  }
+  return -1;
+}
+function draw(img){
+  var cw = cv.width, ch = cv.height;
+  if (!cw || !ch) return;
+  ctx.fillStyle = "#060607";
+  ctx.fillRect(0, 0, cw, ch);
+  var iw = img.naturalWidth, ih = img.naturalHeight;
+  if (!iw || !ih) return;
+  var s = Math.max(cw / iw, ch / ih);
+  var dw = iw * s, dh = ih * s;
+  var dx = (cw - dw) / 2;
+  var dy = (ch - dh) * 0.42;   /* focal point slightly above middle */
+  ctx.drawImage(img, dx, dy, dw, dh);
+}
+function drawCurrent(force){
+  var idx = nearestReady(Math.round(cur));
+  if (idx < 0) return;
+  if (!force && idx === lastDrawn) return;
+  lastDrawn = idx;
+  draw(imgs[idx]);
+}
+
+/* ---------- text beats ---------- */
+var b1 = document.getElementById("fhBeat1");
+var b2 = document.getElementById("fhBeat2");
+var b3 = document.getElementById("fhBeat3");
+var brand = document.getElementById("fhBrand");
+function ss(a, b, x){ x = (x - a) / (b - a); x = x < 0 ? 0 : x > 1 ? 1 : x; return x * x * (3 - 2 * x); }
+function setBeat(el, o, ty){
+  el.style.opacity = o.toFixed(3);
+  el.style.transform = "translateY(" + ty.toFixed(1) + "px)";
+}
+function beats(p){
+  setBeat(b1, 1 - ss(0.04, 0.085, p), 0);
+  var o2 = ss(0.42, 0.455, p) * (1 - ss(0.495, 0.525, p));
+  setBeat(b2, o2, (1 - ss(0.42, 0.455, p)) * 26);
+  var o3 = ss(0.925, 0.955, p);
+  setBeat(b3, o3, (1 - ss(0.925, 0.955, p)) * 26);
+  b3.classList.toggle("live", o3 > 0.5);
+  brand.style.opacity = (1 - ss(0.46, 0.54, p)).toFixed(3);
+}
+
+/* ---------- Explore CTA: smooth-scroll to the site content below ---------- */
+var ex = document.getElementById("fhExplore");
+if (ex) ex.addEventListener("click", function(e){
+  var t = document.getElementById("top");
+  if (t){ e.preventDefault(); t.scrollIntoView({ behavior: RM ? "auto" : "smooth" }); }
+});
+
+/* ---------- scroll scrub ---------- */
+var film = document.getElementById("filmHero");
+function progress(){
+  var total = film.offsetHeight - window.innerHeight;
+  if (total <= 0) return 0;
+  var y = -film.getBoundingClientRect().top;
+  var p = y / total;
+  return p < 0 ? 0 : p > 1 ? 1 : p;
+}
+
+if (RM){
+  /* Reduced motion: static frame first; beats snap instantly with scroll, no easing. */
+  cur = Math.min(NA + 20, N - 1);
+  var iv = setInterval(function(){ drawCurrent(true); if (ready[Math.round(cur)]) clearInterval(iv); }, 120);
+  setTimeout(function(){ clearInterval(iv); }, 4000);
+  beats(0);
+  window.addEventListener("scroll", function(){
+    var p = progress();
+    cur = p * (N - 1);
+    drawCurrent(true);
+    beats(p);
+  }, { passive: true });
+} else {
+  (function loop(){
+    var p = progress();
+    var target = p * (N - 1);
+    cur += (target - cur) * 0.12;
+    if (Math.abs(target - cur) < 0.02) cur = target;
+    drawCurrent(false);
+    beats(cur / (N - 1));
+    requestAnimationFrame(loop);
+  })();
+}
+})();
+</script>
 
 <!-- ================= HERO ================= -->
 <section class="hero" id="top">
