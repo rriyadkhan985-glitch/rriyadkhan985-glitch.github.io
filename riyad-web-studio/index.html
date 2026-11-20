@@ -29,6 +29,11 @@ a.project{display:block;color:inherit}
 .conschips div{border:1px solid var(--line);border-radius:13px;padding:10px 15px;text-align:center;background:#0b0c12}
 .conschips b{font:800 17px Manrope;display:block}
 .conschips span{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+.filmbar{border:1px solid rgba(176,151,255,.7);background:linear-gradient(160deg,rgba(132,103,215,.18),rgba(167,139,250,.05) 55%);box-shadow:0 20px 70px rgba(96,69,165,.12)}
+.filmtag{display:inline-block;font-size:9px;letter-spacing:1px;color:#171321;background:#bba7ff;padding:5px 9px;border-radius:20px;font-weight:800;vertical-align:middle;margin-left:9px}
+.filmbar .demolink{color:#c7b4ff;font-weight:700;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.filmprice{font:800 27px Manrope;letter-spacing:-1px;white-space:nowrap}
+.filmprice small{font:500 12px "DM Sans";color:var(--muted);letter-spacing:0}
 .form .invalid{border-color:#f87171!important}
 .form .err{display:none;color:#f87171;font-size:11px;margin-top:-4px}
 .form .err.show{display:block}
@@ -85,6 +90,7 @@ a.project{display:block;color:inherit}
 <article class="price featured reveal"><span class="popular">POPULAR</span><h3>Standard</h3><div class="amount">৳8,000</div><p>For businesses that want bookings and enquiries handled properly.</p><ul><li>Everything in Basic</li><li>Booking / enquiry form</li><li>Offers &amp; customer reviews sections</li><li>Google search setup</li><li>Home-screen web app icon</li></ul><a class="btn primary" href="#contact" data-package="Standard">Discuss Standard ↗</a></article>
 <article class="price reveal"><h3>Premium</h3><div class="amount">৳12,000</div><p>For brands that want the full experience and control.</p><ul><li>Everything in Standard</li><li>Premium / 3D-style design or QR ordering</li><li>Admin conveniences for easy updates</li><li>1 month of small-update support</li><li>Priority delivery</li></ul><a class="btn" href="#contact" data-package="Premium">Discuss Premium ↗</a></article>
 </div>
+<div class="consbar filmbar reveal"><div><h3>🎬 Cinematic Scroll-Film Website<span class="filmtag">PREMIUM</span></h3><p>Your hero is a cinematic film that plays as visitors scroll — an AI video journey (sea → villa → interior), custom-built for your brand. <a class="demolink" href="https://rriyadkhan985-glitch.github.io/meridian-cinematic/" target="_blank" rel="noopener">Watch the live demo ↗</a></p></div><div class="filmprice">৳১,২০,০০০ <small>থেকে</small></div><a class="btn primary" href="#contact" data-package="Film">Discuss Scroll-Film ↗</a></div>
 <div class="consbar reveal"><div><h3>🏗️ Construction Package — for developers &amp; builders</h3><p>Project pages, 3D building viewer, cost calculator, progress tracker and your own admin panel — the full Meridian Builders system, built for your company.</p></div><div class="conschips"><div><b>৳15,000</b><span>Basic</span></div><div><b>৳25,000</b><span>Standard</span></div><div><b>৳40,000</b><span>Premium</span></div></div><a class="btn primary" href="#contact" data-package="Construction">Discuss Construction ↗</a></div>
 </div></section>
 
@@ -103,7 +109,7 @@ a.project{display:block;color:inherit}
 <input name="name" id="cfName" placeholder="Your name *" maxlength="80"><div class="err" id="errName">Please write your name.</div>
 <input name="phone" id="cfPhone" type="tel" placeholder="WhatsApp number (01XXXXXXXXX) *" maxlength="20"><div class="err" id="errPhone">Please write a valid Bangladeshi mobile number.</div>
 <input name="business" id="cfBiz" placeholder="Business name / type (optional)" maxlength="120">
-<select name="package" id="package"><option value="">Select a package *</option><option>Basic — ৳5,000</option><option>Standard — ৳8,000</option><option>Premium — ৳12,000</option><option>Construction Package — ৳15,000–40,000</option><option>Not sure yet — advise me</option></select><div class="err" id="errPkg">Please choose a package (or "Not sure yet").</div>
+<select name="package" id="package"><option value="">Select a package *</option><option>Basic — ৳5,000</option><option>Standard — ৳8,000</option><option>Premium — ৳12,000</option><option>Construction Package — ৳15,000–40,000</option><option>Cinematic Scroll-Film Website — ৳১,২০,০০০ থেকে</option><option>Not sure yet — advise me</option></select><div class="err" id="errPkg">Please choose a package (or "Not sure yet").</div>
 <textarea name="message" id="cfMsg" placeholder="Tell us about your project..." maxlength="1200"></textarea>
 <button class="btn primary" type="submit">Send enquiry on WhatsApp ↗</button>
 <small>Submitting opens WhatsApp with your enquiry ready — just press send there. Your enquiry is also saved to our studio panel so nothing gets lost. We never ask for passwords or PINs.</small></form>
@@ -119,7 +125,7 @@ nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classLi
 const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 document.getElementById('year').textContent=new Date().getFullYear();
-document.querySelectorAll('[data-package]').forEach(a=>a.addEventListener('click',()=>{document.getElementById('package').value={Basic:'Basic — ৳5,000',Standard:'Standard — ৳8,000',Premium:'Premium — ৳12,000',Construction:'Construction Package — ৳15,000–40,000'}[a.dataset.package]}));
+document.querySelectorAll('[data-package]').forEach(a=>a.addEventListener('click',()=>{document.getElementById('package').value={Basic:'Basic — ৳5,000',Standard:'Standard — ৳8,000',Premium:'Premium — ৳12,000',Construction:'Construction Package — ৳15,000–40,000',Film:'Cinematic Scroll-Film Website — ৳১,২০,০০০ থেকে'}[a.dataset.package]}));
 const toast=document.getElementById('toast');
 document.getElementById('contactForm').addEventListener('submit',e=>{e.preventDefault();
 const name=document.getElementById('cfName'),phone=document.getElementById('cfPhone'),biz=document.getElementById('cfBiz'),pkg=document.getElementById('package'),msg=document.getElementById('cfMsg');
