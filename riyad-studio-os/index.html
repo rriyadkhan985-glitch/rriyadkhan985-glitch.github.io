@@ -807,6 +807,7 @@ a{color:inherit}
   }
   renderProjects(PROJECTS);
   window.__setProjects = renderProjects;
+  window.__builtinProjects = PROJECTS;
   var dFilter = document.getElementById("dFilter"), dEmpty = document.getElementById("dEmpty");
   dFilter.addEventListener("input", function(){
     var q = dFilter.value.trim().toLowerCase(), shown = 0;
@@ -1008,7 +1009,12 @@ a{color:inherit}
             if (cel) cel.textContent = cfmt(cval);
           });
         }
-        if (Array.isArray(c.demos) && c.demos.length && window.__setProjects) window.__setProjects(c.demos);
+        if (Array.isArray(c.demos) && c.demos.length && window.__setProjects){
+          var merged = c.demos.slice();
+          var seen = {}; merged.forEach(function(d){ if (d && d.url) seen[d.url] = 1; });
+          (window.__builtinProjects || []).forEach(function(p){ if (p && p.url && !seen[p.url]) merged.push(p); });
+          window.__setProjects(merged);
+        }
       }).catch(function(){});
     }catch(err){}
   })();
